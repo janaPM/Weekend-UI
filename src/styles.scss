@@ -1,1 +1,47 @@
+
+// @use "igniteui-angular/theming" as *;
+// Uncomment the following lines if you want to add a custom palette:
+// $primary: #731963 !default;
+// $secondary: #ce5712 !default;
+// $app-palette: palette($primary, $secondary, $surface);
+
+/* autoprefixer grid: on */
+/*
+@include core();
+@include typography($font-family: $material-typeface, $type-scale: $material-type-scale);
+@include theme($default-palette);
+// CSS Reset, comment out if not required or using a different module
+@import 'minireset.css/minireset';
+@import '../node_modules/@syncfusion/ej2-material-theme/styles/material.css';
+*/
 /* You can add global styles to this file, and also import other style files */
+
+/* Global styles for Syncfusion events */
+html, body { height: 100%; margin: 0; padding: 0; }
+.e-schedule .e-appointment {
+    background-color: #28a745 !important; /* Green background for events */
+    color: #ffffff !important; /* White text for event titles */
+    border: none; /* Remove any unnecessary borders */
+    border-radius: 4px; /* Slightly rounded corners for better design */
+    padding: 2px 4px; /* Minimal padding for better space management */
+    font-size: 14px; /* Standard font size for desktop */
+    text-align: center; /* Center-align the text */
+   }
+   /* Mobile-specific styles for event titles */
+   @media (max-width: 768px) {
+    .e-schedule .e-appointment {
+      font-size: 12px; /* Smaller font size for mobile */
+      white-space: nowrap; /* Prevent text wrapping */
+      text-overflow: ellipsis; /* Add ellipsis if the text is too long */
+      overflow: hidden; /* Ensure content doesn't overflow the block */
+    }
+   }
+   /* Ensure event details in the tooltip (if any) are visible */
+   .e-schedule .e-appointment:hover {
+    opacity: 0.9; /* Slight transparency effect on hover */
+   }
+   /* Optional: Customize the event title alignment in tooltips or detailed views */
+   .e-schedule .template-wrapper {
+    font-weight: bold; /* Make the title bold */
+    color: #ffffff; /* Ensure text remains white */
+   }

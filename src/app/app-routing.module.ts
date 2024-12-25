@@ -1,7 +1,32 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [];
+import { ProfileComponent } from '../pages/profile/profile.component';
+import { ForYouComponent } from '../pages/for-you/for-you.component';
+import { LayoutComponent } from '../pages/layout/layout.component';
+import { EventsComponent } from '../pages/events/events.component';
+import { ChatsComponent } from '../pages/chats/chats.component';
+import { ChatConversationComponent } from '../pages/chat-conversation/chat-conversation.component';
+import { EventDetailComponent } from '../pages/event-detail/event-detail.component';
+import { combineLatest } from 'rxjs';
+import { CalendarComponent } from '../pages/calendar/calendar.component';
+import { LoginComponent } from '../pages/login/login.component';
+const routes: Routes = [
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'login', component: LoginComponent},
+      { path: 'for-you', component: ForYouComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'events', component: EventsComponent},
+      { path: 'chats', component: ChatsComponent},
+      { path: 'chat-conversation', component: ChatConversationComponent},
+      { path: 'event-detail/:id', component: EventDetailComponent},
+      { path: 'calendar', component: CalendarComponent}
+    ]
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
