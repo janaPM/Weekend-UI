@@ -1,0 +1,161 @@
+<div class="profile-page" *ngIf="(!editing && !isInterestModalOpen)">
+  <!-- Profile Header -->
+  <h1 class="profile-header1">
+    Profile
+    <button class="edit-button" *ngIf="!editingMode" (click)="startEditingg()">
+      Edit
+    </button>
+    <button class="save-button" *ngIf="editingMode" (click)="saveAll()">
+      Save
+    </button>
+  </h1>
+  <div class="profile-header">
+    <div class="profile-info">
+      <img
+        [src]="images.profile1"
+        alt="Profile Picture"
+        class="profile-picture"
+      />
+      <div class="profile-details">
+        <div class="name-field">
+          <h1>{{ user.name || "Add your name" }}</h1>
+          <button
+            class="next-icon"
+            (click)="startEditing('name')"
+            *ngIf="editingMode"
+          >
+            <img [src]="images.next" width="15" height="15" />
+          </button>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" [style.width.%]="progress"></div>
+        </div>
+        <span class="complete-profile">{{ progress }}% Completed</span>
+      </div>
+    </div>
+    <div class="settings-icon">
+      <i class="fas fa-cog"></i>
+    </div>
+  </div>
+  <!-- Premium Section -->
+  <div class="premium-section">
+    <h2>Premium</h2>
+    <p>
+      Unlock all of our features to be in complete control of your experience
+    </p>
+    <button class="explore-premium">Explore Premium</button>
+  </div>
+  <div class="profile-container">
+    <h3>Bio</h3>
+    <div class="about-item" *ngFor="let item of bioItems">
+      <div class="item-icon">
+        <img [src]= "item.icon" width="20" height="20"/>
+      </div> 
+      <div class="item-info">
+        <span class="item-title">{{ item.title }}</span>
+        <span class="item-title1">{{
+          user[item.key] || "Add " + item.title
+        }}</span>
+        <button class="next-icon" (click)="startEditing(item.key)">
+          <img [src]="images.next" width="15" height="15" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="profile-container">
+    <div class = "interest-header">
+    <h3>Interests</h3>
+    <button
+      class="edit-interest-button"
+      (click)="startEditingInterest()"
+    >
+      <img [src]="images.next" width="15" height="15" />
+    </button>
+  </div>
+    <div class="interests-container">
+      <div class="interest-bubble" *ngFor="let interest of user.interest">
+        {{ interest }}
+      </div>
+    </div>
+  </div>
+  <!-- About You Section -->
+  <div class="profile-container">
+    <h3>About You</h3>
+    <div class="about-item" *ngFor="let item of aboutItems">
+      <div class="item-icon">
+        <img [src]= "item.icon" width="20" height="20"/>
+      </div>    
+      <div class="item-info">
+        <span class="item-title">{{ item.title }}</span>
+        <span class="item-title1">{{
+          user[item.key] || "Add " 
+        }}</span>
+        <!-- "Add "+ item.title -->
+        <button class="next-icon" (click)="startEditing(item.key)">
+          <img [src]="images.next" width="15" height="15" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- More About You Section -->
+  <div class="profile-container">
+    <h3>More About You</h3>
+    <p>Cover the things most people are curious about.</p>
+    <div class="about-item" *ngFor="let item of moreItems">
+      <div class="item-info">
+        <div class="item-icon">
+          <img [src]= "item.icon" width="20" height="20"/>
+        </div>
+        <span class="item-title">{{ item.title }}</span>
+        <span class="item-title1">{{
+          user[item.key] || "Add " 
+        }}</span>
+        <button class="next-icon" (click)="startEditing(item.key)">
+          <img [src]="images.next" width="15" height="15" />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Edit Component -->
+<div class="edit-page" *ngIf="editing">
+  <button class="back-button" (click)="goBack()">
+    <img [src]="images.back" width="15" height="15" />
+  </button>
+  <h1>{{ question }}</h1>
+  <div class="input-container">
+    <input
+      type="text"
+      [(ngModel)]="currentValue"
+      [placeholder]="'Enter your ' + currentField"
+      (input)="onInput()"
+    />
+    <button
+      class="update-button"
+      [ngClass]="{ active: inputActive }"
+      (click)="saveEdit(currentField)"
+    >
+      Update
+    </button>
+  </div>
+</div>
+
+<div class="edit-page" *ngIf="isInterestModalOpen">
+  <button class="back-button" (click)="goBack()">
+    <img [src]="images.back" width="15" height="15" />
+  </button>
+  <h1>Select Your Interests</h1>
+  <div class="input-container">
+    <div
+      class="interest-bubble"
+      *ngFor="let option of interestOptions"
+      [class.selected]="selectedInterests.includes(option)"
+      (click)="toggleInterest(option)"
+    >
+      {{ option }}
+    </div>
+  </div>
+  <button class="update-button" (click)="saveInterestSelection()">
+    Update
+  </button>
+</div>

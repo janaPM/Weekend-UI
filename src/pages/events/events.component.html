@@ -1,0 +1,110 @@
+<div class ="margin">
+  <p class="weekend-text">Weekend</p>
+  <div class="toggle-container">
+    <button [class.active]="isDefaultView" (click)="switchView(true)">
+      For-You
+    </button>
+    <button [class.active]="!isDefaultView" (click)="switchView(false)">
+      Events
+    </button>
+  </div>
+  <div *ngIf="isDefaultView" class="events-container">
+    <div class="search-section">
+      <input [(ngModel)]="searchQuery" placeholder="What's the event name?" />
+      <input placeholder="Date and time" />
+      <!-- <input placeholder="Gender and age range" /> -->
+      <button (click)="filterEvents()">Search</button>
+    </div>
+    <section class="event-section">
+      <h3>Upcoming events</h3>
+      <div class="event-grid">
+        <div class="event-card" *ngFor="let event of events?.upcomingEvents" (click)="filterEventsCategory(event.name)">
+          <img [src]="event.image" alt="{{ event.name }}" />
+          <p class="event-name">{{ event.name }}</p>
+        </div>
+      </div>
+    </section>
+    <section class="event-list">
+      <h3>Events near you</h3>
+      <div
+        class="event-card"
+        *ngFor="let event of filteredNearbyEvents"
+        class="event-card"
+        (click)="viewEvent(event.id)"
+      >
+        <img [src]="event.image" alt="{{ event.name }}" />
+        <h4>{{ event.name }}</h4>
+        <p>{{ event.description }}</p>
+        <p>{{ event.fee }}, {{ event.age }}</p>
+      </div>
+    </section>
+  </div>
+  <div *ngIf="!isDefaultView" class="for-you-container">
+      <!-- Event Creation Form -->
+      <div *ngIf="isCreatingEvent" class="create-event-form">
+        <h3>Create New Event</h3>
+        <div>
+          <label>Event Name:</label>
+          <input [(ngModel)]="newEvent.name" placeholder="Event Name" />
+        </div>
+        <div>
+          <label>Location:</label>
+          <input [(ngModel)]="newEvent.location" placeholder="Event Location" />
+        </div>
+        <div>
+          <label>Date:</label>
+          <input [(ngModel)]="newEvent.date" type="date" />
+        </div>
+        <div>
+          <label>Time:</label>
+          <input [(ngModel)]="newEvent.time" type="time" />
+        </div>
+        <div>
+          <label>Organizer Name:</label>
+          <input
+            [(ngModel)]="newEvent.organizerName"
+            placeholder="Organizer Name"
+          />
+        </div>
+        <div>
+          <label>Gender:</label>
+          <select [(ngModel)]="newEvent.gender">
+            <option value="Any">Any</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div>
+          <label>Age:</label>
+          <input [(ngModel)]="newEvent.age" placeholder="Age Range (e.g., 18-30)" />
+        </div>
+        <div>
+          <label>Event Image URL:</label>
+          <input [(ngModel)]="newEvent.image" placeholder="Image URL" />
+        </div>
+        <div class="form-buttons">
+          <button (click)="saveEvent()">Save</button>
+          <button (click)="cancelEvent()">Cancel</button>
+        </div>
+      </div>
+    <div *ngFor="let event of forYouEvents" class="for-you-card">
+      <img [src]="event.image" alt="{{ event.name }}" class="event-image" />
+      <div class="event-details">
+        <h4>{{ event.name }}</h4>
+        <p>{{ event.location }}</p>
+        <p>{{ event.date }} | {{ event.time }}</p>
+        <p>
+          Organizer: {{ event.organizerName }}, {{ event.gender }},
+          {{ event.age }}
+        </p>
+      </div>
+    </div>
+    <!-- Create Event Button -->
+    <button class="floating-button" (click)="toggleCreateEvent()">
+      <span [ngClass]="{ 'rotate': isCreatingEvent }">
+      <ng-container *ngIf="!isCreatingEvent">+</ng-container>
+      <ng-container *ngIf="isCreatingEvent">+</ng-container>
+      </span>
+    </button>
+  </div>
+</div>

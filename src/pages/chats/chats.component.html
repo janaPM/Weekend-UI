@@ -1,0 +1,18 @@
+<div class="chats-container">
+  <header class="header">
+    <h1 class="title">
+        <img [src]="images.heart" alt="Love Icon" class="love-icon"/> LoveChat
+      </h1>
+    <button class="new-chat-btn">New Chat</button>
+  </header>
+  <hr class="header-line" />
+  <div class="chat-list">
+    <div *ngFor="let chat of chats" class="chat-item" (click)="navigateTo('chat-conversation')">
+      <img [src]="chat.avatar" alt="{{ chat.name }}" class="avatar" />
+      <div class="chat-details">
+        <h3 class="chat-name">{{ chat.name }}</h3>
+        <p class="chat-message">{{ chat.message }}</p>
+      </div>
+    </div>
+  </div>
+</div>

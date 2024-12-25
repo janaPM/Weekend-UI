@@ -1,0 +1,20 @@
+<nav class="footer-nav">
+    <a class="footer-item" (click)="navigateTo('profile')" [class.active]="activeRoute === 'profile'">
+        <img [src]="images.profile_icon" alt="Profile Icon" class="footer-icon"/><br/>Profile
+    </a>
+    <!-- <a href="#" class="footer-item">
+        <img [src]="images.home" alt="Home Icon" class="footer-icon"/><br/>Home
+    </a> -->
+    <a class="footer-item" (click)="navigateTo('for_youu')" [class.active]="activeRoute === 'for-you'">
+        <img [src]="images.for_you" alt="For You Icon" class="footer-icon"/><br/>For you
+    </a>
+    <a class="footer-item" (click)="navigateTo('events')" [class.active]="activeRoute === 'events'">
+        <img [src]="images.events" alt="Events Icon" class="footer-icon"/><br/>Events
+    </a>
+    <a class="footer-item" (click)="navigateTo('calendar')" [class.active]="activeRoute === 'calendar'"> 
+        <img [src]="images.calendar" alt="Achievements Icon" class="footer-icon"/><br/>Calendar
+    </a>
+    <a class="footer-item" (click)="navigateTo('chats')" [class.active]="activeRoute === 'chats'">
+        <img [src]="images.chat" alt="Chats Icon" class="footer-icon"/><br/>Chats
+    </a>
+</nav>

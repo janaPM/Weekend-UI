@@ -1,0 +1,151 @@
+@mixin width-height($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin position($position, $top: null, $right: null, $bottom: null, $left: null) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+@mixin flex($align-items: null, $gap: null, $justify-content: null, $direction: null, $flex-wrap: null, $flex-grow: null, $flex-shrink: null) {
+    display: flex;
+    align-items: $align-items;
+    gap: $gap;
+    justify-content: $justify-content;
+    flex-direction: $direction;
+    flex-wrap: $flex-wrap;
+    flex-grow: $flex-grow;
+    flex-shrink: $flex-shrink;
+}
+
+@mixin flexWidth($width) {
+    flex: 0 0 $width;
+    max-width: $width;
+}
+
+@mixin font($color: null, $font-size: null, $line-height: null, $font-weight: null, $font-family: null, $text-align: null, $letter-spacing: null) {
+    color: $color;
+    font-size: $font-size;
+    line-height: $line-height;
+    font-weight: $font-weight;
+    font-family: $font-family;
+    text-align: $text-align;
+    letter-spacing: $letter-spacing;
+}
+
+@mixin background-img($background-size: null, $background-repeat: null) {
+    background-size: $background-size;
+    background-repeat: $background-repeat;
+}
+
+@mixin bgborder($border-radius: null, $border: null, $background: null, $box-shadow: null) {
+    border-radius: $border-radius;
+    border: $border;
+    background: $background;
+    box-shadow: $box-shadow;
+}
+@mixin dimen($width,$height){
+    width : $width;
+    height : $height;
+}
+ 
+@mixin flexinit($display,$flexdirection,$justify,$align,$wrap){
+    display: $display;
+    flex-direction: $flexdirection;
+    justify-content: $justify;
+    align-items: $align;
+    flex-wrap: $wrap;
+}
+ 
+@mixin margin($top: null,$right: null,$bottom: null,$left: null){
+    margin-top: $top;
+    margin-right: $right;
+    margin-bottom: $bottom;
+    margin-left: $left;
+}
+ 
+ 
+@mixin padding($top,$right,$bottom,$left){
+    padding-top: $top;
+    padding-right: $right;
+    padding-bottom: $bottom;
+    padding-left: $left;
+}
+ 
+@mixin border($width,$type,$color)
+{
+    border: $width $type $color;
+}
+ 
+@mixin textdesign($font,$letter,$indent,$align,$wordspace,$lineheight,$wrap){
+ 
+    font-family: $font;
+    letter-spacing: $letter;
+    text-indent: $indent;
+    text-align: $align;
+    word-spacing: $wordspace;
+    line-height: $lineheight;
+    text-wrap: $wrap;
+ 
+}
+ 
+@mixin borderradius ($top,$right,$bottom,$left){
+    border-radius: $top $right $bottom $left;
+}
+ 
+@mixin flexprop($flex1,$flex2,$flexx3){
+    flex: $flex1 $flex2 $flexx3;
+}
+ 
+@mixin background ($color,$pos){
+    background-color: $color;
+    position:$pos;
+}
+ 
+// @mixin position($top,$right,$bottom,$left){
+//     top: $top;
+//     right: $right;
+//     bottom: $bottom;
+//     left: $left;
+// }
+ 
+@mixin linkdesing($float,$color,$textalign,$textdec,$fonts)
+{
+    float: $float;
+    color: $color;
+    text-align: $textalign;
+    text-decoration: $textdec;
+    font-size: $fonts;
+}
+ 
+@mixin link($bcolor,$color)
+{
+    background-color: $bcolor;
+    color : $color;
+}
+
+@mixin textdesign($font, $letter, $indent, $align, $wordspace, $lineheight, $wrap) {
+    font-family: $font;
+    letter-spacing: $letter;
+    text-indent: $indent;
+    text-align: $align;
+    word-spacing: $wordspace;
+    line-height: $lineheight;
+    white-space: $wrap; 
+  }
+  @mixin animation($animation-type:null){
+    animation: $animation-type;
+  }
+  @keyframes grow-animation {
+    from {
+        transform: scale(.8);
+    }
+    to{
+        transform: scale(1);
+    }
+    
+  }

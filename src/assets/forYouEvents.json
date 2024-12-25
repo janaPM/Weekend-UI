@@ -1,0 +1,32 @@
+[
+    {
+      "name": "Beach Volleyball Tournament",
+      "location": "Sunset Beach",
+      "date": "March 15, 2023",
+      "time": "3:00 PM",
+      "organizerName": "Emily",
+      "gender": "Female",
+      "age": 29,
+      "image": "/assets/images/volleyball.jpg"
+    },
+    {
+      "name": "City Night Run",
+      "location": "Downtown Park",
+      "date": "April 1, 2023",
+      "time": "8:00 PM",
+      "organizerName": "John",
+      "gender": "Male",
+      "age": 35,
+      "image": "/assets/images/city-run.jpg"
+    },
+    {
+      "name": "Art in the Garden",
+      "location": "Botanical Gardens",
+      "date": "March 20, 2023",
+      "time": "10:00 AM",
+      "organizerName": "Sarah",
+      "gender": "Female",
+      "age": 27,
+      "image": "/assets/images/art-garden.jpg"
+    }
+   ]

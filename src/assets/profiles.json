@@ -1,0 +1,74 @@
+[
+    {
+        "id":"PRL00000001",
+        "name": "Sakshi",
+        "age": 22,
+        "job": "Assistant Manager",
+        "education": "VIT 2023",
+        "gender": "Woman",
+        "interests": [
+            "Singing",
+            "Badminton",
+            "Mystery",
+            "Hip hop"
+        ],
+        "image": "/assets/profil1.jpg"
+    },
+    {
+        "id":"PRL00000002",
+        "name": "Aniruth",
+        "age": 22,
+        "job": "Software Developer",
+        "education": "NIT Agartala 2023",
+        "gender": "Men",
+        "interests": [
+            "Singing",
+            "Badminton",
+            "Mystery",
+            "Hip hop"
+        ],
+        "image": "/assets/profile1.jpeg"
+    },
+    {
+        "id":"PRL00000003",
+        "name": "Kamal",
+        "age": 23,
+        "job": "Software Developer",
+        "education": "IIT Madras 2023",
+        "gender": "Men",
+        "interests": [
+            "Singing",
+            "Football",
+            "Tennnis"
+        ],
+        "image": "/assets/profile1.jpeg"
+    },
+    {
+        "id":"PRL00000003",
+        "name": "Varnith",
+        "age": 23,
+        "job": "Software Developer",
+        "education": "MIT 2023",
+        "gender": "Men",
+        "interests": [
+            "Singing",
+            "Football",
+            "Cricket"
+        ],
+        "image": "/assets/profile1.jpeg"
+    },
+    {
+        "id":"PRL00000003",
+        "name": "K",
+        "age": 23,
+        "job": "Software Developer",
+        "education": "IIT Madras 2023",
+        "gender": "Men",
+        "interests": [
+            "Singing",
+            "Football",
+            "Tennnis"
+        ],
+        "image": "/assets/profile1.jpeg"
+    }
+]

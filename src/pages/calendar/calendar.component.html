@@ -1,0 +1,17 @@
+<div class="margin">
+    <h1 class="profile-header1">Calender</h1>
+</div>
+<ejs-schedule
+ width="100%"
+ height="740px"
+ [selectedDate]="selectedDate"
+ [eventSettings]="eventSettings"
+ [currentView]="'Month'">
+<ng-template #eventTemplate let-data>
+<div class="template-wrapper">
+<strong>{{ data.Subject }}</strong> <!-- Display Event Subject -->
+<div>{{ data.StartTime | date: 'shortTime' }} - {{ data.EndTime | date: 'shortTime' }}</div>
+<div>{{ data.Location }}</div> <!-- Optional: Display Location -->
+</div>
+</ng-template>
+</ejs-schedule>

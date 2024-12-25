@@ -1,0 +1,140 @@
+{
+  "upcomingEvents": [
+    { "name": "Sports", "image": "/assets/sports.jpeg", "category": "Sports" },
+    { "name": "Food Festival", "image": "/assets/food-festival.jpeg", "category": "Food" },
+    { "name": "Concert", "image": "/assets/concert.jpeg", "category": "Music" },
+    { "name": "Exhibition", "image": "/assets/exhibition.jpeg", "category": "Arts" }
+  ],
+  "nearbyEvents": [
+    {
+      "id": "EVT00000001",
+      "name": "Friday Night Live",
+      "description": "Enjoy live music!",
+      "image": "/assets/music.jpg",
+      "age": "18+",
+      "startTime": "2024-12-06T21:00:00",
+      "endTime": "2024-12-06T22:00:00",
+      "address": "Social Koramangala, Bangalore",
+      "fee": "Free Entry",
+      "hastag": ["Concert", "Dancing", "Cocktails", "Networking", "Food"],
+      "profiles": ["WND00000001"]
+    },
+    {
+      "id": "EVT00000002",
+      "name": "Sunset Cocktail Party",
+      "description": "A glamorous cocktail evening with stunning views.",
+      "image": "/assets/party.avif",
+      "age": "21+",
+      "startTime": "2024-12-14T18:00:00",
+      "endTime": "2024-12-14T21:00:00",
+      "address": "Downtown Venue, Bangalore",
+      "fee": "₹500",
+      "hastag": ["Cocktails", "Networking", "Party"],
+      "profiles": ["WND00000005"]
+    },
+    {
+      "id": "EVT00000003",
+      "name": "Yoga and Meditation Retreat",
+      "description": "Rejuvenate with yoga, meditation, and mindfulness practices.",
+      "image": "/assets/yoga.jpg",
+      "age": "All Ages",
+      "startTime": "2024-12-15T07:00:00",
+      "endTime": "2024-12-15T09:00:00",
+      "address": "Zen Garden, Bangalore",
+      "fee": "₹500",
+      "hastag": ["Yoga", "Meditation", "Wellness", "Mindfulness"],
+      "profiles": ["WND00000002", "WND00000003"]
+    },
+    {
+      "id": "EVT00000004",
+      "name": "Tech Conference",
+      "description": "A summit on innovation, technology, and workshops.",
+      "image": "/assets/tech.jpg",
+      "age": "18+",
+      "startTime": "2024-12-16T09:00:00",
+      "endTime": "2024-12-16T17:00:00",
+      "address": "Convention Center, Bangalore",
+      "fee": "₹1000",
+      "hastag": ["Tech", "Innovation", "Networking", "Workshops"],
+      "profiles": ["WND00000004", "WND00000005"]
+    },
+    {
+      "id": "EVT00000005",
+      "name": "Art Exhibition",
+      "description": "Showcasing stunning visual art pieces.",
+      "image": "/assets/art.jpg",
+      "age": "All Ages",
+      "startTime": "2024-12-17T11:00:00",
+      "endTime": "2024-12-17T19:00:00",
+      "address": "Art Gallery, Bangalore",
+      "fee": "Free Entry",
+      "hastag": ["Art", "Culture", "Painting", "Sculpture"],
+      "profiles": ["WND00000001"]
+    },
+    {
+      "id": "EVT00000006",
+      "name": "Food Festival",
+      "description": "Explore culinary delights from around the world.",
+      "image": "/assets/food.avif",
+      "age": "All Ages",
+      "startTime": "2024-12-18T12:00:00",
+      "endTime": "2024-12-18T22:00:00",
+      "address": "City Square, Bangalore",
+      "fee": "₹200",
+      "hastag": ["Food", "Cuisine", "Taste", "Festival"],
+      "profiles": ["WND00000002", "WND00000003", "WND00000004"]
+    },
+    {
+      "id": "EVT00000007",
+      "name": "Comedy Night",
+      "description": "Laugh out loud with top comedians.",
+      "image": "/assets/comedy.webp",
+      "age": "18+",
+      "startTime": "2024-12-19T20:00:00",
+      "endTime": "2024-12-19T22:00:00",
+      "address": "Comedy Club, Bangalore",
+      "fee": "₹300",
+      "hastag": ["Comedy", "Humor", "Laughter", "Entertainment"],
+      "profiles": ["WND00000005"]
+    },
+    {
+      "id": "EVT00000008",
+      "name": "Book Launch",
+      "description": "Meet the author and discover their latest book.",
+      "image": "/assets/book.jpg",
+      "age": "All Ages",
+      "startTime": "2024-12-20T15:00:00",
+      "endTime": "2024-12-20T17:00:00",
+      "address": "Bookstore, Bangalore",
+      "fee": "Free Entry",
+      "hastag": ["Book", "Author", "Literature", "Reading"],
+      "profiles": ["WND00000001", "WND00000002"]
+    },
+    {
+      "id": "EVT00000009",
+      "name": "Outdoor Adventure",
+      "description": "Hiking and camping in a scenic location.",
+      "image": "/assets/adventure.jpg",
+      "age": "18+",
+      "startTime": "2024-12-21T09:00:00",
+      "endTime": "2024-12-21T17:00:00",
+      "address": "National Park, Bangalore",
+      "fee": "₹500",
+      "hastag": ["Adventure", "Hiking", "Camping", "Nature"],
+      "profiles": ["WND00000003", "WND00000004"]
+    },
+    {
+      "id": "EVT00000010",
+      "name": "Charity Concert",
+      "description": "Music for a cause. All proceeds go to charity.",
+      "image": "/assets/charity.png",
+      "age": "All Ages",
+      "startTime": "2024-12-22T19:00:00",
+      "endTime": "2024-12-22T22:00:00",
+      "address": "Music Hall, Bangalore",
+      "fee": "₹100",
+      "hastag": ["Charity", "Music", "Donation", "Good Cause"],
+      "profiles": ["WND00000001", "WND00000002", "WND00000003", "WND00000004", "WND00000005"]
+    }
+  ]
+ }

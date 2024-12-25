@@ -1,0 +1,20 @@
+<div *ngIf="event" class="event-detail-container">
+  <img [src]="event.image" alt="{{ event.name }}" class="event-image" />
+  <h2>{{ event.name }}</h2>
+  <p>{{ event.time }}, {{ event.place }}</p>
+  <!-- <p>
+    <strong>{{ event.fee }}</strong>
+  </p> -->
+  <h3>{{ event.fee }}</h3>
+  <p>{{ event.description }}</p>
+  <h3>Live Music</h3>
+  <div class="tags">
+    <span *ngFor="let interest of event.hastag" class="tag">
+      {{ interest }}
+    </span>
+  </div>
+  <div class="actions">
+    <button class="reject" (click)="isReject()">✖</button>
+    <button class="accept" (click)="isAccept()">❤</button>
+  </div>
+</div>

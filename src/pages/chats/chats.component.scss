@@ -1,0 +1,69 @@
+.chats-container {
+    padding: 20px;
+    padding-top: 0px;
+    font-family: Arial, sans-serif;
+   }
+   .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // margin-bottom: 20px;
+   }
+   .title {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #e63946;
+    .love-icon { /* New class for the heart image */
+        margin-right: 20px; /* Increased space between image and text */
+        width: 30px; /* Increased image width */
+        height: 30px; /* Increased image height */
+      }
+   }
+   .new-chat-btn {
+    background-color: #e63946;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+   }
+   .new-chat-btn:hover {
+    background-color: #e02a59;
+   }
+   .chat-list {
+    .chat-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #f0f0f0;
+      padding-bottom: 10px;
+      .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+      .chat-details {
+        .chat-name {
+          font-size: 18px;
+          font-weight: bold;
+          margin: 0;
+        }
+        .chat-message {
+          font-size: 14px;
+          color: #888;
+          margin: 5px 0 0;
+        }
+      }
+    }
+   }
+
+   .header-line{  /* Target both lines with the same style */
+  margin-bottom: 10px; /* Remove any default margin */
+  border: none; /* Remove default border styles */
+  height: 1px; /* Set height for the line */
+  background-color: #f0f0f0; /* Set color for the line */
+}
