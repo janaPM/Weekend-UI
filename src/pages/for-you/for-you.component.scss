@@ -265,6 +265,7 @@ $weekend-gold-yellow: #ffd700;
     white-space: nowrap;
     transition: transform 1s ease-in-out, margin 1 ease-in-out;
     .profile-card {
+      touch-action: pan-y;
       flex: 0 0 auto;
       position: relative;
       background: #eff2f4;

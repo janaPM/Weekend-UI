@@ -205,6 +205,7 @@ onTouchEnd(profile: any, event: any) {
   if (element) {
     element.style.transition = 'transform 0.5s ease-out'; // Smooth animation
     element.style.transform = `translateX(${swipeDistance}px)`; // Move off-screen
+    // element.style.position = 'absolute';
     // Wait for the animation to complete before invoking the callback
     setTimeout(() => {
       callback();
@@ -231,6 +232,16 @@ removeProfile(profile: any) {
  openProfileView(){
   this.showProfile = true;
  }
-
+ getCardBackground(translateX: number): string {
+  if (translateX > 0) {
+    // Swipe right (green)
+    return `linear-gradient(to right, #d4edda, #c3e6cb)`;
+  } else if (translateX < 0) {
+    // Swipe left (red)
+    return `linear-gradient(to left, #f8d7da, #f5c6cb)`;
+  }
+  // No swipe (transparent)
+  return 'transparent';
+ }
  constructor(private http: HttpClient) {}
 }

@@ -37,7 +37,8 @@
         [attr.data-id]="profile.id"
         [ngStyle]="{
           transform: activeIndex === i ? 'translateX(' + currentTranslateX + 'px)' : 'translateX(0)',
-          transition: activeIndex === null ? 'transform 0.3s ease-out' : 'none'
+          transition: activeIndex === null ? 'transform 0.3s ease-out' : 'none',
+          background: activeIndex === i ? getCardBackground(currentTranslateX) : 'white'
         }"
         (touchstart)="onTouchStart($event, i)"
         (touchmove)="onTouchMove($event)"
