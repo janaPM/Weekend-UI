@@ -1,4 +1,4 @@
-<div class="events-container" *ngIf = !this.showProfile>
+<div class="events-container" *ngIf=!this.showProfile>
   <!-- Header with heart icon -->
   <div class="events-header">
     <h1>For you</h1>
@@ -21,34 +21,27 @@
   <h3>Your Events</h3>
   <div *ngFor="let event of events">
     <div class="event-card">
-    <h3>{{ event.name }}</h3>
-    <p>{{ event.date }} | {{ event.time }}</p>
-    <button (click)="toggleInterestedProfiles(event)">
-      {{ event.showProfiles ? 'Hide' : 'View' }} Interested Profiles
-    </button>
+      <h3>{{ event.name }}</h3>
+      <p>{{ event.date }} | {{ event.time }}</p>
+      <button (click)="toggleInterestedProfiles(event)">
+        {{ event.showProfiles ? 'Hide' : 'View' }} Interested Profiles
+      </button>
     </div>
     <!-- Interested Profiles Section -->
     <div *ngIf="event.showProfiles" class="interested-profiles">
       <h4 *ngIf="event.profiles.length > 0">Profiles Interested</h4>
-      <div
-        (click)="openProfileView()"
-        class="profile-card"
-        *ngFor="let profile of event.profiles; let i = index"
-        [attr.data-id]="profile.id"
-        [ngStyle]="{
+      <div (click)="openProfileView()" class="profile-card" *ngFor="let profile of event.profiles; let i = index"
+        [attr.data-id]="profile.id" [ngStyle]="{
           transform: activeIndex === i ? 'translateX(' + currentTranslateX + 'px)' : 'translateX(0)',
           transition: activeIndex === null ? 'transform 0.3s ease-out' : 'none',
           background: activeIndex === i ? getCardBackground(currentTranslateX) : 'white'
-        }"
-        (touchstart)="onTouchStart($event, i)"
-        (touchmove)="onTouchMove($event)"
-        (touchend)="onTouchEnd(profile, event)"
-        >
+        }" (touchstart)="onTouchStart($event, i)" (touchmove)="onTouchMove($event)"
+        (touchend)="onTouchEnd(profile, event)">
         <img [src]="profile.image" alt="{{ profile.name }}" />
         <h3>{{ profile.name }}</h3>
         <p>{{ profile.commonInterests }} Common Interests</p>
         <button (click)="addFriend(profile)">Accept</button>
-        </div>
+      </div>
     </div>
   </div>
   <!-- Swipeable Profiles Section -->
@@ -65,11 +58,11 @@
     </div>
   </div>
   <!-- Profiles Interested in Event -->
-  <div class="profiles-interested" *ngIf= "profiles.length > 0">
+  <div class="profiles-interested" *ngIf="profiles.length > 0">
     <h3>Profiles Interested</h3>
     <div class="profile-grid">
       <div *ngFor="let profile of profiles" class="profile-card">
-        <img [src]="images.close" class="close-icon" (click)="removeProfile(profile)"/>
+        <img [src]="images.close" class="close-icon" (click)="removeProfile(profile)" />
         <img class="profile-img" [src]="profile.image" alt="{{ profile.name }}" />
         <p class="profile-name">{{ profile.name }}</p>
         <p class="common-interests">
