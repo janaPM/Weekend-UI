@@ -146,6 +146,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
   switchView(isDefault: boolean): void {
     this.isDefaultView = isDefault;
+    this.isHovering = false;
   }
   viewEvent(id: string): void {
     this.router.navigate(['/event-detail', id]);
@@ -165,6 +166,7 @@ export class EventsComponent implements OnInit, OnDestroy {
         event.hastag?.some((tag) => tag.toLowerCase().includes(query))
     );
     console.error('filteredNearbyEvents:', this.filteredNearbyEvents);
+    this.isHovering = false;
   }
   toggleCreateEvent(): void {
     this.isCreatingEvent = !this.isCreatingEvent;
