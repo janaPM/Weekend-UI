@@ -15,15 +15,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
-    LoginComponent,
-    ProfileComponent,
-    FooterComponent,
-    LayoutComponent,
-    EventsComponent,
-    ChatsComponent,
-    ChatConversationComponent,
-    EventDetailComponent,
-    CalendarComponent
+
   ],
   imports: [
     CommonModule

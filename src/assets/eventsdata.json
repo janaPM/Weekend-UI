@@ -1,9 +1,9 @@
 {
   "upcomingEvents": [
-    { "name": "Sports", "image": "/assets/sports.jpeg", "category": "Sports" },
-    { "name": "Food Festival", "image": "/assets/food-festival.jpeg", "category": "Food" },
-    { "name": "Concert", "image": "/assets/concert.jpeg", "category": "Music" },
-    { "name": "Exhibition", "image": "/assets/exhibition.jpeg", "category": "Arts" }
+    { "name": "New Year Party", "image": "/assets/newyear.webp", "category": "Party" },
+    { "name": "Christmas", "image": "/assets/secretsanta.png", "category": "Party" },
+    { "name": "Board Game", "image": "/assets/boardgame.png", "category": "Game" },
+    { "name": "Start-up", "image": "/assets/startup.png", "category": "Event" }
   ],
   "nearbyEvents": [
     {

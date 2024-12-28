@@ -69,7 +69,7 @@
         }
       }
     }
-   }
+  }
   .event-list {
     // h3 {
     //   font-size: 1.5rem;
@@ -278,3 +278,29 @@
   outline: none;
 }
 
+.carousel-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  // height: 200px; // Adjust height as needed
+ }
+ .carousel-wrapper {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+ }
+ .carousel-item {
+  flex: 0 0 100%; // Each item takes the full width
+  text-align: center;
+  img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  p {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0px;
+  }
+ }

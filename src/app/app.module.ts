@@ -32,7 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ScheduleModule,
     RecurrenceEditorModule,
     HammerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService, DragAndDropService, ResizeService,
     provideClientHydration(), provideHttpClient(withFetch()),

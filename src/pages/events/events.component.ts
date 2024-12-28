@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NgModel } from '@angular/forms';
@@ -8,7 +8,7 @@ import { images } from '../../app/constants/image-constants';
  templateUrl: './events.component.html',
  styleUrls: ['./events.component.scss']
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent implements OnInit, OnDestroy {
   isDefaultView: boolean = true;
   isCreatingEvent: boolean = false; // Track if creating an event
   public images = images;
@@ -57,8 +57,75 @@ export class EventsComponent implements OnInit {
     age: string;
     image: string;
   }> = [];
+  currentIndex: number = 0;
+  isDragging = false;
+  startX = 0;
+  currentTranslate = 0;
+  prevTranslate = 0;
+  autoScrollInterval: any;
+  isHovering = false;
+  ngOnDestroy(): void {
+    this.stopAutoScroll();
+  }
+  startAutoScroll(): void {
+    this.autoScrollInterval = setInterval(() => {
+      if (!this.isHovering) {
+        this.moveToNext();
+      }
+    }, 3000); // Scroll every 3 seconds
+  }
+  stopAutoScroll(): void {
+    clearInterval(this.autoScrollInterval);
+  }
+  @HostListener('mouseenter', ['$event'])
+  onMouseEnter(): void {
+    this.isHovering = true;
+  }
+  @HostListener('mouseleave', ['$event'])
+  onMouseLeave(): void {
+    this.isHovering = false;
+  }
+  onTouchStart(event: TouchEvent): void {
+    this.isDragging = true;
+    this.startX = event.touches[0].clientX;
+    this.prevTranslate = this.currentTranslate;
+  }
+  onTouchMove(event: TouchEvent): void {
+    if (!this.isDragging) return;
+    const currentX = event.touches[0].clientX;
+    this.currentTranslate = this.prevTranslate + currentX - this.startX;
+  }
+  onTouchEnd(): void {
+    this.isDragging = false;
+    const threshold = 50; // Minimum swipe distance to change slide
+    const movedBy = this.currentTranslate - this.prevTranslate;
+    if (movedBy < -threshold) {
+      this.moveToNext();
+    } else if (movedBy > threshold) {
+      this.moveToPrevious();
+    } else {
+      this.currentTranslate = this.prevTranslate; // Snap back if not enough swipe
+    }
+    // this.startAutoScroll();
+  }
+  moveToNext(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.events.upcomingEvents.length;
+    this.updatePosition();
+  }
+  moveToPrevious(): void {
+    this.currentIndex =
+      (this.currentIndex - 1 + this.events.upcomingEvents.length) % this.events.upcomingEvents.length;
+    this.updatePosition();
+  }
+  updatePosition(): void {
+    this.currentTranslate = -this.currentIndex * 100;
+  }
+  getTransform(): string {
+    return `translateX(${this.currentTranslate}%)`;
+  }
   constructor(private http: HttpClient, private router: Router) {}
   ngOnInit(): void {
+    this.startAutoScroll();
     this.http.get<any>('/assets/eventsdata.json').subscribe({
       next: (data) => {
         this.events = data;

@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { images } from '../../app/constants/image-constants';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -69,43 +68,6 @@ onSubmit() {
   }
 }
 
-// onSignIn() {
-//   console.log(this.isLogin);
-//   if (!this.isValidEmail(this.signinObj.email)) {
-//       console.log('Invalid email format:', this.signinObj.email);
-//       this.invalidEmail = true;
-//       return;
-//   }
-//   this.invalidEmail = false;
-//   console.log('Login submitted:', this.signinObj.email, this.signinObj.password);
-//   this.login_cred_server(this.signinObj.email, this.signinObj.password);
-//   console.log('sent to server');
-
-//   this.http.post('http://localhost:3000/api/login-account-validation', { "email_address":this.signinObj.email, "password":this.signinObj.password })
-//     .subscribe(
-//       (response: any) => {
-//         const responses = response.message; // Store the userId
-//         console.log("responses--->"+ JSON.stringify(responses));
-//         if (response.message === 'User not found'){
-//           this.userNotExists = true;
-//           console.log("userNotExists--->"+ JSON.stringify(this.userNotExists));
-//         }
-//         else if (response.message === 'Incorrect password'){
-//           this.userNotExists = false;
-//           this.passwordInvalid = true;
-//           console.log("passwordInvalid--->"+ JSON.stringify(this.passwordInvalid));
-//         }
-//         else {
-//           // Successful Login
-//           localStorage.setItem('My_ID', responses); // Assuming "responses" contains the userId
-//           // this.router.navigate(['/profile']);
-//         }
-//       },
-//       (error) => {
-//         console.error('Error saving user data:', error);
-//       }
-//     );
-// }
 
 onSignIn() {
   console.log(this.isLogin);
@@ -149,34 +111,6 @@ onSignIn() {
       }
     );
  }
-
-// login_cred_server(email_address: string, password: string): void {
-//   console.log(JSON.stringify(email_address));
-//   this.http.post('http://localhost:3000/api/login-account-validation', { "email_address":email_address, "password":password })
-//     .subscribe(
-//       (response: any) => {
-//         const responses = response.message; // Store the userId
-//         console.log("responses--->"+ JSON.stringify(responses));
-//         if (response.message === 'User not found'){
-//           this.userNotExists = true;
-//           console.log("userNotExists--->"+ JSON.stringify(this.userNotExists));
-//         }
-//         else if (response.message === 'Incorrect password'){
-//           this.userNotExists = false;
-//           this.passwordInvalid = true;
-//           console.log("passwordInvalid--->"+ JSON.stringify(this.passwordInvalid));
-//         }
-
-//       },
-//       (error) => {
-//         console.error('Error saving user data:', error);
-//       }
-//     );
-// }
-
-
-
-
 
 onSignUp() {
   if (!this.isValidEmail(this.signupObj.email)) {
