@@ -10,6 +10,28 @@ import { images } from '../../app/constants/image-constants';
 export class ForYouComponent implements OnInit {
 
   // profile view
+  isCreatingEvent: boolean = false; // Track if creating an event
+  public isOpen = false;
+  newEvent = {
+    name: '',
+    location: '',
+    date: '',
+    time: '',
+    organizerName: '',
+    gender: 'Any',
+    age: '',
+    image: ''
+  }; // Holds the new event data
+  forYouEvents: Array<{
+    name: string;
+    location: string;
+    date: string;
+    time: string;
+    organizerName: string;
+    gender: string;
+    age: string;
+    image: string;
+  }> = [];
   bioItems = [
     {key: "bio", title: "Bio", icon: './../../assets/bio.png'},
   ];
@@ -244,4 +266,47 @@ removeProfile(profile: any) {
   return 'transparent';
  }
  constructor(private http: HttpClient) {}
+
+ toggleCreateEvent(): void {
+  this.isCreatingEvent = !this.isCreatingEvent;
+  this.isOpen = !this.isOpen;
+  if (!this.isCreatingEvent) {
+    this.resetNewEvent();
+  }
+}
+saveEvent(): void {
+  if (this.isEventValid()) {
+    this.forYouEvents.push({ ...this.newEvent }); // Add to event list
+    this.isCreatingEvent = false;
+    this.resetNewEvent();
+  } else {
+    alert('Please fill out all fields!');
+  }
+}
+cancelEvent(): void {
+  this.isCreatingEvent = false;
+  this.resetNewEvent();
+}
+resetNewEvent(): void {
+  this.newEvent = {
+    name: '',
+    location: '',
+    date: '',
+    time: '',
+    organizerName: '',
+    gender: 'Any',
+    age: '',
+    image: ''
+  };
+}
+isEventValid(): boolean {
+  return (
+    this.newEvent.name !== '' &&
+    this.newEvent.location !== ''&&
+    this.newEvent.date !== '' &&
+    this.newEvent.time !== '' &&
+    this.newEvent.organizerName !== '' &&
+    this.newEvent.image !== ''
+  );
+}
 }

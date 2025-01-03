@@ -11,7 +11,7 @@ $weekend-gold: #F7C028;
 $weekend-gold-yellow: #ffd700;
 // Container styling
 .events-container {
- padding: 16px;
+ padding: 1vh;
  background-color: $background-color;
  font-family: 'Arial', sans-serif;
  border-radius: $border-radius;
@@ -488,3 +488,97 @@ $weekend-gold-yellow: #ffd700;
 }
 
 /* Other styles for edit-page and interest-modal are not required as per the request */
+
+.create-event-container {
+  text-align: center;
+  margin-bottom: 1rem;
+ }
+ .create-event-button {
+  display: flex;
+  background-color: #ff0080;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+ }
+ .create-event-button i {
+  margin-right: 5px;
+ }
+ .create-event-form {
+  border: 1px solid #ddd;
+  padding: 15px;
+  // margin: 15px auto;
+  // margin-bottom: 50px;
+  // max-width: 400px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+ }
+ .create-event-form h3 {
+  text-align: center;
+ }
+ .create-event-form div {
+  margin-bottom: 10px;
+ }
+ .create-event-form label {
+  font-weight: bold;
+ }
+ .create-event-form input,
+ .create-event-form select {
+  // width: 100%;
+  width: -webkit-fill-available;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+ }
+ .form-buttons {
+  text-align: center;
+ }
+ .form-buttons button {
+  margin: 5px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+ }
+ .form-buttons button:first-child {
+  background-color: #28a745;
+  color: white;
+ }
+ .form-buttons button:last-child {
+  background-color: #dc3545;
+  color: white;
+ }
+
+ .floating-button {
+ position: fixed;
+ bottom: 100px;
+ right: 20px;
+ width: 60px;
+ height: 60px;
+ // background-color: #F7C028;
+ background-color: #ffd700;
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+ cursor: pointer;
+ transition: transform 0.3s ease-in-out;
+}
+.floating-button span {
+ font-size: 30px;
+ font-weight: bold;
+ color: #000;
+ transition: transform 0.3s ease-in-out;
+}
+.floating-button span.rotate {
+ transform: rotate(45deg);
+}
+.floating-button:focus{
+  outline: none;
+}
