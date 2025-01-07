@@ -103,7 +103,7 @@ onSignIn() {
           // Save `userId` to localStorage
           localStorage.setItem('My_ID', userId);
           // Navigate to the profile page
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/new']);
         }
       },
       (error) => {

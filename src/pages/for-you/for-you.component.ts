@@ -155,6 +155,7 @@ export class ForYouComponent implements OnInit {
  }
  addFriend(profile: any) {
    alert(`Friend request sent to ${profile.name}`);
+   this.showProfile = false;
    this.profiles = this.profiles.filter((p) => p !== profile);
  }
 //  rejectProfile(profile: any) {

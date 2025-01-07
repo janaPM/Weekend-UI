@@ -41,7 +41,7 @@
         <img [src]="profile.image" alt="{{ profile.name }}" />
         <h3>{{ profile.name }}</h3>
         <p>{{ profile.commonInterests }} Common Interests</p>
-        <button (click)="addFriend(profile)">Accept</button>
+        <button (click)="addFriend(profile) ; $event.stopPropagation()">Accept</button>
       </div>
     </div>
   </div>

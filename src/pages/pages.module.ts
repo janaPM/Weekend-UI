@@ -10,12 +10,12 @@ import { ChatsComponent } from './chats/chats.component';
 import { ChatConversationComponent } from './chat-conversation/chat-conversation.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { NewProfileInfoComponent } from './new-profile-info/new-profile-info.component';
 
 
 
 @NgModule({
   declarations: [
-
   ],
   imports: [
     CommonModule

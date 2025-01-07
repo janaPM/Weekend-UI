@@ -325,6 +325,7 @@
       transition: opacity 0.2s ease;
  &.active {
         opacity: 1;
+        color: #000000;
       }
  &:hover {
         // background-color: #0056b3;
@@ -332,6 +333,7 @@
       }
  &:active {
         // background-color: #003f88;
+        color: #000000;
         background-color: #ea9800;
       }
     }
@@ -413,3 +415,63 @@
     }
   }
  
+/* Scroller Styles */
+.scroll-container {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+ .scrollable {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  width: 100%;
+  max-height: 120px;
+  scroll-snap-type: y mandatory;
+ }
+ .scrollable div {
+  text-align: center;
+  font-size: 20px;
+  padding: 10px 0;
+  scroll-snap-align: center;
+  color: #aaa;
+  transition: color 0.3s, font-size 0.3s;
+ }
+
+ /* Gender Option */
+ .gender-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+ }
+ .dot-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 20px;
+  // border: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+ }
+ .dot-option.selected {
+  background-color: #ffd700;
+  color: #fff;
+ }
+ /* Update Button */
+ .update-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  // background-color: #ddd;
+  cursor: not-allowed;
+  transition: background-color 0.3s;
+ }
+ .update-button.active {
+  background-color: #ffd700;
+  // color: #fff;
+  cursor: pointer;
+ }
