@@ -19,9 +19,10 @@ import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, WorkWe
 // import * as Hammer from 'hammerjs';
 import { HammerGestureConfig } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NewProfileInfoComponent } from '../pages/new-profile-info/new-profile-info.component';
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent, ProfileComponent, ForYouComponent, FooterComponent, LayoutComponent, EventsComponent, ChatsComponent, ChatConversationComponent, EventDetailComponent, CalendarComponent
+    AppComponent, LoginComponent, ProfileComponent, ForYouComponent, FooterComponent, LayoutComponent, EventsComponent, ChatsComponent, ChatConversationComponent, EventDetailComponent, CalendarComponent, NewProfileInfoComponent
   ],
   imports: [
     BrowserModule,

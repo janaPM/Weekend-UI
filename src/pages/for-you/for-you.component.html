@@ -109,7 +109,7 @@
     <h3>Profiles Interested</h3>
     <div class="profile-grid">
       <div *ngFor="let profile of profiles" class="profile-card">
-        <img [src]="images.close" class="close-icon" (click)="removeProfile(profile)" />
+        <img [src]="images.cross" class="close-icon" (click)="removeProfile(profile)" />
         <img class="profile-img" [src]="profile.image" alt="{{ profile.name }}" />
         <p class="profile-name">{{ profile.name }}</p>
         <p class="common-interests">

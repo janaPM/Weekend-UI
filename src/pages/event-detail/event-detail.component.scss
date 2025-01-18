@@ -1,4 +1,5 @@
 .event-detail-container {
+  overflow: hidden;
     padding: 1rem;
     font-family: Arial, sans-serif;
     .event-image {
@@ -52,6 +53,10 @@
           background-color: #ff4d4d;
           color: white;
         }
+        &.buddy-up {
+          background-color: #ffd700;
+          color: white;
+        }
    &.accept {
           background-color: #4caf50;
           color: white;
@@ -59,3 +64,323 @@
       }
     }
    }
+.swipe-container {
+  position: absolute;
+  /* Use absolute or relative positioning depending on your layout */
+  // top: 50%; /* Adjust this value to move the container higher or lower */
+  left: 50%;
+  transform: translate(-50%, -2%);
+  /* Center horizontally */
+  width: 100%;
+  max-width: 500px; /* Adjust width to fit cards nicely */
+  height: 100vh;
+  /* Set a fixed height for the swipe area */
+  overflow: hidden;
+  // overflow-y: auto; /* Enable vertical scrolling */
+  // overflow-x: hidden; /* Prevent horizontal scrolling */
+  /* Hide cards moving out of bounds */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  pointer-events: auto;
+  /* Allow interactions */
+
+  .profile-card {
+    position: absolute;
+    top: 1%;
+    max-width: 500px;
+    width: 90vw;
+    // height: auto;
+    height: 83vh;
+    // background: transparent;
+    // background-color: rgb(255, 225, 56);
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:start;
+    // text-align: center;
+    padding: 1rem;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+
+    .profile-details {
+      overflow-y: auto; /* Enable vertical scrolling */
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+      // max-height: 90vh; /* Set a max height for scrolling */
+      width: 100%; /* Ensure it takes full width */
+
+
+.profile-picture {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  object-fit: cover;
+  cursor: pointer;
+ &.editable {
+    position: relative;
+ &:hover {
+      border: 2px solid #ffd700;
+    }
+  }
+ }
+ .upload-button,
+ .capture-button {
+  background-color: #ffd700;
+  color: #000;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 8px;
+ &:hover {
+    background-color: #ea9800;
+  }
+ }
+
+ 
+ .profile-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // align-items: center;
+  // padding-bottom: 16px;
+  
+  img {
+    width: 89vw;
+    height: 320px;
+    margin-top: 5vh;
+  }
+  .profile-picture {
+    // width: -webkit-fill-available;
+    // margin-top: 40vh;
+    margin-top: 0.7vh;
+    height: 320px;
+    border-radius: 20px; /* Square image */
+    // margin-right: 16px;
+  }
+  .profile-info {
+    display: flex;
+    align-items: center;
+    h2{
+      margin-left: 0px;
+      margin-bottom: 0px;
+      padding-left: 0px;
+      align-items: center;
+
+    }
+    .profile-details {
+      .name-field {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 5px;
+      }
+
+      .edit-name-button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-size: 18px;
+        color: #007bff;
+      }
+    }
+  }
+
+  .settings-icon {
+    font-size: 24px;
+    color: #666;
+  }
+  .profile-container {
+    margin-top: 20px;
+    // margin-bottom: 50px;
+    .interest-header {
+      display: flex;
+      align-items: center;
+    }
+
+    .interests-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .interest-bubble {
+      background-color: #eee;
+      position: relative;
+      padding: 8px 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+      transition: background-color 0.3s ease, color 0.3s ease;
+
+      &.selected {
+        background-color: #ffd700;
+        color: #000;
+        font-weight: bold;
+      }
+    }
+
+    .edit-interest-button {
+      display: none; /* Hide edit interest button by default */
+    }
+
+    .h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+  }
+
+  .actions {
+    text-align: center;
+    margin-top: 20px;
+  }
+}
+  }
+  }
+  /* Active card (first card) */
+  .profile-card:first-child {
+    z-index: 5;
+    opacity: 1;
+    background-color: white;
+    // background-color: rgb(255, 225, 56);
+    transform: scale(1) translateY(0);
+    pointer-events: all;
+  }
+
+  /* Next card (second card) */
+  .profile-card:nth-child(2) {
+    z-index: 0;
+    opacity: 1;
+    /* Slightly transparent */
+    // background-color: rgb(255, 225, 56);
+    transform: scale(0.1) translateY(0px);
+    /* Slightly smaller and lower */
+  }
+
+  /* Other cards */
+  .profile-card:nth-child(n+3) {
+    z-index: 0;
+    opacity: 1;
+    // background-color: rgb(255, 225, 56);
+    transform: scale(0.1) translateY(0px);
+    /* Smaller and even lower */
+  }
+
+  /* Ensure scaling never exceeds the first card */
+  .profile-card:active,
+  .profile-card:focus {
+    // background-color: rgb(255, 225, 56);
+    transform: scale(1);
+    /* Prevent scaling larger than the active card */
+  }
+}
+.profile-container {
+  margin-top: 20px;
+  // margin-bottom: 50px;
+  .interest-header {
+    display: flex;
+    align-items: center;
+  }
+
+  .interests-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .interest-bubble {
+    background-color: #eee;
+    position: relative;
+    padding: 8px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &.selected {
+      background-color: #ffd700;
+      color: #000;
+      font-weight: bold;
+    }
+  }
+
+  .edit-interest-button {
+    display: none; /* Hide edit interest button by default */
+  }
+
+  .h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .about-item {
+    display: flex;
+    align-items: center;
+    width: 90vw;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+
+    .item-icon {
+      font-size: 20px;
+      margin-right: 10px;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .item-info {
+      flex-grow: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .item-title {
+        font-size: 14px;
+        color: #333;
+      }
+
+      .item-title1 {
+        display: flex;
+        margin-left: auto; /* Align to center */
+        font-size: 14px;
+        color: #333;
+      }
+    }
+  }
+}
+.weekend {
+  display: flex;
+  justify-content: space-between; /* Distribute space between text and icon */
+  align-items: center; /* Center items vertically */
+  font-size: xx-large;
+  margin-left: 1vh;
+  margin-top: 1vh;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-bottom: .8vh;
+  font-family: fantasy;
+  font-weight: bold; /* Add this line for bolder text */
+  width: 95%; /* Ensure it takes the full width of the container */
+}
+
+.weekend-text {
+  /* Optional: Add styles for the text if needed */
+  font-weight: bold; /* Add this line for bolder text in h3 */
+}
+.filter-icon {
+  width: 30px; /* Adjust size as needed */
+  height: 30px; 
+}
+

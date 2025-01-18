@@ -185,6 +185,7 @@ router.post("/update-user", (req, res) => {
     exercise,
     educationLevel,
     interest,
+    profilePicture,
   } = req.body; // Data sent via the request body
   const interest_stringified = JSON.stringify(interest);
 
@@ -200,7 +201,7 @@ router.post("/update-user", (req, res) => {
 
     // Update user data if ID exists:
     if (result.length > 0) {
-      const updateQuery = "UPDATE chessy_database.accounts SET name = ?, bio = ?, work = ?, education = ?, gender = ?, location = ?, hometown = ?, height = ?, exercise = ?, educationLevel = ?, interest = ? WHERE id = ?";
+      const updateQuery = "UPDATE chessy_database.accounts SET name = ?, bio = ?, work = ?, education = ?, gender = ?, location = ?, hometown = ?, height = ?, exercise = ?, educationLevel = ?, interest = ?, profilePicture = ? WHERE id = ?";
 
       connection.query(
         updateQuery,
@@ -216,6 +217,7 @@ router.post("/update-user", (req, res) => {
           exercise,
           educationLevel,
           interest_stringified,
+          profilePicture,
           id,
         ],
         (err, updateResult) => {

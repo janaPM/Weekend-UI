@@ -16,3 +16,10 @@ export const how_does_it_work: string = "How Does It Work?";
 export const why_use_our_tool: string = "Why Use Our Tool?";
 export const ready_to_get_started: string = "Ready to Get Started?";
 export const weekDays: string[] = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), importProvidersFrom(TranslateModule.forRoot())],
+};

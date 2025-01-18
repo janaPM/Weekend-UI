@@ -1,4 +1,4 @@
-<div *ngIf="event" class="event-detail-container">
+<div *ngIf="event && !showSwipableProfiles" class="event-detail-container">
   <img [src]="event.image" alt="{{ event.name }}" class="event-image" />
   <h2>{{ event.name }}</h2>
   <p>{{ event.time }}, {{ event.place }}</p>
@@ -15,6 +15,82 @@
   </div>
   <div class="actions">
     <button class="reject" (click)="isReject()">✖</button>
+    <button class="buddy-up" (click)="showBuddyOptions()">𖠋𖠋</button>
     <button class="accept" (click)="isAccept()">❤</button>
+  </div>
+</div>
+<!-- Swipable Profiles -->
+<h3 *ngIf="showSwipableProfiles" class="weekend">
+  <span class="weekend-text">Weekend</span>
+  <img [src]="images.filter" width="15" height="15" alt="Filter" class="filter-icon"/>
+</h3>
+<div *ngIf="showSwipableProfiles" class="swipe-container">
+  <div class="profile-card" *ngFor="let profile of swipeableProfiles; let i = index" [attr.data-id]="profile.id"
+    [ngStyle]="{
+           transform:
+             activeIndex === i
+               ? 'translate(' + currentTranslateX + 'px, ' + currentTranslateY + 'px) rotate(' + currentRotation + 'deg)'
+               : 'translate(0, 0) rotate(0)',
+           transition: isDragging ? 'none' : 'transform 0.3s ease-out'
+         }" (touchstart)="onTouchStart($event, i)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd(profile)">
+    <div class="profile-details">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <img [src]="images.profile1" alt="{{ profile.name }}" class="profile-picture" />
+      <div class="profile-info">
+        <h2 class="profile-name">{{ profile.name }}</h2>
+      </div>
+    </div>
+
+    <div class="profile-container">
+      <h3>Bio</h3>
+      <div class="about-item" *ngFor="let item of bioItems">
+        <div class="item-icon">
+          <img [src]="item.icon" width="20" height="20" />
+        </div>
+        <div class="item-info">
+          <span class="item-title">{{ [item.title] }}</span>
+          <span class="item-title1">{{ profile[item.key] }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="profile-container">
+      <div class="interest-header">
+        <h3>Interests</h3>
+      </div>
+      <div class="interests-container">
+        <div class="interest-bubble" *ngFor="let interest of profile.interest">
+          {{ interest }}
+        </div>
+      </div>
+    </div>
+    <!-- About You Section -->
+    <div class="profile-container">
+      <h3>About You</h3>
+      <div class="about-item" *ngFor="let item of aboutItems">
+        <div class="item-icon">
+          <img [src]="item.icon" width="20" height="20" />
+        </div>
+        <div class="item-info">
+          <span class="item-title">{{ [item.title] }}</span>
+          <span class="item-title1">{{ profile[item.key] }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- More About You Section -->
+    <div class="profile-container">
+      <h3>More About You</h3>
+      <p>Cover the things most people are curious about.</p>
+      <div class="about-item" *ngFor="let item of moreItems">
+        <div class="item-info">
+          <div class="item-icon">
+            <img [src]="item.icon" width="20" height="20" />
+          </div>
+          <span class="item-title">{{ item.title }}</span>
+          <span class="item-title1">{{ profile[item.key] }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 </div>

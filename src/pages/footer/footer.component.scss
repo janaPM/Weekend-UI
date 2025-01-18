@@ -20,9 +20,21 @@
     text-decoration: none;
     padding: 5px 0;
 }
+// .footer-item.active .footer-icon {
+//     filter: invert(40%) sepia(100%) saturate(500%) hue-rotate(200deg) brightness(90%) contrast(85%);
+//  }
+ .footer-item.active .footer-icon {
+    /* Remove the filter and set the color directly */
+    filter: none; /* Remove any existing filter */
+    /* If the icons are SVGs, you can set the fill color directly */
+    /* If they are images, ensure you have a yellow version or use a different method */
+    // background-color: #ffd700; /* Set background color to yellow */
+    /* If you want to change the icon color, you may need to use an SVG or a different method */
+}
 .footer-item.active .footer-icon {
-    filter: invert(40%) sepia(100%) saturate(500%) hue-rotate(200deg) brightness(90%) contrast(85%);
- }
+    fill: #ffd700; /* Change fill color to yellow for SVG icons */
+    filter: brightness(0) saturate(100%) invert(40%) sepia(100%) saturate(500%) hue-rotate(200deg) brightness(90%) contrast(85%);
+}
 
 .footer-icon {
     width: 20px;
@@ -32,7 +44,7 @@
 }
 
 .footer-item:hover {
-    color: #007bff;
+     color: #007bff;
     // color: #ffd700;
 }
 

@@ -70,7 +70,18 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
     this.http.get<any>(`http://localhost:3000/api/get-user-detail?userId=${UserId}`).subscribe((data) => {
       this.user.id = UserId;
       this.user = { ...data };
+      
+      if (Array.isArray(this.user.profilePicture)) {
+        this.user.profilePicture = `data:image/jpeg;base64,${this.byteArrayToBase64(this.user.profilePicture.data)}`;
+      } else if (typeof this.user.profilePicture === 'string') {
+        // If it's already a base64 string, just prepend the data URL
+        this.user.profilePicture = `data:image/jpeg;base64,${this.user.profilePicture.data}`;
+      } else {
+        console.error('Unexpected format for profilePicture:', this.user.profilePicture.data);
+      }
+      console.log('Data from db--->'+JSON.stringify(this.user.profilePicture));
       this.originalUser = { ...data };
+      // console.log('Data from db--->'+JSON.stringify(this.user));
       this.selectedInterests = this.user.interest ? [...this.user.interest] : [];
       this.initializeMissingFields();
       this.calculateProgress();
@@ -86,9 +97,16 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
    this.user.work = this.user.work || '';
    this.user.gender = this.user.gender || '';
   }
+  byteArrayToBase64(byteArray: number[]): string {
+    const binaryString = byteArray.map(byte => String.fromCharCode(byte)).join('');
+    return window.btoa(binaryString);
+  }
   startEditing(field: string): void {
     this.inputActive = false;
     this.currentField = field;
+    // if (field === 'profilePhoto') {
+    //   this.openPhotoOptions();
+    // }
     if (field === 'work') {
       const [title, company] = (this.user.work || '').split(' at ');
       this.currentTitle = title || '';
@@ -105,6 +123,73 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
     }
     this.editing = true;
    }
+   openPhotoOptions() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'camera'; // This will open the camera on mobile devices
+
+    input.onchange = (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        this.uploadPhoto(file);
+      }
+    };
+
+    input.click();
+  }
+  // Method to upload the selected photo
+  uploadPhoto(file: File) {
+    const reader = new FileReader();
+  
+    // This event is triggered when the file is read successfully
+    reader.onload = (e: any) => {
+      const img = new Image();
+      img.src = e.target.result;
+  
+      img.onload = () => {
+        // Create a canvas element
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+  
+        // Set the desired width and height for the resized image
+        const MAX_WIDTH = 800; // Set your desired max width
+        const MAX_HEIGHT = 800; // Set your desired max height
+        let width = img.width;
+        let height = img.height;
+  
+        // Calculate the new dimensions while maintaining the aspect ratio
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+  
+        // Resize the canvas to the new dimensions
+        canvas.width = width;
+        canvas.height = height;
+  
+        // Draw the image on the canvas
+        ctx?.drawImage(img, 0, 0, width, height);
+  
+        // Convert the canvas to a base64 string
+        const resizedImage = canvas.toDataURL('image/jpeg', 0.7); // Adjust quality (0.7) as needed
+        this.user.profilePicture = resizedImage; 
+        // this.user.profilePicture = 'dfghj';
+        console.log('Profile picture updated:', this.user.profilePicture);
+      };
+    };
+  
+    // Read the file as a base64 string
+    reader.readAsDataURL(file);
+  }
+
   startEditingg(){
     this.editingMode = true;
   }

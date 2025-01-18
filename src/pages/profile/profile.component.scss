@@ -18,7 +18,7 @@
       padding: 10px 20px;
       border: none;
       border-radius: 5px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
 &:hover {
@@ -221,7 +221,7 @@
           margin-left: 10px;
         }
         input {
-          font-size: 14px;
+          font-size: 16px;
           padding: 5px;
           border: 1px solid #ccc;
           border-radius: 5px;
@@ -254,6 +254,10 @@
  .edit-page {
   text-align: center;
   padding: 32px;
+  .blackcolor {
+    color: black;
+    fill: black;
+  }
   .back-button {
     position: absolute;
     top: 10px;
@@ -282,7 +286,7 @@
       padding: 15px;
       padding-left: 15px;
       padding-right: 0px;
-      font-size: 14px;
+      font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 25px;
       outline: none;
@@ -319,7 +323,7 @@
       padding: 15px 20px;
       border: none;
       border-radius: 25px;
-      font-size: 14px;
+      font-size: 16px;
       cursor: pointer;
       opacity: 0.5;
       transition: opacity 0.2s ease;
@@ -362,7 +366,7 @@
     padding: 15px;
     padding-left: 15px;
     padding-right: 0px;
-    font-size: 14px;
+    font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 25px;
     outline: none;
@@ -383,7 +387,7 @@
     padding: 15px 20px;
     border: none;
     border-radius: 25px;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     opacity: 0.5;
     transition: opacity 0.2s ease;
@@ -408,7 +412,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     margin-top: 20px;
  &:hover {
       background-color: #ea9800;
