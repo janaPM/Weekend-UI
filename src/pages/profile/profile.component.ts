@@ -67,7 +67,7 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
     console.log("Profile");
     const UserId = localStorage.getItem('My_ID'); 
     console.log("UserId--->"+UserId);
-    this.http.get<any>(`http://localhost:3000/api/get-user-detail?userId=${UserId}`).subscribe((data) => {
+    this.http.get<any>(`http://localhost:3000/userDetail?userId=${UserId}`).subscribe((data) => {
       this.user.id = UserId;
       this.user = { ...data };
       
@@ -243,7 +243,7 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
     alert('Profile saved successfully!');
     console.log(JSON.stringify(this.user));
     // this.http.put('http://your-backend-api/update-user', this.user)
-    this.http.post('http://localhost:3000/api/update-user', this.user)
+    this.http.post('http://localhost:3000/updateUser', this.user)
       .subscribe(
         (response) => {
           console.log('User data saved successfully:', response);

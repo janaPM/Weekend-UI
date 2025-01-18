@@ -171,7 +171,7 @@ async function validateUser(userData) {
 
 
 
-router.post("/update-user", (req, res) => {
+router.post("/updateUser", (req, res) => {
   const {
     id,
     name,
@@ -234,7 +234,7 @@ router.post("/update-user", (req, res) => {
 });
 
 
-router.get('/get-user-detail', (req, res) => {
+router.get('/userDetail', (req, res) => {
     const userId = req.query.userId;
   
 
