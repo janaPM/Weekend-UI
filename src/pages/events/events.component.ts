@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NgModel } from '@angular/forms';
 import { images } from '../../app/constants/image-constants';
+import { environment } from '../../../environment';
 @Component({
  selector: 'app-events',
  templateUrl: './events.component.html',
  styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit, OnDestroy {
+  private apiUrl = environment.URL;
   isDefaultView: boolean = true;
   isCreatingEvent: boolean = false; // Track if creating an event
   public images = images;
@@ -126,10 +128,11 @@ export class EventsComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private router: Router) {}
   ngOnInit(): void {
     this.startAutoScroll();
-    this.http.get<any>('/assets/eventsdata.json').subscribe({
+    this.http.get<any>(`${this.apiUrl}getAllEvents?`).subscribe({
       next: (data) => {
         this.events = data;
-        this.filteredNearbyEvents = data.nearbyEvents; // Initialize filtered events
+        this.filteredNearbyEvents = data; // Initialize filtered events
+        console.log(JSON.stringify(this.filteredNearbyEvents));
       },
       error: (error) => {
         console.error('Error fetching events data:', error);

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { images } from '../../app/constants/image-constants';
-
+import { environment } from '../../../environment';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit {
+  private apiUrl = environment.URL;
   public images = images;
   user: any = {};
   UserId: any;
@@ -66,8 +67,9 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
     try {
     console.log("Profile");
     const UserId = localStorage.getItem('My_ID'); 
+    // const UserId = '1';
     console.log("UserId--->"+UserId);
-    this.http.get<any>(`http://localhost:3000/userDetail?userId=${UserId}`).subscribe((data) => {
+    this.http.get<any>(`${this.apiUrl}userDetail?userId=${UserId}`).subscribe((data) => {
       this.user.id = UserId;
       this.user = { ...data };
       
@@ -239,11 +241,14 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
     this.editingMode = false;
     this.originalUser = { ...this.user }; // Simulate saving all data
     this.user.id = localStorage.getItem('My_ID');
+    // this.user.id = '1';
     this.calculateProgress();
     alert('Profile saved successfully!');
     console.log(JSON.stringify(this.user));
+    console.log(JSON.stringify(this.http.post(`${this.apiUrl}updateUser`, this.user)));
     // this.http.put('http://your-backend-api/update-user', this.user)
-    this.http.post('http://localhost:3000/updateUser', this.user)
+    // this.http.post('http://localhost:3000/api/updateUser', this.user)
+    this.http.post(`${this.apiUrl}updateUser`, this.user)
       .subscribe(
         (response) => {
           console.log('User data saved successfully:', response);

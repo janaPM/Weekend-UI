@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Console } from 'node:console';
 import { images } from '../../app/constants/image-constants';
+import { environment } from '../../../environment';
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.component.html',
@@ -16,6 +17,7 @@ export class EventDetailComponent implements OnInit {
   // public user = [
   //   {id: "WND00000001"}
   // ];
+  private apiUrl = environment.URL;
   public images = images;
   user: any;
   id: string = "WND00000001";
@@ -35,7 +37,8 @@ export class EventDetailComponent implements OnInit {
     { key: 'exercise', title: 'Exercise', icon: './../../assets/exercise.png' },
     { key: 'educationLevel', title: 'Education level', icon: './../../assets/education.png' }
   ];
-  profileIds = ['c92e2eaf-f066-4f18-80d9-2e204f1bccc6', 'cacd8ee9-8082-4ad8-b5d5-a8534f8d0903','1ghgjkhv-gvhjnk4567', '54e7eab8-e741-4af3-b690-053697933a8e']; // List of profile IDs
+  profileIds = ['1', 'cacd8ee9-8082-4ad8-b5d5-a8534f8d0903','1ghgjkhv-gvhjnk4567', '54e7eab8-e741-4af3-b690-053697933a8e']; // List of profile IDs
+  // profileIds = ['1'];
   profiles: any[] = []; // To store fetched profile data
   swipeableProfiles: any[]=[];
   showSwipableProfiles = false;
@@ -150,18 +153,11 @@ export class EventDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
   ngOnInit(): void {
     const eventId = this.route.snapshot.paramMap.get('id');
-    console.log("Event-Details--->" + eventId);
-    this.http.get<any>('/assets/eventsdata.json')
-      .subscribe((data) => {
-        this.event = data.nearbyEvents.find((e: any) => e.id === eventId);
-        console.log("Event-Details--->" + JSON.stringify(this.event));
-      },
-      (error) => {
-        console.error('Error fetching event data:', error);
-      });
-      this.http.get<any>('/assets/eventsdata.json').subscribe(
+    console.log("Event-Id--->" + eventId);
+    // this.http.get<any>(`${this.apiUrl}getAllEvents?id=${eventId}`).toPromise()
+      this.http.get<any>(`${this.apiUrl}getAllEvents?`).subscribe(
         (data) => {
-          this.event = data.nearbyEvents.find((e: any) => e.id === eventId);
+          this.event = data.find((e: any) => e.id === eventId);
           console.log('Event-Details--->' + JSON.stringify(this.event));
         },
         (error) => {
@@ -173,7 +169,7 @@ export class EventDetailComponent implements OnInit {
   }
   fetchProfiles() {
     const requests = this.profileIds.map((id) =>
-      this.http.get<any>(`http://localhost:3000/api/get-user-detail?userId=${id}`).toPromise()
+      this.http.get<any>(`http://localhost:3000/api/userDetail?userId=${id}`).toPromise()
     );
     Promise.all(requests)
       .then((results) => {

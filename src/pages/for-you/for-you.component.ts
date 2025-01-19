@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { images } from '../../app/constants/image-constants';
+import { environment } from '../../../environment';
 // import * as Hammer from 'hammerjs';
 @Component({
   selector: 'app-for-you',
@@ -8,22 +9,26 @@ import { images } from '../../app/constants/image-constants';
   styleUrl: './for-you.component.scss'
 })
 export class ForYouComponent implements OnInit {
-
+  private apiUrl = environment.URL;
   // profile view
   isCreatingEvent: boolean = false; // Track if creating an event
   public isOpen = false;
   newEvent = {
     name: '',
+    description: '',
     location: '',
     date: '',
     time: '',
     organizerName: '',
     gender: 'Any',
     age: '',
-    image: ''
+    image: '',
+    fee: '',
+    owner: ''
   }; // Holds the new event data
   forYouEvents: Array<{
     name: string;
+    description: string;
     location: string;
     date: string;
     time: string;
@@ -31,6 +36,8 @@ export class ForYouComponent implements OnInit {
     gender: string;
     age: string;
     image: string;
+    fee: string;
+    owner: string;
   }> = [];
   bioItems = [
     {key: "bio", title: "Bio", icon: './../../assets/bio.png'},
@@ -277,7 +284,19 @@ removeProfile(profile: any) {
 }
 saveEvent(): void {
   if (this.isEventValid()) {
+    this.newEvent.owner = localStorage.getItem('My_ID') || ''; // Ensure it's a string
     this.forYouEvents.push({ ...this.newEvent }); // Add to event list
+    console.log(JSON.stringify(this.newEvent));
+    this.http.post(`${this.apiUrl}createEvent`, this.newEvent).subscribe(
+      (response) => {
+        console.log('Event saved successfully:', response);
+        this.resetNewEvent(); // Reset the new event after successful save
+      },
+      (error) => {
+        console.error('Error saving event:', error);
+        alert('Failed to save event. Please try again.');
+      }
+    );
     this.isCreatingEvent = false;
     this.resetNewEvent();
   } else {
@@ -291,23 +310,28 @@ cancelEvent(): void {
 resetNewEvent(): void {
   this.newEvent = {
     name: '',
+    description: '',
     location: '',
     date: '',
     time: '',
     organizerName: '',
     gender: 'Any',
     age: '',
-    image: ''
+    image: '',
+    fee:'',
+    owner:''
   };
 }
 isEventValid(): boolean {
   return (
-    this.newEvent.name !== '' &&
-    this.newEvent.location !== ''&&
-    this.newEvent.date !== '' &&
-    this.newEvent.time !== '' &&
-    this.newEvent.organizerName !== '' &&
-    this.newEvent.image !== ''
+    this.newEvent.name !== '' // &&
+    // this.newEvent.description !== '' &&
+    // this.newEvent.location !== ''&&
+    // this.newEvent.date !== '' &&
+    // this.newEvent.time !== '' &&
+    // this.newEvent.organizerName !== '' &&
+    // this.newEvent.image !== '' &&
+    // this.newEvent.fee !== ''
   );
 }
 }

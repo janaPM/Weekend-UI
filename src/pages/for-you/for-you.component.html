@@ -54,6 +54,10 @@
     <input [(ngModel)]="newEvent.name" placeholder="Event Name" />
   </div>
   <div>
+    <label>Event Description:</label>
+    <input [(ngModel)]="newEvent.description" placeholder="Event Name" />
+  </div>
+  <div>
     <label>Location:</label>
     <input [(ngModel)]="newEvent.location" placeholder="Event Location" />
   </div>
@@ -84,6 +88,10 @@
   <div>
     <label>Event Image URL:</label>
     <input [(ngModel)]="newEvent.image" placeholder="Image URL" />
+  </div>
+  <div>
+    <label>Event Fee:</label>
+    <input [(ngModel)]="newEvent.fee" placeholder="Organizer Name" />
   </div>
   <div class="form-buttons">
     <button (click)="saveEvent()">Save</button>
