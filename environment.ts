@@ -2,6 +2,8 @@
 export const environment = {
     production: false,
     Local:'http://localhost:3000/api/',
-JSK:'http://192.168.1.27:3000/',
-URL:'http://192.168.1.27:3000/',
+    AJAN:'http://192.168.1.15:3000/',
+    JSK:'http://192.168.1.27:3000/',
+    HOST:'http://192.168.1.4:3000/',
+    URL:'http://192.168.1.2:3000/',
   };

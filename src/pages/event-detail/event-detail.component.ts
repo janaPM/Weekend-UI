@@ -155,10 +155,13 @@ export class EventDetailComponent implements OnInit {
     const eventId = this.route.snapshot.paramMap.get('id');
     console.log("Event-Id--->" + eventId);
     // this.http.get<any>(`${this.apiUrl}getAllEvents?id=${eventId}`).toPromise()
-      this.http.get<any>(`${this.apiUrl}getAllEvents?`).subscribe(
+      this.http.get<any>(`${this.apiUrl}getAllEvent?`).subscribe(
         (data) => {
           this.event = data.find((e: any) => e.id === eventId);
           console.log('Event-Details--->' + JSON.stringify(this.event));
+          if (this.event && this.event.startTime) {
+            this.event.formattedStartTime = this.formatDateTime(this.event.startTime);
+          }
         },
         (error) => {
           console.error('Error fetching event data:', error);
@@ -166,6 +169,23 @@ export class EventDetailComponent implements OnInit {
       );
       // Fetch profiles data based on IDs
       this.fetchProfiles();
+  }
+  formatDateTime(dateTimeString: string): string {
+    const dateObj = new Date(dateTimeString);
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'short', // Use 'short', 'long', or 'narrow'
+      day: 'numeric',
+      month: 'short', // Use 'short', 'long', or 'narrow'
+      year: 'numeric'
+  };
+    const formattedDate = dateObj.toLocaleDateString('en-US', options);
+    const timeOptions: Intl.DateTimeFormatOptions = {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+  };
+    const formattedTime = dateObj.toLocaleTimeString('en-US', timeOptions);
+    return `${formattedDate}\n${formattedTime}`;
   }
   fetchProfiles() {
     const requests = this.profileIds.map((id) =>

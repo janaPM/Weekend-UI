@@ -21,17 +21,20 @@ export class EventsComponent implements OnInit, OnDestroy {
     location: '',
     date: '',
     time: '',
+    startTime: '',
     organizerName: '',
     gender: 'Any',
     age: '',
+    fee:'',
     image: ''
   }; // Holds the new event data
   filteredNearbyEvents: Array<{
     id: string;
     name: string;
     description: string;
+    startTime: string;
     age: string;
-    fee: string;
+    fee: any;
     image: string;
   }> = []; // To store filtered events
   events: {
@@ -39,6 +42,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     nearbyEvents: Array<{
       id: string;
       name: string;
+      startTime: string;
       description: string;
       age: string;
       fee: string;
@@ -54,6 +58,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     location: string;
     date: string;
     time: string;
+    startTime: string;
     organizerName: string;
     gender: string;
     age: string;
@@ -128,7 +133,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private router: Router) {}
   ngOnInit(): void {
     this.startAutoScroll();
-    this.http.get<any>(`${this.apiUrl}getAllEvents?`).subscribe({
+    this.http.get<any>(`${this.apiUrl}getAllEvent?`).subscribe({
       next: (data) => {
         this.events = data;
         this.filteredNearbyEvents = data; // Initialize filtered events
@@ -146,6 +151,23 @@ export class EventsComponent implements OnInit, OnDestroy {
         console.error('Error fetching For-You events data:', error);
       },
     });
+  }
+  formatDateTime(dateTimeString: string): string {
+    const dateObj = new Date(dateTimeString);
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'short', // Use 'short', 'long', or 'narrow'
+      day: 'numeric',
+      month: 'short', // Use 'short', 'long', or 'narrow'
+      year: 'numeric'
+    };
+    const formattedDate = dateObj.toLocaleDateString('en-US', options);
+    const timeOptions: Intl.DateTimeFormatOptions = {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    };
+    const formattedTime = dateObj.toLocaleTimeString('en-US', timeOptions);
+    return `${formattedDate}\n${formattedTime}`;
   }
   switchView(isDefault: boolean): void {
     this.isDefaultView = isDefault;
@@ -197,9 +219,11 @@ export class EventsComponent implements OnInit, OnDestroy {
       location: '',
       date: '',
       time: '',
+      startTime: '',
       organizerName: '',
       gender: 'Any',
       age: '',
+      fee:'',
       image: ''
     };
   }

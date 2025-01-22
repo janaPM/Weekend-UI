@@ -19,6 +19,7 @@ export class ForYouComponent implements OnInit {
     location: '',
     date: '',
     time: '',
+    startTime: '',
     organizerName: '',
     gender: 'Any',
     age: '',
@@ -32,6 +33,7 @@ export class ForYouComponent implements OnInit {
     location: string;
     date: string;
     time: string;
+    startTime: string;
     organizerName: string;
     gender: string;
     age: string;
@@ -285,7 +287,23 @@ removeProfile(profile: any) {
 saveEvent(): void {
   if (this.isEventValid()) {
     this.newEvent.owner = localStorage.getItem('My_ID') || ''; // Ensure it's a string
+    this.newEvent.startTime = this.combineDateAndTime(); // Set the startTime
     this.forYouEvents.push({ ...this.newEvent }); // Add to event list
+    // this.newEvent = {"name":"Weekend Recruting","description":"No need of college degree","location":"Bangalure","date":"2025-01-20","time":"10:00","startTime":"2025-01-20T04:30:00.000Z","organizerName":"","gender":"Any","age":"18+","image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRucQIktdhubA67woLderNRVAR4lP1bC-BYBg&s","fee":"0","owner":"1"};
+    // this.newEvent = {
+    //   name: "Weekend Recruiting",
+    //   description: "No need of college degree",
+    //   location: "Bangalure",
+    //   date: "2025-01-20",
+    //   time: "10:00:00",
+    //   startTime: "2025-01-20 04:30:00", // Ensure this is the correct start time
+    //   organizerName: "",
+    //   gender: "Any",
+    //   age: "18+",
+    //   image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRucQIktdhubA67woLderNRVAR4lP1bC-BYBg&s",
+    //   fee: "0",
+    //   owner: localStorage.getItem('My_ID') || '' // Ensure it's a string
+    // };
     console.log(JSON.stringify(this.newEvent));
     this.http.post(`${this.apiUrl}createEvent`, this.newEvent).subscribe(
       (response) => {
@@ -303,6 +321,20 @@ saveEvent(): void {
     alert('Please fill out all fields!');
   }
 }
+private combineDateAndTime(): string {
+  const date = new Date(`${this.newEvent.date}T${this.newEvent.time}`); // Create a Date object
+
+  // Extract the components
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  // Format the date and time as 'YYYY-MM-DD HH:mm:ss'
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
 cancelEvent(): void {
   this.isCreatingEvent = false;
   this.resetNewEvent();
@@ -314,6 +346,7 @@ resetNewEvent(): void {
     location: '',
     date: '',
     time: '',
+    startTime:'',
     organizerName: '',
     gender: 'Any',
     age: '',

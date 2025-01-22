@@ -41,7 +41,8 @@
         <img [src]="event.image" alt="{{ event.name }}" />
         <h4>{{ event.name }}</h4>
         <p>{{ event.description }}</p>
-        <p>{{ event.fee }}, {{ event.age }}</p>
+        <p>{{ formatDateTime(event.startTime) }}</p>
+        <p>{{ event.fee == 0 || event.fee === null ? 'Free' : '₹' + event.fee }}, {{ event.age }}</p>
       </div>
     </section>
   </div>
