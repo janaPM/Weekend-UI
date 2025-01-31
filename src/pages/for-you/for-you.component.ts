@@ -72,39 +72,71 @@ export class ForYouComponent implements OnInit {
  showProfile=false;
  ngOnInit() {
    // Mock Events
-   this.events = [
-     {
-       id: 1,
-       name: 'Music Festival 2023',
-       date: 'August 20, 2023',
-       time: '5:00 PM',
-       profiles: [
-         { id: '1', name: 'Anna', image: '.././../assets/profile1.jpeg', commonInterests: 5 },
-         { id: '2', name: 'John', image: '.././../assets/profile1.jpeg', commonInterests: 3 }
-       ],
-       showProfiles: false
-     },
-     {
-       id: 2,
-       name: 'Art Exhibition',
-       date: 'September 10, 2023',
-       time: '3:00 PM',
-       profiles: [
-         { id: '3', name: 'Emily', image: '.././../assets/profile1.jpeg', commonInterests: 4 }
-       ],
-       showProfiles: false
-     },
-     {
-      id: 3,
-      name: 'Art Exhibition',
-      date: 'September 10, 2023',
-      time: '3:00 PM',
-      profiles: [
-        { id: '4', name: 'Emily', image: '.././../assets/profile1.jpeg', commonInterests: 3 }
-      ],
-      showProfiles: false
+
+   this.http.get<any>(`${this.apiUrl}getMyEvent?ownerId=1`).subscribe((data) => {
+    console.log('User details:', data);
+
+    // Assuming data is an array of events, iterate and map it to this.events
+    if (Array.isArray(data)) {
+      data.forEach(eventData => {
+        // Create event object and map data
+        const event = {
+          id: eventData.id,
+          name: eventData.name,
+          date: new Date(eventData.startTime).toLocaleDateString(),  // Convert date to a readable format
+          time: new Date(eventData.startTime).toLocaleTimeString(), // Convert time to a readable format
+          startTime: eventData.startTime,
+          location: eventData.location,
+          description: eventData.description,
+          gender: eventData.gender,
+          age: eventData.age,
+          image: eventData.image,
+          fee: eventData.fee.toString(), // Ensure fee is a string
+          owner: eventData.owner,
+          profiles: eventData.req_users,  // Assuming you have no profiles yet
+          showProfiles: false
+        };
+
+        // Add the new event to this.events
+        this.events.push(event);
+      });
     }
-   ];
+  });
+  
+
+  //  this.events = [
+  //    {
+  //      id: 1,
+  //      name: 'Music Festival 2023',
+  //      date: 'August 20, 2023',
+  //      time: '5:00 PM',
+  //      profiles: [
+  //        { id: '1', name: 'Anna', image: '.././../assets/profile1.jpeg', commonInterests: 5 },
+  //        { id: '2', name: 'John', image: '.././../assets/profile1.jpeg', commonInterests: 3 }
+  //      ],
+  //      showProfiles: false
+  //    },
+  //    {
+  //      id: 2,
+  //      name: 'Art Exhibition',
+  //      date: 'September 10, 2023',
+  //      time: '3:00 PM',
+  //      profiles: [
+  //        { id: '3', name: 'Emily', image: '.././../assets/profile1.jpeg', commonInterests: 4 }
+  //      ],
+  //      showProfiles: false
+  //    },
+  //    {
+  //     id: 3,
+  //     name: 'Art Exhibition',
+  //     date: 'September 10, 2023',
+  //     time: '3:00 PM',
+  //     profiles: [
+  //       { id: '4', name: 'Emily', image: '.././../assets/profile1.jpeg', commonInterests: 3 }
+  //     ],
+  //     showProfiles: false
+  //   }
+  //  ];
    this.profiles = [
     {
       id: 101,
@@ -151,10 +183,10 @@ export class ForYouComponent implements OnInit {
    //for profile
 
   this.UserId = 'c92e2eaf-f066-4f18-80d9-2e204f1bccc6';
-  this.http.get<any>(`http://localhost:3000/api/get-user-detail?userId=${this.UserId}`).subscribe((data) => {
+  // this.http.get<any>(`http://localhost:3000/api/get-user-detail?userId=${this.UserId}`).subscribe((data) => {
 
-    this.user = { ...data }; });
-    console.log(JSON.stringify(this.user));
+  //   this.user = { ...data }; });
+    // console.log(JSON.stringify(this.user));
  }
  toggleInterestedProfiles(event: any) {
    event.showProfiles = !event.showProfiles;
