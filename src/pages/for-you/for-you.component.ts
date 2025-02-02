@@ -242,13 +242,13 @@ onTouchEnd(profile: any, event: any) {
   if (this.currentTranslateX > 100) {
     // Swipe Right
     this.animateSwipe(profile, 'right', () => {
-      this.acceptProfile(profile);
+      this.acceptProfile(profile.id,event.id);
       event.profiles = event.profiles.filter((p: any) => p.id !== profile.id);
     });
   } else if (this.currentTranslateX < -100) {
     // Swipe Left
     this.animateSwipe(profile, 'left', () => {
-      this.rejectProfile(profile);
+      this.rejectProfile(profile.id,event.id);
       event.profiles = event.profiles.filter((p: any) => p.id !== profile.id);
     });
   } else {
@@ -277,13 +277,43 @@ onTouchEnd(profile: any, event: any) {
     }, 500); // Match the animation duration
   }
  }
-acceptProfile(profile: any) {
-  // alert(`You accepted ${profile.name}`);
-  this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+
+
+ 
+ acceptProfile(profile: any, event: any) {
+  const payload = {
+    profileId: profile,
+    eventId: event
+  };
+
+  this.http.post(`${this.apiUrl}acceptProfileForMyEvent`, payload).subscribe(
+    (response) => {
+      console.log('Profile accepted successfully:', response);
+      this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+    },
+    (error) => {
+      console.error('Error accepting profile:', error);
+      alert('Failed to accept profile. Please try again.');
+    }
+  );
 }
-rejectProfile(profile: any) {
-  // alert(`You rejected ${profile.name}`);
-  this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+
+rejectProfile(profile: any,event: any) {
+  const payload = {
+    profileId: profile,
+    eventId: event
+  };
+
+  this.http.post(`${this.apiUrl}rejectProfileForMyEvent`, payload).subscribe(
+    (response) => {
+      console.log('Profile rejected successfully:', response);
+      this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+    },
+    (error) => {
+      console.error('Error rejecting profile:', error);
+      alert('Failed to reject profile. Please try again.');
+    }
+  );
 }
 resetCard() {
   this.activeIndex = null;
