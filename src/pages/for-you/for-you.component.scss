@@ -9,244 +9,368 @@ $border-radius: 10px;
 $box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 $weekend-gold: #F7C028;
 $weekend-gold-yellow: #ffd700;
+
 // Container styling
 .events-container {
- padding: 1vh;
- background-color: $background-color;
- font-family: 'Arial', sans-serif;
- border-radius: $border-radius;
- margin-bottom: 70px;
+  padding: 1vh;
+  background-color: $background-color;
+  font-family: 'Arial', sans-serif;
+  border-radius: $border-radius;
+  margin-bottom: 70px;
 }
+
 // Header section styling
 .events-header {
- display: flex;
- justify-content: space-between;
- align-items: center;
- margin-bottom: 20px;
- h1 {
-   // color: $secondary-color;
-   font-family: Arial, sans-serif;
-   margin: 5px 0;
-   color: #666;
-   font-weight: bold;
- }
- .heart-icon {
-   font-size: 24px;
-   // color: $weekend-gold;
-   color: $weekend-gold-yellow;
-   border: none;
-   background: none;
-   cursor: pointer;
-   transition: transform 0.2s;
-&:hover {
-     transform: scale(1.2);
-   }
- }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h1 {
+    // color: $secondary-color;
+    font-family: Arial, sans-serif;
+    margin: 5px 0;
+    color: #666;
+    font-weight: bold;
+  }
+
+  .heart-icon {
+    font-size: 24px;
+    // color: $weekend-gold;
+    color: $weekend-gold-yellow;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
 }
+
 // Event card styling
 .event-card {
- background: $card-background;
- padding: 15px;
- margin: 10px 0;
- border-radius: $border-radius;
- box-shadow: $box-shadow;
- color: $text-color;
- h3 {
-   margin: 0;
-   font-size: 18px;
-   //color: $primary-color;
- }
- p {
-   margin: 5px 0;
-   color: $text-color;
- }
- button {
-   // background: $weekend-gold;
-   background: $weekend-gold-yellow;
-   color: #000;
-   font-weight: 550;
-   width: -webkit-fill-available;
-   border: none;
-   padding: 8px 12px;
-   border-radius: $border-radius;
-   height: 35px;
-   cursor: pointer;
-   transition: background 0.3s;
-&:hover {
-     // background: darken($weekend-gold, 10%);
-     background: darken($weekend-gold-yellow, 10%);
-   }
- }
-}
-// Interested profiles section styling
-.interested-profiles {
- margin-top: 10px;
- flex-direction: column;
- position: relative;
- overflow: hidden;
- h4 {
-   color: $secondary-color;
-   font-size: 16px;
-   margin-bottom: 8px;
-   margin-top: 0px;
- }
- .profile-card {
-  //  display: flex;
-  //  align-items: center;
-  //  background: #e1bee7; // Light purple
-  //  padding: 10px;
-  //  margin-bottom: 8px;
-  //  border-radius: $border-radius / 2;
-  //  box-shadow: $box-shadow;
+  background: $card-background;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  color: $text-color;
 
-   position: relative;
-   background: $light-blue; // Light blue
-   padding: 15px;
-   border-radius: $border-radius;
-   box-shadow: $box-shadow;
-   margin-bottom: 10px;
-   transition: transform 0.3s ease-out, opacity 0.3s;
-   will-change: transform, opacity;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   img {
-     width: 50px;
-     height: 50px;
-     border-radius: 50%;
-     margin-right: 10px;
-   }
-   p {
-     margin-left: auto;
-    margin-right: 0px;
-     // flex-grow: 1;
-     flex-shrink: 1;
-   }
-   h3 {
-    font-size: 16px;
-    margin: 0 5px;
-    display: flex;
-    align-items: center;
+  h3 {
+    margin: 0;
+    font-size: 18px;
   }
-   button {
-    background: $secondary-color;
-    color: #fff;
+
+  .event-details {
+    display: flex;
+    /* Use flexbox for layout */
+    justify-content: space-between;
+    /* Space between date/time and profiles */
+    align-items: center;
+    /* Center items vertically */
+    margin-bottom: 5px;
+    /* Space below the details */
+  }
+
+  .event-datetime {
+    p {
+      margin: 5px 0;
+      color: $text-color;
+    }
+  }
+
+  // .accepted-profiles {
+  //   display: flex; /* Use flexbox for the profile images */
+  //   align-items: center; /* Center images vertically */
+  //   margin-left: 20px; /* Space from the right */
+  // }
+
+  // .profile-stack {
+  //   display: flex; /* Stack profile images horizontally */
+  // }
+
+  // .profile-image {
+  //   width: 40px; /* Adjust size as needed */
+  //   height: 40px; /* Adjust size as needed */
+  //   border-radius: 50%; /* Make images circular */
+  //   margin-left: 5px; /* Space between images */
+  // }
+  .accepted-profiles {
+
+    display: flex;
+
+    align-items: center;
+
+  }
+
+  .profile-stack {
+
+    display: flex;
+
+    align-items: center;
+
+    position: relative;
+
+    .profile-image {
+
+      width: 35px;
+
+      height: 35px;
+
+      border-radius: 50%;
+
+      margin-left: -10px; // Overlapping effect
+
+      border: 2px solid white;
+
+      position: relative;
+
+    }
+
+    .profile-more {
+
+      width: 35px;
+
+      height: 35px;
+
+      border-radius: 50%;
+
+      background: #ddd;
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      color: black;
+
+      margin-left: -10px;
+
+      border: 2px solid white;
+
+    }
+
+  }
+
+  button {
+    background: $weekend-gold-yellow;
+    color: #000;
+    font-weight: 550;
+    width: -webkit-fill-available;
     border: none;
-    padding: 5px 10px;
-    border-radius: calc($border-radius/2);
+    padding: 8px 12px;
+    border-radius: $border-radius;
+    height: 35px;
     cursor: pointer;
     transition: background 0.3s;
-    margin-left: auto;
-    margin-right: 0px;
-&:hover {
-       background: darken($secondary-color, 10%);
-     }
-   }
- }
+
+    &:hover {
+      background: darken($weekend-gold-yellow, 10%);
+    }
+  }
 }
+
+// Interested profiles section styling
+.interested-profiles {
+  margin-top: 10px;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+
+  h4 {
+    color: $secondary-color;
+    font-size: 16px;
+    margin-bottom: 8px;
+    margin-top: 0px;
+  }
+
+  .profile-card {
+    //  display: flex;
+    //  align-items: center;
+    //  background: #e1bee7; // Light purple
+    //  padding: 10px;
+    //  margin-bottom: 8px;
+    //  border-radius: $border-radius / 2;
+    //  box-shadow: $box-shadow;
+
+    position: relative;
+    background: $light-blue; // Light blue
+    padding: 15px;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-out, opacity 0.3s;
+    will-change: transform, opacity;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    p {
+      margin-left: auto;
+      margin-right: 0px;
+      // flex-grow: 1;
+      flex-shrink: 1;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 0 5px;
+      display: flex;
+      align-items: center;
+    }
+
+    button {
+      background: $secondary-color;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: calc($border-radius/2);
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-left: auto;
+      margin-right: 0px;
+
+      &:hover {
+        background: darken($secondary-color, 10%);
+      }
+    }
+  }
+}
+
 // Swipeable profiles section styling
 .swipeable-profiles {
- margin-top: 20px;
- h3 {
-   color: $primary-color;
-   margin-bottom: 10px;
- }
- .swipe-card {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   background: $light-blue; // Light blue
-   padding: 15px;
-   border-radius: $border-radius;
-   box-shadow: $box-shadow;
-   margin-bottom: 10px;
-   transition: transform 0.3s;
-   img {
-     width: 50px;
-     height: 50px;
-     border-radius: 50%;
-     margin-right: 10px;
-   }
-   p {
-     margin: 0;
-     flex-grow: 1;
-   }
-   .swipe-actions {
-     button {
-       border: none;
-       padding: 5px 10px;
-       border-radius: $border-radius;
-       cursor: pointer;
-       transition: background 0.3s;
-&:first-child {
-         background: #e57373; // Red for reject
-         color: #fff;
-         margin-right: 5px;
-&:hover {
-           background: darken(#e57373, 10%);
-         }
-       }
-&:last-child {
-         background: #81c784; // Green for accept
-         color: #fff;
-&:hover {
-           background: darken(#81c784, 10%);
-         }
-       }
-     }
-   }
- }
+  margin-top: 20px;
+
+  h3 {
+    color: $primary-color;
+    margin-bottom: 10px;
+  }
+
+  .swipe-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $light-blue; // Light blue
+    padding: 15px;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    margin-bottom: 10px;
+    transition: transform 0.3s;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    p {
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .swipe-actions {
+      button {
+        border: none;
+        padding: 5px 10px;
+        border-radius: $border-radius;
+        cursor: pointer;
+        transition: background 0.3s;
+
+        &:first-child {
+          background: #e57373; // Red for reject
+          color: #fff;
+          margin-right: 5px;
+
+          &:hover {
+            background: darken(#e57373, 10%);
+          }
+        }
+
+        &:last-child {
+          background: #81c784; // Green for accept
+          color: #fff;
+
+          &:hover {
+            background: darken(#81c784, 10%);
+          }
+        }
+      }
+    }
+  }
 }
+
 // Friend requests section styling
 .friend-requests {
- margin-top: 20px;
- h3 {
-   color: #000;
-   font-weight: bold;
- }
- .request-card {
-   display: flex;
-   align-items: center;
-   // background: #F7C028; // Light orange
-   background: #ffd700;
-   padding: 10px;
-   border-radius: $border-radius;
-   box-shadow: $box-shadow;
-   margin: 10px 0;
-   img {
-     width: 50px;
-     height: 50px;
-     border-radius: 50%;
-     margin-right: 10px;
-   }
-   p {
-     margin: 0;
-     flex-grow: 1;
-   }
-   .reject-button{
-     background: #000;
-     color: #fff;
-   }
-   .accept-button {
-     background: #fff;
-     color: #000;
-   }
+  margin-top: 20px;
 
-   button {
-     background: $primary-color;
-     // background: #000;
-     // color: #fff;
-     border: none;
-     padding: 5px 10px;
-     border-radius: calc($border-radius/ 2);
-     cursor: pointer;
-     margin-left: 5px;
-     transition: background 0.3s;
-&:hover {
-       background: darken($primary-color, 10%);
-     }
-   }
- }
+  h3 {
+    color: #000;
+    font-weight: bold;
+  }
+
+  .request-card {
+    display: flex;
+    align-items: center;
+    // background: #F7C028; // Light orange
+    background: #ffd700;
+    padding: 10px;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    margin: 10px 0;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    p {
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .reject-button {
+      background: #000;
+      color: #fff;
+    }
+
+    .accept-button {
+      background: #fff;
+      color: #000;
+    }
+
+    button {
+      background: $primary-color;
+      // background: #000;
+      // color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: calc($border-radius/ 2);
+      cursor: pointer;
+      margin-left: 5px;
+      transition: background 0.3s;
+
+      &:hover {
+        background: darken($primary-color, 10%);
+      }
+    }
+  }
 }
 
 // Profiles Interested Section
@@ -254,25 +378,28 @@ $weekend-gold-yellow: #ffd700;
   margin-top: 20px;
   margin-bottom: 10px;
   margin-bottom: 60px;
-  overflow-x: auto; 
+  overflow-x: auto;
   // touch-action: pan-y;
   // overflow-y: auto; // Enable vertical scrolling
   overflow-x: hidden;
   white-space: nowrap;
   align-items: center;
+
   h3 {
     // font-size: 22px;
     color: #2c3e50;
     margin-bottom: 15px;
   }
+
   .profile-grid {
     display: flex;
     gap: 15px;
-    overflow-x: auto; 
+    overflow-x: auto;
     white-space: nowrap;
     transition: transform 1s ease-in-out, margin 1 ease-in-out;
+
     .profile-card {
-      overflow-x: auto; 
+      overflow-x: auto;
       // touch-action: pan-y;
       flex: 0 0 auto;
       position: relative;
@@ -287,10 +414,12 @@ $weekend-gold-yellow: #ffd700;
       text-align: center;
       transition: transform 0.3s ease-out;
       will-change: transform;
+
       &:hover {
         transform: translateY(-3px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
+
       img {
         width: 100px;
         height: 125px;
@@ -299,34 +428,43 @@ $weekend-gold-yellow: #ffd700;
         object-fit: cover;
         border: 2px solid #ffd700;
       }
+
       .close-icon {
-        position: absolute; /* Position it relative to the card */
-        top: 5px;           /* Distance from the top of the card */
-        right: 5px;   
+        position: absolute;
+        /* Position it relative to the card */
+        top: 5px;
+        /* Distance from the top of the card */
+        right: 5px;
         width: 16px;
-        height: 16px;      /* Distance from the right of the card */
-        font-size: 18px;    /* Adjust size as needed */
-        cursor: pointer;    /* Pointer cursor on hover */
+        height: 16px;
+        /* Distance from the right of the card */
+        font-size: 18px;
+        /* Adjust size as needed */
+        cursor: pointer;
+        /* Pointer cursor on hover */
         // color: #e74c3c;     /* Default color */
         transition: transform 0.2s, color 0.3s;
         border: transparent;
-    //  &:hover {
-    //       transform: scale(1); /* Slight zoom effect on hover */
-    //       color: #c0392b;        /* Darker red on hover */
-    //     }
+        //  &:hover {
+        //       transform: scale(1); /* Slight zoom effect on hover */
+        //       color: #c0392b;        /* Darker red on hover */
+        //     }
       }
+
       .profile-name {
         font-size: 16px;
         color: #34495e;
         font-weight: 600;
         margin: 0px;
       }
+
       .common-interests {
         font-size: 12px;
         color: #7f8c8d;
         margin-top: 5px;
         margin-bottom: 5px;
       }
+
       .add-friend-btn {
         margin-top: 5px;
         margin-bottom: 10px;
@@ -338,7 +476,8 @@ $weekend-gold-yellow: #ffd700;
         border-radius: 6px;
         cursor: pointer;
         transition: background-color 0.2s;
-&:hover {
+
+        &:hover {
           background-color: #000;
         }
       }
@@ -346,7 +485,7 @@ $weekend-gold-yellow: #ffd700;
   }
 }
 
- 
+
 /* profile-page.scss */
 
 .profile-page {
@@ -356,33 +495,50 @@ $weekend-gold-yellow: #ffd700;
   padding-bottom: 70px;
   background-color: #f5f5f5;
 
+  .header {
+    display: flex;
+    justify-content: start; /* Align back button to the right */
+    width: 100%; 
+    margin-bottom: 0px;
+  }
+  
+  .back-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
   .profile-header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     // padding-bottom: 16px;
-    
+
     img {
       width: -webkit-fill-available;
       height: 64px;
     }
+
     .profile-picture {
       width: -webkit-fill-available;
       height: 320px;
-      border-radius: 20px; /* Square image */
+      border-radius: 20px;
+      /* Square image */
       // margin-right: 16px;
     }
+
     .profile-info {
       display: flex;
       align-items: center;
-      h2{
+
+      h2 {
         margin-left: 0px;
         margin-bottom: 0px;
         padding-left: 0px;
         align-items: center;
 
       }
+
       .profile-details {
         .name-field {
           display: flex;
@@ -410,6 +566,7 @@ $weekend-gold-yellow: #ffd700;
 
   .profile-container {
     margin-top: 20px;
+
     // margin-bottom: 50px;
     .interest-header {
       display: flex;
@@ -441,7 +598,8 @@ $weekend-gold-yellow: #ffd700;
     }
 
     .edit-interest-button {
-      display: none; /* Hide edit interest button by default */
+      display: none;
+      /* Hide edit interest button by default */
     }
 
     .h3 {
@@ -478,7 +636,8 @@ $weekend-gold-yellow: #ffd700;
         }
 
         .item-title1 {
-          margin-left: auto; /* Align to center */
+          margin-left: auto;
+          /* Align to center */
           font-size: 14px;
           color: #333;
         }
@@ -497,8 +656,9 @@ $weekend-gold-yellow: #ffd700;
 .create-event-container {
   text-align: center;
   margin-bottom: 1rem;
- }
- .create-event-button {
+}
+
+.create-event-button {
   display: flex;
   background-color: #ff0080;
   color: white;
@@ -509,11 +669,13 @@ $weekend-gold-yellow: #ffd700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
- }
- .create-event-button i {
+}
+
+.create-event-button i {
   margin-right: 5px;
- }
- .create-event-form {
+}
+
+.create-event-form {
   border: 1px solid #ddd;
   padding: 15px;
   // margin: 15px auto;
@@ -521,71 +683,82 @@ $weekend-gold-yellow: #ffd700;
   // max-width: 400px;
   border-radius: 8px;
   background-color: #f9f9f9;
- }
- .create-event-form h3 {
+}
+
+.create-event-form h3 {
   text-align: center;
- }
- .create-event-form div {
+}
+
+.create-event-form div {
   margin-bottom: 10px;
- }
- .create-event-form label {
+}
+
+.create-event-form label {
   font-weight: bold;
- }
- .create-event-form input,
- .create-event-form select {
+}
+
+.create-event-form input,
+.create-event-form select {
   // width: 100%;
   width: -webkit-fill-available;
   padding: 8px;
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
- }
- .form-buttons {
+}
+
+.form-buttons {
   text-align: center;
- }
- .form-buttons button {
+}
+
+.form-buttons button {
   margin: 5px;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
- }
- .form-buttons button:first-child {
+}
+
+.form-buttons button:first-child {
   background-color: #28a745;
   color: white;
- }
- .form-buttons button:last-child {
+}
+
+.form-buttons button:last-child {
   background-color: #dc3545;
   color: white;
- }
+}
 
- .floating-button {
- position: fixed;
- bottom: 100px;
- right: 20px;
- width: 60px;
- height: 60px;
- // background-color: #F7C028;
- background-color: #ffd700;
- border-radius: 50%;
- display: flex;
- align-items: center;
- justify-content: center;
- box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
- cursor: pointer;
- transition: transform 0.3s ease-in-out;
+.floating-button {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  // background-color: #F7C028;
+  background-color: #ffd700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
 }
+
 .floating-button span {
- font-size: 30px;
- font-weight: bold;
- color: #000;
- transition: transform 0.3s ease-in-out;
+  font-size: 30px;
+  font-weight: bold;
+  color: #000;
+  transition: transform 0.3s ease-in-out;
 }
+
 .floating-button span.rotate {
- transform: rotate(45deg);
- align-items: center;
- justify-content: center;
+  transform: rotate(45deg);
+  align-items: center;
+  justify-content: center;
 }
-.floating-button:focus{
+
+.floating-button:focus {
   outline: none;
 }

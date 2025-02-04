@@ -42,5 +42,8 @@ export const images = {
     Height: "../../../assets/height.png",
     Exercise: "../../../assets/exercise.png",
     plus: "../../../assets/plus.png",
-    filter: "../../assets/filterIcon.svg"
+    filter: "../../assets/filterIcon.svg",
+    time:"../../assets/time.svg",
+    calander:"../../assets/calendaricon.png",
+    age:"../../assets/age.png"
 }

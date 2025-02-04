@@ -25,6 +25,19 @@
         margin: 1rem 0;
       }
     }
+    .event-time, .event-location {
+      display: flex;
+      align-items: center; /* Center the icon and text vertically */
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      color: #555;
+  
+      .icon {
+        margin-right: 0.5rem; /* Space between icon and text */
+        width: 20px; /* Adjust icon size */
+        height: 20px; /* Adjust icon size */
+      }
+    }
     .tags {
       margin: 0.5rem 0;
       text-align: center;

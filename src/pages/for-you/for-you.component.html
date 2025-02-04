@@ -22,16 +22,50 @@
   <h3>Your Events</h3>
   <div *ngFor="let event of events">
     <div class="event-card">
-      <h3>{{ event.name }}</h3>
-      <p>{{ event.date }} | {{ event.time }}</p>
-      <button (click)="toggleInterestedProfiles(event)">
+      <div class="event-details">
+        <div class="event-datetime">
+          <h3>{{ event.name }}</h3>
+          <p>{{ formatDateTime(event.startTime).formattedDate }}</p>
+          <p>{{ formatDateTime(event.startTime).formattedTime }}</p>
+        </div>
+        <!-- Stack of accepted profile images -->
+        <!-- <div class="accepted-profiles">
+          <div class="profile-stack">
+            <img *ngFor="let profile of event.profiles" [src]="profile.image || images.profile1" alt="{{ profile.name }}" class="profile-image" />
+          </div>
+        </div> -->
+        <div class="accepted-profiles">
+          <!-- <div class="profile-stack">
+            <ng-container *ngFor="let profile of event.profiles.slice(0,3); let i = index">
+              <img [src]="profile.image || images.profile1" [alt]="profile.name" class="profile-image" />
+            </ng-container>
+            <ng-container *ngIf="event.profiles.length > 3" class="profile-more">
+              +{{ event.profiles.length -3 }} </ng-container>
+          </div> -->
+          <div class="profile-stack">
+            <ng-container *ngFor="let profile of (event.profiles); let i = index">
+            <ng-container *ngIf="i < 2">
+            <img
+                   [src]="profile.image || images.profile1"
+                   [alt]="profile.name || 'Profile Image'"
+                   class="profile-image"
+                 />
+            </ng-container>
+            </ng-container>
+            <div *ngIf="(event.profiles).length > 2" class="profile-more">
+               +{{ (event.profiles).length - 2 }}
+            </div>
+            </div>
+        </div>
+      </div>
+      <button (click)="toggleInterestedProfiles(event)" [disabled]="!event.profiles || event.profiles.length === 0">
         {{ event.showProfiles ? 'Hide' : 'View' }} Interested Profiles
       </button>
     </div>
     <!-- Interested Profiles Section -->
     <div *ngIf="event.showProfiles" class="interested-profiles">
       <h4 *ngIf="event.profiles.length > 0">Profiles Interested</h4>
-      <div (click)="openProfileView()" class="profile-card" *ngFor="let profile of event.profiles; let i = index"
+      <div (click)="openProfileView(profile)" class="profile-card" *ngFor="let profile of event.profiles; let i = index"
         [attr.data-id]="profile.id" [ngStyle]="{
           transform: activeIndex === i ? 'translateX(' + currentTranslateX + 'px)' : 'translateX(0)',
           transition: activeIndex === null ? 'transform 0.3s ease-out' : 'none',
@@ -107,8 +141,8 @@
       <p>{{ profile.name }}</p>
       <p>{{ profile.commonInterests }} Common Interests</p>
       <div class="swipe-actions">
-        <button (click)="rejectProfile(profile)">❌ Reject</button>
-        <button (click)="acceptProfile(profile)">✅ Accept</button>
+        <button (click)="rejectProfile(profile, events)">❌ Reject</button>
+        <button (click)="acceptProfile(profile, events)">✅ Accept</button>
       </div>
     </div>
   </div>
@@ -133,6 +167,14 @@
 
 <div *ngIf=this.showProfile>
   <div class="profile-page">
+    <div class="header">
+      <button class="back-button" (click)="closeProfileView()">
+        <svg width="15" height="15" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"> 
+          <path d="M14.6624 1.03406C15.2686 0.384077 16.3215 0.318213 17.0142 0.886949C17.6537 1.41194 17.7627 2.29414 17.2989 2.93798L17.171 3.09364L9.79674 11L17.171 18.9064C17.7305 19.5064 17.7138 20.3943 17.163 20.9747L17.0142 21.1131C16.3748 21.638 15.4284 21.6223 14.8099 21.1055L14.6624 20.9659L6.32912 12.0298C5.82511 11.4893 5.78311 10.7045 6.20312 10.1233L6.32912 9.97021L14.6624 1.03406Z" fill="black" color="black"/>
+        </svg>
+      </button>
+      <!-- <span class="weekend-text">Weekend</span>  -->
+    </div>
     <div class="profile-card">
       <div class="profile-header">
         <img [src]="images.profile1" alt="Profile Picture" class="profile-picture" />

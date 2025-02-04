@@ -170,22 +170,22 @@ export class EventDetailComponent implements OnInit {
       // Fetch profiles data based on IDs
       this.fetchProfiles();
   }
-  formatDateTime(dateTimeString: string): string {
+  formatDateTime(dateTimeString: string): { formattedDate: string, formattedTime: string } {
     const dateObj = new Date(dateTimeString);
     const options: Intl.DateTimeFormatOptions = {
       weekday: 'short', // Use 'short', 'long', or 'narrow'
       day: 'numeric',
       month: 'short', // Use 'short', 'long', or 'narrow'
       year: 'numeric'
-  };
+    };
     const formattedDate = dateObj.toLocaleDateString('en-US', options);
     const timeOptions: Intl.DateTimeFormatOptions = {
       hour: 'numeric',
       minute: '2-digit',
       hour12: true
-  };
+    };
     const formattedTime = dateObj.toLocaleTimeString('en-US', timeOptions);
-    return `${formattedDate}\n${formattedTime}`;
+    return { formattedDate, formattedTime };
   }
   fetchProfiles() {
     const requests = this.profileIds.map((id) =>

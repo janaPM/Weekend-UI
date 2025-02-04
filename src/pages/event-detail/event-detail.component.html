@@ -1,11 +1,18 @@
 <div *ngIf="event && !showSwipableProfiles" class="event-detail-container">
   <img [src]="event.image" alt="{{ event.name }}" class="event-image" />
   <h2>{{ event.name }}</h2>
-  <p>{{ event.formattedStartTime }}</p>
-  <p>{{ event.place }}</p>
-  <!-- <p>
-    <strong>{{ event.fee }}</strong>
-  </p> -->
+  <p class="event-time">
+    <img [src]="images.calander" width="15" height="15" class="icon" /> {{ formatDateTime(event.startTime).formattedDate }}
+  </p>
+  <p class="event-time">
+    <img [src]="images.time" width="15" height="15" class="icon" /> {{ formatDateTime(event.startTime).formattedTime }}
+  </p>
+  <p class="event-location">
+    <img [src]="images.Location" width="15" height="15" class="icon" /> {{ event.location }}
+  </p>
+  <p class="event-location">
+    <img [src]="images.age" width="15" height="15" class="icon" /> {{ event.age }}
+  </p>
   <p>
     <strong>{{ event.fee === 0 || event.fee === null ? 'Free' : '₹' + event.fee }}</strong>
   </p>  

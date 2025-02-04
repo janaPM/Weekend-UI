@@ -59,6 +59,7 @@ export class ForYouComponent implements OnInit {
    // profile view end
  public images = images;
  UserId: string='';
+ UserIds: string=''; 
  user: any;
  events: Array<any> = [];
  profiles: Array<any> = [];
@@ -72,39 +73,39 @@ export class ForYouComponent implements OnInit {
  showProfile=false;
  ngOnInit() {
    // Mock Events
-   this.events = [
-     {
-       id: 1,
-       name: 'Music Festival 2023',
-       date: 'August 20, 2023',
-       time: '5:00 PM',
-       profiles: [
-         { id: '1', name: 'Anna', image: '.././../assets/profile1.jpeg', commonInterests: 5 },
-         { id: '2', name: 'John', image: '.././../assets/profile1.jpeg', commonInterests: 3 }
-       ],
-       showProfiles: false
-     },
-     {
-       id: 2,
-       name: 'Art Exhibition',
-       date: 'September 10, 2023',
-       time: '3:00 PM',
-       profiles: [
-         { id: '3', name: 'Emily', image: '.././../assets/profile1.jpeg', commonInterests: 4 }
-       ],
-       showProfiles: false
-     },
-     {
-      id: 3,
-      name: 'Art Exhibition',
-      date: 'September 10, 2023',
-      time: '3:00 PM',
-      profiles: [
-        { id: '4', name: 'Emily', image: '.././../assets/profile1.jpeg', commonInterests: 3 }
-      ],
-      showProfiles: false
-    }
-   ];
+   const UserId = localStorage.getItem('My_ID'); 
+   console.log('UserId:', UserId);
+   this.http.get<any>(`${this.apiUrl}getMyEvent?ownerId=${UserId}`).subscribe((data) => {
+    console.log('User details:', data);
+
+    // Assuming data is an array of events, iterate and map it to this.events
+    if (Array.isArray(data)) {
+      data.forEach(eventData => {
+        // Create event object and map data
+        const event = {
+          id: eventData.id,
+          name: eventData.name,
+          // date: new Date(eventData.startTime).toLocaleDateString(),  // Convert date to a readable format
+          // time: new Date(eventData.startTime).toLocaleTimeString(), // Convert time to a readable format
+          startTime: eventData.startTime,
+          // location: eventData.location,
+          // description: eventData.description,
+          // gender: eventData.gender,
+          // age: eventData.age,
+          // image: eventData.image,
+          // fee: eventData.fee.toString(), // Ensure fee is a string
+          // owner: eventData.owner,
+          profiles: eventData.req_users,  // Assuming you have no profiles yet
+          showProfiles: false
+        };
+
+          // Add the new event to this.events
+          this.events.push(event);
+          console.log("this.events"+JSON.stringify(this.events));
+        });
+      }
+    });
+  
    this.profiles = [
     {
       id: 101,
@@ -150,15 +151,29 @@ export class ForYouComponent implements OnInit {
 
    //for profile
 
-  this.UserId = 'c92e2eaf-f066-4f18-80d9-2e204f1bccc6';
-  this.http.get<any>(`http://localhost:3000/api/get-user-detail?userId=${this.UserId}`).subscribe((data) => {
-
-    this.user = { ...data }; });
-    console.log(JSON.stringify(this.user));
+  // this.UserId = 'c92e2eaf-f066-4f18-80d9-2e204f1bccc6';
+  // this.UserId = '1';
  }
  toggleInterestedProfiles(event: any) {
-   event.showProfiles = !event.showProfiles;
- }
+  // Check if any other event already has profiles visible
+  const isAnotherEventVisible = this.events.some(
+    (otherEvent) => otherEvent !== event && otherEvent.showProfiles
+  );
+
+  // If another event is visible, hide its profiles first
+  if (isAnotherEventVisible) {
+    this.events.forEach((otherEvent) => {
+      if (otherEvent !== event) {
+        otherEvent.showProfiles = false;
+      }
+    });
+  }
+
+  event.showProfiles = !event.showProfiles;
+}
+closeProfileView(){
+  this.showProfile = false;
+}
  toggleFriendRequests() {
    this.showFriendRequests = !this.showFriendRequests;
  }
@@ -186,11 +201,13 @@ export class ForYouComponent implements OnInit {
   this.touchStartX = event.touches[0].clientX;
   this.activeIndex = index;
   this.currentTranslateX = 0; // Reset translate position
+  console.log("onTouchStart");
 }
 onTouchMove(event: TouchEvent) {
   if (this.activeIndex === null) return;
   const currentX = event.touches[0].clientX;
   this.currentTranslateX = currentX - this.touchStartX;
+  console.log("onTouchMove");
 }
 // onTouchEnd(profile: any, event: any) {
 //   if (this.currentTranslateX > 100) {
@@ -210,13 +227,15 @@ onTouchEnd(profile: any, event: any) {
   if (this.currentTranslateX > 100) {
     // Swipe Right
     this.animateSwipe(profile, 'right', () => {
-      this.acceptProfile(profile);
+      // this.acceptProfile(profile);
+      this.acceptProfile(profile.id,event.id);
       event.profiles = event.profiles.filter((p: any) => p.id !== profile.id);
     });
   } else if (this.currentTranslateX < -100) {
     // Swipe Left
     this.animateSwipe(profile, 'left', () => {
-      this.rejectProfile(profile);
+      // this.rejectProfile(profile);
+      this.rejectProfile(profile.id,event.id);
       event.profiles = event.profiles.filter((p: any) => p.id !== profile.id);
     });
   } else {
@@ -229,6 +248,7 @@ onTouchEnd(profile: any, event: any) {
       container.classList.remove('reordering');
     }
   },500);
+  console.log("onTouchEnd");
  }
 
  animateSwipe(profile: any, direction: 'left' | 'right', callback: () => void) {
@@ -245,13 +265,45 @@ onTouchEnd(profile: any, event: any) {
     }, 500); // Match the animation duration
   }
  }
-acceptProfile(profile: any) {
-  // alert(`You accepted ${profile.name}`);
-  this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+// acceptProfile(profile: any) {
+//   // alert(`You accepted ${profile.name}`);
+//   this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+// }
+acceptProfile(profile: any, event: any) {
+  const payload = {
+    profileId: profile,
+    eventId: event
+  };
+  this.http.post(`${this.apiUrl}acceptProfileForMyEvent`, payload).subscribe(
+    (response) => {
+      console.log('Profile accepted successfully:', response);
+      this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+    },
+    (error) => {
+      console.error('Error accepting profile:', error);
+      alert('Failed to accept profile. Please try again.');
+    }
+  );
 }
-rejectProfile(profile: any) {
-  // alert(`You rejected ${profile.name}`);
-  this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+// rejectProfile(profile: any) {
+//   // alert(`You rejected ${profile.name}`);
+//   this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+// }
+rejectProfile(profile: any,event: any) {
+  const payload = {
+    profileId: profile,
+    eventId: event
+  };
+  this.http.post(`${this.apiUrl}rejectProfileForMyEvent`, payload).subscribe(
+    (response) => {
+      console.log('Profile rejected successfully:', response);
+      this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
+    },
+    (error) => {
+      console.error('Error rejecting profile:', error);
+      alert('Failed to reject profile. Please try again.');
+    }
+  );
 }
 resetCard() {
   this.activeIndex = null;
@@ -261,8 +313,19 @@ removeProfile(profile: any) {
   this.profiles = this.profiles.filter((p) => p !== profile);
   alert(`${profile.name} has been removed.`);
  }
- openProfileView(){
+ openProfileView(profile: any){
+  this.UserIds = profile.id;
+  console.log("UserIds"+this.UserIds);
   this.showProfile = true;
+  console.log("UserId-http"+this.UserIds);
+  // this.UserIds ='1';
+  this.http.get<any>(`${this.apiUrl}userDetail?userId=${this.UserIds}`).subscribe((data) => {
+    this.user = { ...data }; }
+  ,(error) => {
+    console.error('Error fetching requested user data:', error);
+    alert('Failed to get requested user data. Please try again.');
+  });
+    console.log(JSON.stringify(this.user));
  }
  getCardBackground(translateX: number): string {
   if (translateX > 0) {
@@ -283,6 +346,23 @@ removeProfile(profile: any) {
   if (!this.isCreatingEvent) {
     this.resetNewEvent();
   }
+}
+formatDateTime(dateTimeString: string): { formattedDate: string, formattedTime: string } {
+  const dateObj = new Date(dateTimeString);
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: 'short', // Use 'short', 'long', or 'narrow'
+    day: 'numeric',
+    month: 'short', // Use 'short', 'long', or 'narrow'
+    year: 'numeric'
+  };
+  const formattedDate = dateObj.toLocaleDateString('en-US', options);
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  };
+  const formattedTime = dateObj.toLocaleTimeString('en-US', timeOptions);
+  return { formattedDate, formattedTime };
 }
 saveEvent(): void {
   if (this.isEventValid()) {
