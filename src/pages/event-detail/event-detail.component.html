@@ -8,10 +8,14 @@
     <img [src]="images.time" width="15" height="15" class="icon" /> {{ formatDateTime(event.startTime).formattedTime }}
   </p>
   <p class="event-location">
-    <img [src]="images.Location" width="15" height="15" class="icon" /> {{ event.location }}
-  </p>
+    <img [src]="images.Location" width="15" height="15" class="icon" /> 
+    {{ event.location }}
+    <a *ngIf="event.location_url" [href]="event.location_url" target="_blank" class="location-icon">
+      <img src="https://assets-in.bmscdn.com/nmcms/synopsis/navigate-button.png" width="10" height="10" class="icon" />
+    </a>
+  </p>  
   <p class="event-location">
-    <img [src]="images.age" width="15" height="15" class="icon" /> {{ event.age }}
+    <img [src]="images.age" width="10" height="10" class="icon" /> {{ event.age }}
   </p>
   <p>
     <strong>{{ event.fee === 0 || event.fee === null ? 'Free' : '₹' + event.fee }}</strong>
@@ -26,7 +30,7 @@
   <div class="actions">
     <button class="reject" (click)="isReject()">✖</button>
     <button class="buddy-up" (click)="showBuddyOptions()">𖠋𖠋</button>
-    <button class="accept" (click)="isAccept()">❤</button>
+    <button class="accept" (click)="isAccept(event.id)">❤</button>
   </div>
 </div>
 <!-- Swipable Profiles -->

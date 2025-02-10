@@ -3,7 +3,7 @@
   <div class="events-header">
     <!-- <h1>For you</h1> -->
     <h1>My events</h1>
-    <button class="heart-icon" (click)="toggleFriendRequests()">
+    <button class="heart-icon" (click)="toggleFriendRequests()" [disabled]="!showProfilesSection">
       ❤️
     </button>
   </div>
@@ -19,7 +19,8 @@
     </div>
   </div>
   <!-- Events List -->
-  <h3>Your Events</h3>
+  <h3 *ngIf="showProfilesSection">Your Events</h3>
+  <h3 *ngIf="!showProfilesSection">Events joined</h3>
   <div *ngFor="let event of events">
     <div class="event-card">
       <div class="event-details">
@@ -42,8 +43,8 @@
             <ng-container *ngIf="event.profiles.length > 3" class="profile-more">
               +{{ event.profiles.length -3 }} </ng-container>
           </div> -->
-          <div class="profile-stack">
-            <ng-container *ngFor="let profile of (event.profiles); let i = index">
+          <div class="profile-stack" (click)="toggleAcceptedProfiles(event)">
+            <ng-container *ngFor="let profile of (event.accProfiles); let i = index">
             <ng-container *ngIf="i < 2">
             <img
                    [src]="profile.image || images.profile1"
@@ -52,15 +53,18 @@
                  />
             </ng-container>
             </ng-container>
-            <div *ngIf="(event.profiles).length > 2" class="profile-more">
-               +{{ (event.profiles).length - 2 }}
+            <div *ngIf="(event.accProfiles).length > 2" class="profile-more">
+               +{{ (event.accProfiles).length - 2 }}
             </div>
             </div>
         </div>
       </div>
-      <button (click)="toggleInterestedProfiles(event)" [disabled]="!event.profiles || event.profiles.length === 0">
+      <button *ngIf="showProfilesSection" (click)="toggleInterestedProfiles(event)" [disabled]="!event.profiles || event.profiles.length === 0">
         {{ event.showProfiles ? 'Hide' : 'View' }} Interested Profiles
       </button>
+      <!-- <button *ngIf="!showProfilesSection && event.showProfiles" (click)="toggleAcceptedProfiles(event)" [disabled]="!event.profiles || event.profiles.length === 0">
+        {{ event.showProfiles ? 'Hide' : 'View' }} Joined Profiles
+      </button> -->
     </div>
     <!-- Interested Profiles Section -->
     <div *ngIf="event.showProfiles" class="interested-profiles">
@@ -78,6 +82,15 @@
         <button (click)="addFriend(profile) ; $event.stopPropagation()">Accept</button>
       </div>
     </div>
+        <!-- Interested Profiles Section -->
+        <div *ngIf="event.showAccProfiles" class="interested-profiles">
+          <h4 *ngIf="event.accProfiles.length > 0">Confirmed Profiles</h4>
+          <div (click)="openProfileView(profile)" class="profile-card" *ngFor="let profile of event.accProfiles;">
+            <img [src]="profile.image" alt="{{ profile.name }}" />
+            <h3>{{ profile.name }}</h3>
+            <p>{{ profile.commonInterests }} Common Interests</p>
+          </div>
+        </div>
   </div>
 
   <!-- Event Creation Form -->
@@ -94,6 +107,18 @@
   <div>
     <label>Location:</label>
     <input [(ngModel)]="newEvent.location" placeholder="Event Location" />
+  </div>
+  <div>
+    <label>location Link:</label>
+    <input [(ngModel)]="newEvent.location_url" placeholder="Event Location URL" />
+  </div>
+  <div>
+    <label>Enter max no of participants:</label>
+    <input [(ngModel)]="newEvent.bu_count" placeholder="Enter max no of participants" />
+  </div>
+  <div>
+    <label>Enter min count of buddies:</label>
+    <input [(ngModel)]="newEvent.bu_min_count" placeholder="Enter min count of buddies for confirmation" />
   </div>
   <div>
     <label>Date:</label>

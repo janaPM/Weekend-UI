@@ -9,6 +9,7 @@ import { environment } from '../../../environment';
   styleUrl: './for-you.component.scss'
 })
 export class ForYouComponent implements OnInit {
+  @Input() showProfilesSection = true;
   private apiUrl = environment.URL;
   // profile view
   isCreatingEvent: boolean = false; // Track if creating an event
@@ -17,6 +18,7 @@ export class ForYouComponent implements OnInit {
     name: '',
     description: '',
     location: '',
+    location_url:'',
     date: '',
     time: '',
     startTime: '',
@@ -25,12 +27,15 @@ export class ForYouComponent implements OnInit {
     age: '',
     image: '',
     fee: '',
+    bu_count:'',
+    bu_min_count:'',
     owner: ''
   }; // Holds the new event data
   forYouEvents: Array<{
     name: string;
     description: string;
     location: string;
+    location_url: string;
     date: string;
     time: string;
     startTime: string;
@@ -39,6 +44,8 @@ export class ForYouComponent implements OnInit {
     age: string;
     image: string;
     fee: string;
+    bu_count: string,
+    bu_min_count: string,
     owner: string;
   }> = [];
   bioItems = [
@@ -70,12 +77,14 @@ export class ForYouComponent implements OnInit {
  activeIndex: number | null = null; // Active card index being swiped
  showFriendRequests = false;
  showProfilesInterested = false;
+ showAccProfiles = false;
  showProfile=false;
  ngOnInit() {
    // Mock Events
    const UserId = localStorage.getItem('My_ID'); 
    console.log('UserId:', UserId);
-   this.http.get<any>(`${this.apiUrl}getMyEvent?ownerId=${UserId}`).subscribe((data) => {
+   const apiEndpoint = this.showProfilesSection ? 'getMyEvent' : 'getEventsByReqId';
+   this.http.get<any>(`${this.apiUrl}${apiEndpoint}?ownerId=${UserId}`).subscribe((data) => {
     console.log('User details:', data);
 
     // Assuming data is an array of events, iterate and map it to this.events
@@ -95,8 +104,10 @@ export class ForYouComponent implements OnInit {
           // image: eventData.image,
           // fee: eventData.fee.toString(), // Ensure fee is a string
           // owner: eventData.owner,
+          accProfiles: eventData.acc_users,
           profiles: eventData.req_users,  // Assuming you have no profiles yet
-          showProfiles: false
+          showProfiles: false,
+          showAccProfiles: false
         };
 
           // Add the new event to this.events
@@ -168,8 +179,25 @@ export class ForYouComponent implements OnInit {
       }
     });
   }
-
+  event.showAccProfiles = false;
   event.showProfiles = !event.showProfiles;
+}
+toggleAcceptedProfiles(event: any){
+    // Check if any other event already has profiles visible
+    const isAnotherEventVisible = this.events.some(
+      (otherEvent) => otherEvent !== event && otherEvent.showAccProfiles
+    );
+  
+    // If another event is visible, hide its profiles first
+    if (isAnotherEventVisible) {
+      this.events.forEach((otherEvent) => {
+        if (otherEvent !== event) {
+          otherEvent.showAccProfiles = false;
+        }
+      });
+    }
+    event.showProfiles = false;
+    event.showAccProfiles = !event.showAccProfiles;
 }
 closeProfileView(){
   this.showProfile = false;
@@ -385,6 +413,7 @@ saveEvent(): void {
     //   owner: localStorage.getItem('My_ID') || '' // Ensure it's a string
     // };
     console.log(JSON.stringify(this.newEvent));
+    this.newEvent = {"name":"Kanva Lake Camping","description":"Kanva Lake Camping provides a serene getaway surrounded by nature's beauty.","location":"Kanva Reservoir, Karnataka","location_url":"https://www.google.com/maps/place/Kanva+Reservoir","date":"2025-02-15","time":"00:00","startTime":"2025-02-15 00:00:00","organizerName":"Rishikanna","gender":"Any","age":"18+","image":"https://media1.thrillophilia.com/filestore/x5yu4hn3svla5ug4oh31uq4b2tqi_IMG_20201218_221443_733.jpg?w=auto&h=600","fee":"1349","bu_count":"10","bu_min_count":"3","owner":"1"}
     this.http.post(`${this.apiUrl}createEvent`, this.newEvent).subscribe(
       (response) => {
         console.log('Event saved successfully:', response);
@@ -424,6 +453,7 @@ resetNewEvent(): void {
     name: '',
     description: '',
     location: '',
+    location_url:'',
     date: '',
     time: '',
     startTime:'',
@@ -432,6 +462,8 @@ resetNewEvent(): void {
     age: '',
     image: '',
     fee:'',
+    bu_count:'',
+    bu_min_count:'',
     owner:''
   };
 }

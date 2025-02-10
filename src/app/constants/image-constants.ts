@@ -45,5 +45,6 @@ export const images = {
     filter: "../../assets/filterIcon.svg",
     time:"../../assets/time.svg",
     calander:"../../assets/calendaricon.png",
-    age:"../../assets/age.png"
+    age:"../../assets/age.png",
+    redirect:"../../assets/redirect.svg"
 }

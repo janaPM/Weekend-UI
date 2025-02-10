@@ -37,7 +37,13 @@
         width: 20px; /* Adjust icon size */
         height: 20px; /* Adjust icon size */
       }
+      .location-icon {
+        margin-left: 5px; /* Adjust spacing between location text and icon */
+        // width: 10px; /* Adjust icon size */
+        // height: 10px; /* Adjust icon size */
+      }
     }
+    
     .tags {
       margin: 0.5rem 0;
       text-align: center;

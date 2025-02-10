@@ -91,7 +91,7 @@
         <button (click)="cancelEvent()">Cancel</button>
       </div>
     </div>
-    <div *ngFor="let event of forYouEvents" class="for-you-card">
+    <!-- <div *ngFor="let event of forYouEvents" class="for-you-card">
       <img [src]="event.image" alt="{{ event.name }}" class="event-image" />
       <div class="event-details">
         <h4>{{ event.name }}</h4>
@@ -102,7 +102,8 @@
           {{ event.age }}
         </p>
       </div>
-    </div>
+    </div> -->
+    <app-for-you [showProfilesSection]="false"></app-for-you>
     <!-- Create Event Button -->
     <button class="floating-button" (click)="toggleCreateEvent()">
       <span [ngClass]="{ 'rotate': isCreatingEvent }">
