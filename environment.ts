@@ -6,5 +6,4 @@ export const environment = {
     JSK:'http://192.168.1.27:3000/',
     HOST:'http://192.168.1.4:3000/',
     URL:'http://192.168.1.13:3000/',
-    URL:'http://127.0.0.1:3000/',
   };
