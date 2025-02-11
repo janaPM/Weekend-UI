@@ -27,7 +27,7 @@
       {{ interest }}
     </span>
   </div>
-  <div class="actions">
+  <div *ngIf="!this.isFromForYou" class="actions">
     <button class="reject" (click)="isReject()">✖</button>
     <button class="buddy-up" (click)="showBuddyOptions()">𖠋𖠋</button>
     <button class="accept" (click)="isAccept(event.id)">❤</button>

@@ -15,6 +15,7 @@ export class EventDetailComponent implements OnInit {
   // public user = [
   //   {id: "WND00000001"}
   // ];
+  isFromForYou: boolean = false;
   private apiUrl = environment.URL;
   public images = images;
   user: any;
@@ -177,6 +178,9 @@ export class EventDetailComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.isFromForYou = params['source'] === 'for-you';
+    });
     const UserId = localStorage.getItem('My_ID');
     const eventId = this.route.snapshot.paramMap.get('id');
     console.log('Event-Id--->' + eventId);

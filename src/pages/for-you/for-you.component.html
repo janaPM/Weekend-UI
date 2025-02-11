@@ -22,7 +22,16 @@
   <h3 *ngIf="showProfilesSection">Your Events</h3>
   <h3 *ngIf="!showProfilesSection">Events joined</h3>
   <div *ngFor="let event of events">
-    <div class="event-card">
+    <div class="event-card" (click)="goToEventDetail(event.id)">
+      <!-- Status Badge -->
+      <div *ngIf="event.accProfiles.length >= event.bu_count; else checkMin" class="status-badge closed">
+        <p>Full</p>
+      </div>      
+      <ng-template #checkMin>
+        <div *ngIf="event.accProfiles.length >= event.bu_min_count" class="status-badge confirm">
+          <p>Confirm</p>
+        </div>
+      </ng-template>
       <div class="event-details">
         <div class="event-datetime">
           <h3>{{ event.name }}</h3>
@@ -43,7 +52,7 @@
             <ng-container *ngIf="event.profiles.length > 3" class="profile-more">
               +{{ event.profiles.length -3 }} </ng-container>
           </div> -->
-          <div class="profile-stack" (click)="toggleAcceptedProfiles(event)">
+          <div class="profile-stack" (click)="toggleAcceptedProfiles(event); $event.stopPropagation()">
             <ng-container *ngFor="let profile of (event.accProfiles); let i = index">
             <ng-container *ngIf="i < 2">
             <img
@@ -59,7 +68,7 @@
             </div>
         </div>
       </div>
-      <button *ngIf="showProfilesSection" (click)="toggleInterestedProfiles(event)" [disabled]="!event.profiles || event.profiles.length === 0">
+      <button *ngIf="showProfilesSection" (click)="toggleInterestedProfiles(event); $event.stopPropagation()" [disabled]="!event.profiles || event.profiles.length === 0">
         {{ event.showProfiles ? 'Hide' : 'View' }} Interested Profiles
       </button>
       <!-- <button *ngIf="!showProfilesSection && event.showProfiles" (click)="toggleAcceptedProfiles(event)" [disabled]="!event.profiles || event.profiles.length === 0">
@@ -79,7 +88,7 @@
         <img [src]="profile.image" alt="{{ profile.name }}" />
         <h3>{{ profile.name }}</h3>
         <p>{{ profile.commonInterests }} Common Interests</p>
-        <button (click)="addFriend(profile) ; $event.stopPropagation()">Accept</button>
+        <button (click)="addFriend(profile)">Accept</button>
       </div>
     </div>
         <!-- Interested Profiles Section -->

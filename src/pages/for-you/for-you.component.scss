@@ -57,7 +57,39 @@ $weekend-gold-yellow: #ffd700;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
   color: $text-color;
+  display: flex;
+  flex-direction: column; // Stack items vertically
+  position: relative;
 
+  .event-name {
+    display: flex;
+    justify-content: space-between; // Space between name and badge
+    align-items: center; // Center align vertically
+  }
+  // Status Badge Styles
+  .status-badge {
+    position: absolute;
+    top: 10px; // Adjust as needed
+    right: 10px; // Adjust as needed
+    padding: 5px 10px;
+    font-size: 1vh;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    p {
+      margin: 0; // Remove default margin
+      padding: 0; // Set padding to 0 for the <p> text
+      font-size: 1vh; // You can adjust this size as needed
+    }
+  
+    &.closed {
+      background-color: red; // Red for "Closed"
+    }
+  
+    &.confirm {
+      background-color: green; // Green for "Confirm"
+    }
+  }
   h3 {
     margin: 0;
     font-size: 18px;

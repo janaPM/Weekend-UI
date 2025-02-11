@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { images } from '../../app/constants/image-constants';
 import { environment } from '../../../environment';
+import { Router } from '@angular/router';
 // import * as Hammer from 'hammerjs';
 @Component({
   selector: 'app-for-you',
@@ -104,6 +105,8 @@ export class ForYouComponent implements OnInit {
           // image: eventData.image,
           // fee: eventData.fee.toString(), // Ensure fee is a string
           // owner: eventData.owner,
+          bu_min_count: eventData.bu_min_count,
+          bu_count: eventData.bu_count,
           accProfiles: eventData.acc_users,
           profiles: eventData.req_users,  // Assuming you have no profiles yet
           showProfiles: false,
@@ -117,48 +120,7 @@ export class ForYouComponent implements OnInit {
       }
     });
   
-   this.profiles = [
-    {
-      id: 101,
-      name: 'Alice',
-      image: '.././../assets/profile1.jpeg',
-      commonInterests: 5,
-    },
-    {
-      id: 102,
-      name: 'Bob',
-      image: '.././../assets/profile1.jpeg',
-      commonInterests: 3,
-    },
-    {
-      id: 103,
-      name: 'Jon',
-      image: '.././../assets/profile1.jpeg',
-      commonInterests: 3,
-    },
-    {
-      id: 104,
-      name: 'Harry',
-      image: '.././../assets/profile1.jpeg',
-      commonInterests: 3,
-    },
-    {
-      id: 105,
-      name: 'Nikil',
-      image: '.././../assets/profile1.jpeg',
-      commonInterests: 3,
-    }
-    ];
-   // Mock Profiles Interested
-   this.swipeableProfiles = [
-     { name: 'Kate', image: '.././../assets/profile1.jpeg', commonInterests: 6 },
-     { name: 'Liam', image: '.././../assets/profile1.jpeg', commonInterests: 2 }
-   ];
-   // Mock Friend Requests
-   this.friendRequests = [
-     { name: 'Sophia', image: '.././../assets/profile1.jpeg' },
-     { name: 'Michael', image: '.././../assets/profile1.jpeg' }
-   ];
+
 
    //for profile
 
@@ -366,8 +328,10 @@ removeProfile(profile: any) {
   // No swipe (transparent)
   return 'transparent';
  }
- constructor(private http: HttpClient) {}
-
+ constructor(private http: HttpClient, private router: Router) {}
+ goToEventDetail(eventId: string) {
+  this.router.navigate(['/event-detail', eventId], { queryParams: { source: 'for-you' } });
+}
  toggleCreateEvent(): void {
   this.isCreatingEvent = !this.isCreatingEvent;
   this.isOpen = !this.isOpen;
