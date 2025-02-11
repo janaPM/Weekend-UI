@@ -120,7 +120,43 @@ export class ForYouComponent implements OnInit {
       }
     });
   
-
+    this.profiles = [
+      {
+        id: 101,
+        name: 'Alice',
+        image: '.././../assets/profile1.jpeg',
+        commonInterests: 5,
+      },
+      {
+        id: 102,
+        name: 'Bob',
+        image: '.././../assets/profile1.jpeg',
+        commonInterests: 3,
+      },
+      {
+        id: 103,
+        name: 'Jon',
+        image: '.././../assets/profile1.jpeg',
+        commonInterests: 3,
+      },
+      {
+        id: 104,
+        name: 'Harry',
+        image: '.././../assets/profile1.jpeg',
+        commonInterests: 3,
+      },
+      {
+        id: 105,
+        name: 'Nikil',
+        image: '.././../assets/profile1.jpeg',
+        commonInterests: 3,
+      }
+      ];
+     // Mock Friend Requests
+     this.friendRequests = [
+       { name: 'Sophia', image: '.././../assets/profile1.jpeg' },
+       { name: 'Michael', image: '.././../assets/profile1.jpeg' }
+     ];
 
    //for profile
 
@@ -199,16 +235,6 @@ onTouchMove(event: TouchEvent) {
   this.currentTranslateX = currentX - this.touchStartX;
   console.log("onTouchMove");
 }
-// onTouchEnd(profile: any, event: any) {
-//   if (this.currentTranslateX > 100) {
-//     this.acceptProfile(profile);
-//     event.profiles = event.profiles.filter((p: any) => p.id !== profile.id);
-//   } else if (this.currentTranslateX < -100) {
-//     this.rejectProfile(profile);
-//     event.profiles = event.profiles.filter((p: any) => p.id !== profile.id);
-//   }
-//   this.resetCard();
-//  }
 onTouchEnd(profile: any, event: any) {
   const container = document.querySelector('.profile-list') as HTMLElement;
   if (container){
@@ -255,10 +281,6 @@ onTouchEnd(profile: any, event: any) {
     }, 500); // Match the animation duration
   }
  }
-// acceptProfile(profile: any) {
-//   // alert(`You accepted ${profile.name}`);
-//   this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
-// }
 acceptProfile(profile: any, event: any) {
   const payload = {
     profileId: profile,
@@ -275,10 +297,6 @@ acceptProfile(profile: any, event: any) {
     }
   );
 }
-// rejectProfile(profile: any) {
-//   // alert(`You rejected ${profile.name}`);
-//   this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
-// }
 rejectProfile(profile: any,event: any) {
   const payload = {
     profileId: profile,
