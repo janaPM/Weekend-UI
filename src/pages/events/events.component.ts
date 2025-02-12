@@ -10,14 +10,43 @@ import { environment } from '../../../environment';
  styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit, OnDestroy {
+  userLocation: { latitude: number; longitude: number } | null = null;
   private apiUrl = environment.URL;
   isDefaultView: boolean = true;
   isCreatingEvent: boolean = false; // Track if creating an event
   public images = images;
   public isOpen = false;
   searchQuery: string = ''; // To bind the search input
+  events: Array<{
+    id: string;
+    name: string;
+    description: string;
+    startTime: string;
+    age: string;
+    fee: any;
+    location_url: string;
+    image: string;
+    location: string;
+    hashtag?: string[]; // Ensure this is an array of strings
+  }> = [];
+  
+  filteredEvents: Array<{
+    id: string;
+    name: string;
+    description: string;
+    startTime: string;
+    age: string;
+    fee: any;
+    location_url: string;
+    image: string;
+    location: string;
+    hashtag?: string[];
+  }> = [];
+  
   newEvent = {
+    id: '',
     name: '',
+    description: '',
     location: '',
     date: '',
     time: '',
@@ -25,45 +54,12 @@ export class EventsComponent implements OnInit, OnDestroy {
     organizerName: '',
     gender: 'Any',
     age: '',
-    fee:'',
-    image: ''
-  }; // Holds the new event data
-  filteredNearbyEvents: Array<{
-    id: string;
-    name: string;
-    description: string;
-    startTime: string;
-    age: string;
-    fee: any;
-    image: string;
-  }> = []; // To store filtered events
-  events: {
-    upcomingEvents: Array<{ name: string; image: string }>;
-    nearbyEvents: Array<{
-      id: string;
-      name: string;
-      startTime: string;
-      description: string;
-      age: string;
-      fee: string;
-      image: string;
-      hastag: string[];
-    }>;
-  } = {
-    upcomingEvents: [],
-    nearbyEvents: [],
+    fee: '',
+    location_url: '',
+    image: '',
+    hashtag: [] // Change this to an array of strings
   };
-  forYouEvents: Array<{
-    name: string;
-    location: string;
-    date: string;
-    time: string;
-    startTime: string;
-    organizerName: string;
-    gender: string;
-    age: string;
-    image: string;
-  }> = [];
+
   currentIndex: number = 0;
   isDragging = false;
   startX = 0;
@@ -71,6 +67,10 @@ export class EventsComponent implements OnInit, OnDestroy {
   prevTranslate = 0;
   autoScrollInterval: any;
   isHovering = false;
+
+  ngOnInit(): void {
+    this.fetchEvents();
+    }
   ngOnDestroy(): void {
     this.stopAutoScroll();
   }
@@ -116,12 +116,11 @@ export class EventsComponent implements OnInit, OnDestroy {
     // this.startAutoScroll();
   }
   moveToNext(): void {
-    this.currentIndex = (this.currentIndex + 1) % this.events.upcomingEvents.length;
+    // this.currentIndex = (this.currentIndex + 1) % this.events.upcomingEvents.length;
     this.updatePosition();
   }
   moveToPrevious(): void {
-    this.currentIndex =
-      (this.currentIndex - 1 + this.events.upcomingEvents.length) % this.events.upcomingEvents.length;
+    // this.currentIndex = (this.currentIndex - 1 + this.events.upcomingEvents.length) % this.events.upcomingEvents.length;
     this.updatePosition();
   }
   updatePosition(): void {
@@ -131,13 +130,13 @@ export class EventsComponent implements OnInit, OnDestroy {
     return `translateX(${this.currentTranslate}%)`;
   }
   constructor(private http: HttpClient, private router: Router) {}
-  ngOnInit(): void {
+  fetchEvents(): void {
     this.startAutoScroll();
     this.http.get<any>(`${this.apiUrl}getAllEvent?`).subscribe({
       next: (data) => {
         this.events = data;
-        this.filteredNearbyEvents = data; // Initialize filtered events
-        console.log(JSON.stringify(this.filteredNearbyEvents));
+        this.filteredEvents = data; // Initialize filtered events
+        console.log(JSON.stringify(this.filteredEvents));
       },
       error: (error) => {
         console.error('Error fetching events data:', error);
@@ -145,12 +144,34 @@ export class EventsComponent implements OnInit, OnDestroy {
     });
     this.http.get<any>('/assets/forYouEvents.json').subscribe({
       next: (data) => {
-        this.forYouEvents = data || [];
+        // this.forYouEvents = data || [];
       },
       error: (error) => {
         console.error('Error fetching For-You events data:', error);
       },
     });
+    this.getUserLocation();
+  }
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.userLocation = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          };
+          console.log('User location:', this.userLocation);
+          // You can now use this location for your app's functionality
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          // Handle errors here (e.g., show a message to the user)
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+      // Handle the case where geolocation is not supported
+    }
   }
   formatDateTime(dateTimeString: string): string {
     const dateObj = new Date(dateTimeString);
@@ -184,13 +205,13 @@ export class EventsComponent implements OnInit, OnDestroy {
   filterEvents(): void {
     const query = this.searchQuery.toLowerCase();
     console.error('query:', query);
-    this.filteredNearbyEvents = this.events.nearbyEvents.filter(
+    this.filteredEvents = this.events.filter(
       (event) =>
         event.name.toLowerCase().includes(query) || // Match name
         event.description.toLowerCase().includes(query) ||// Optional: Match hashtags/description
-        event.hastag?.some((tag) => tag.toLowerCase().includes(query))
+        event.hashtag?.some((tag) => tag.toLowerCase().includes(query))
     );
-    console.error('filteredNearbyEvents:', this.filteredNearbyEvents);
+    console.error('filteredNearbyEvents:', this.filteredEvents);
     this.isHovering = false;
   }
   toggleCreateEvent(): void {
@@ -202,29 +223,34 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
   saveEvent(): void {
     if (this.isEventValid()) {
-      this.forYouEvents.push({ ...this.newEvent }); // Add to event list
-      this.isCreatingEvent = false;
-      this.resetNewEvent();
+    this.events.push({ ...this.newEvent }); // Add to events list
+    this.filteredEvents = [...this.events]; // Update filtered list
+    this.isCreatingEvent = false;
+    this.resetNewEvent();
     } else {
-      alert('Please fill out all fields!');
+    alert('Please fill out all required fields!');
     }
-  }
+    }
   cancelEvent(): void {
     this.isCreatingEvent = false;
     this.resetNewEvent();
   }
   resetNewEvent(): void {
     this.newEvent = {
+      id:'',
       name: '',
+      description:'',
       location: '',
       date: '',
       time: '',
-      startTime: '',
+      startTime:'',
       organizerName: '',
       gender: 'Any',
       age: '',
-      fee:'',
-      image: ''
+      fee: '',
+      location_url:'',
+      image: '',
+      hashtag:[]
     };
   }
   isEventValid(): boolean {

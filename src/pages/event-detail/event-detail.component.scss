@@ -8,6 +8,16 @@
       object-fit: cover;
       border-radius: 8px;
     }
+    .event-name {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .share-icon {
+      cursor: pointer;
+      margin-left: 10px; /* Adjust spacing as needed */
+    }
     h2 {
       margin: 1rem 0;
       margin-bottom: 0px;

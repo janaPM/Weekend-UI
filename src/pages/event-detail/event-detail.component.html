@@ -1,6 +1,9 @@
 <div *ngIf="event && !showSwipableProfiles" class="event-detail-container">
   <img [src]="event.image" alt="{{ event.name }}" class="event-image" />
-  <h2>{{ event.name }}</h2>
+  <h2 class="event-name">
+    {{ event.name }}
+    <img [src]="images.share" alt="Share" class="share-icon" (click)="shareEvent(event.id)" />
+  </h2>
   <p class="event-time">
     <img [src]="images.calander" width="15" height="15" class="icon" /> {{ formatDateTime(event.startTime).formattedDate }}
   </p>

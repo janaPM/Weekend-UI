@@ -24,19 +24,19 @@
         </div>
       </div>
     </section> -->
-      <h3>Upcoming events</h3>
+      <!-- <h3>Upcoming events</h3>
     <section class="carousel-container" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
       <div class="carousel-wrapper" [style.transform]="getTransform()" (touchstart)="onTouchStart($event)"
         (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()">
-        <div class="carousel-item" *ngFor="let event of events.upcomingEvents; let i = index">
+        <div class="carousel-item" *ngFor="let event of events; let i = index">
           <img [src]="event.image" alt="{{ event.name }}" />
           <p>{{ event.name }}</p>
         </div>
       </div>
-    </section>
+    </section> -->
     <section class="event-list">
       <h3>Events near you</h3>
-      <div class="event-card" *ngFor="let event of filteredNearbyEvents" class="event-card"
+      <div class="event-card" *ngFor="let event of events" class="event-card"
         (click)="viewEvent(event.id)">
         <img [src]="event.image" alt="{{ event.name }}" />
         <h4>{{ event.name }}</h4>

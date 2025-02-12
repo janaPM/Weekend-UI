@@ -25,11 +25,11 @@
     <div class="event-card" (click)="goToEventDetail(event.id)">
       <!-- Status Badge -->
       <div *ngIf="event.accProfiles.length >= event.bu_count; else checkMin" class="status-badge closed">
-        <p>Full</p>
+        <p>Tickets Filled</p>
       </div>      
       <ng-template #checkMin>
         <div *ngIf="event.accProfiles.length >= event.bu_min_count" class="status-badge confirm">
-          <p>Confirm</p>
+          <p>Confirmed</p>
         </div>
       </ng-template>
       <div class="event-details">

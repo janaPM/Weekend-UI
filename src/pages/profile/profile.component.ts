@@ -72,14 +72,17 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
     this.http.get<any>(`${this.apiUrl}userDetail?userId=${UserId}`).subscribe((data) => {
       this.user.id = UserId;
       this.user = { ...data };
-      
+      console.log("data++++"+JSON.stringify(this.user.profilePicture));
+      console.log("data++++"+JSON.stringify(this.user.profilePicture.data));
       if (Array.isArray(this.user.profilePicture)) {
-        this.user.profilePicture = `data:image/jpeg;base64,${this.byteArrayToBase64(this.user.profilePicture.data)}`;
+        console.log("data++++"+JSON.stringify(this.user.profilePicture));
+        this.user.profilePicture = `data:image/jpeg;base64,${this.byteArrayToBase64(this.user.profilePicture)}`;
       } else if (typeof this.user.profilePicture === 'string') {
         // If it's already a base64 string, just prepend the data URL
-        this.user.profilePicture = `data:image/jpeg;base64,${this.user.profilePicture.data}`;
+        this.user.profilePicture = `data:image/jpeg;base64,${this.user.profilePicture}`;
       } else {
-        console.error('Unexpected format for profilePicture:', this.user.profilePicture.data);
+        console.log(typeof this.user.profilePicture);
+        console.error('Unexpected format for profilePicture:', this.user.profilePicture);
       }
       console.log('Data from db--->'+JSON.stringify(this.user.profilePicture));
       this.originalUser = { ...data };

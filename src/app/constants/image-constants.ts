@@ -46,5 +46,6 @@ export const images = {
     time:"../../assets/time.svg",
     calander:"../../assets/calendaricon.png",
     age:"../../assets/age.png",
-    redirect:"../../assets/redirect.svg"
+    redirect:"../../assets/redirect.svg",
+    share:"../../assets/share.png"
 }

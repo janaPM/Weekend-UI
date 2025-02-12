@@ -69,7 +69,6 @@ export class EventDetailComponent implements OnInit {
     this.startY = event.touches[0].clientY;
     this.isDragging = true;
   }
-
   onTouchMove(event: TouchEvent): void {
     if (!this.isDragging) return;
     const currentX = event.touches[0].clientX;
@@ -278,4 +277,32 @@ export class EventDetailComponent implements OnInit {
   isReject() {
     this.router.navigate(['/events']);
   }
+  shareEvent(eventId: string) {
+    const eventLink = `http://localhost:4200/event-detail/${eventId}`;
+  
+    // Check if the Web Share API is supported
+    if (navigator.share) {
+      navigator.share({
+        title: 'Check out this event!',
+        url: eventLink
+      }).then(() => {
+        console.log('Event shared successfully');
+      }).catch((error) => {
+        console.error('Error sharing event:', error);
+      });
+    } else {
+      // Fallback for browsers that do not support the Web Share API
+      this.copyToClipboard(eventLink);
+    }
+  }
+  
+  copyToClipboard(text: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      console.log('Link copied to clipboard');
+      alert('Link copied to clipboard!'); // Optional: Notify the user
+    }).catch((error) => {
+      console.error('Error copying link:', error);
+    });
+  }
+  
 }
