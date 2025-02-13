@@ -17,6 +17,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   public images = images;
   public isOpen = false;
   searchQuery: string = ''; // To bind the search input
+  UserId: any;
   events: Array<{
     id: string;
     name: string;
@@ -59,6 +60,22 @@ export class EventsComponent implements OnInit, OnDestroy {
     image: '',
     hashtag: [] // Change this to an array of strings
   };
+  userData = {
+    id: '' as any, // Replace with the actual user ID
+    // name: '',
+    // bio: '',
+    // work: '',
+    // education: '',
+    // gender: '',
+    // location: '',
+    // hometown: '',
+    // height: null,
+    // exercise: '',
+    // educationLevel: '',
+    // interest: [], // Adjust based on your requirements
+    latitude: null as number | null, // Allow latitude to be a number or null
+    longitude: null as number | null, // Allow longitude to be a number or null
+  };
 
   currentIndex: number = 0;
   isDragging = false;
@@ -70,6 +87,7 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchEvents();
+    this.getUserLocation();
     }
   ngOnDestroy(): void {
     this.stopAutoScroll();
@@ -150,9 +168,9 @@ export class EventsComponent implements OnInit, OnDestroy {
         console.error('Error fetching For-You events data:', error);
       },
     });
-    this.getUserLocation();
   }
   getUserLocation() {
+    const UserId = localStorage.getItem('My_ID'); 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -161,7 +179,14 @@ export class EventsComponent implements OnInit, OnDestroy {
             longitude: position.coords.longitude
           };
           console.log('User location:', this.userLocation);
-          // You can now use this location for your app's functionality
+          
+          // Update userData with the retrieved location
+          this.userData.id = UserId;
+          this.userData.latitude = this.userLocation.latitude;
+          this.userData.longitude = this.userLocation.longitude;
+
+          // Send user data including location to the backend
+          this.sendUserLocation();
         },
         (error) => {
           console.error('Error getting location:', error);
@@ -171,6 +196,20 @@ export class EventsComponent implements OnInit, OnDestroy {
     } else {
       console.error('Geolocation is not supported by this browser.');
       // Handle the case where geolocation is not supported
+    }
+  }
+  sendUserLocation() {
+    if (this.userLocation) {
+      console.log("this.userData++"+JSON.stringify(this.userData));
+      this.http.post(`${this.apiUrl}updateUser`, this.userData)
+        .subscribe(
+          response => {
+            console.log('Location sent successfully:', response);
+          },
+          error => {
+            console.error('Error sending location:', error);
+          }
+        );
     }
   }
   formatDateTime(dateTimeString: string): string {
