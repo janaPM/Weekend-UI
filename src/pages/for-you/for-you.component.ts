@@ -395,7 +395,7 @@ saveEvent(): void {
     //   owner: localStorage.getItem('My_ID') || '' // Ensure it's a string
     // };
     console.log(JSON.stringify(this.newEvent));
-    this.newEvent = {"name":"Kanva Lake Camping","description":"Kanva Lake Camping provides a serene getaway surrounded by nature's beauty.","location":"Kanva Reservoir, Karnataka","location_url":"https://www.google.com/maps/place/Kanva+Reservoir","date":"2025-02-15","time":"00:00","startTime":"2025-02-15 00:00:00","organizerName":"Rishikanna","gender":"Any","age":"18+","image":"https://media1.thrillophilia.com/filestore/x5yu4hn3svla5ug4oh31uq4b2tqi_IMG_20201218_221443_733.jpg?w=auto&h=600","fee":"1349","bu_count":"10","bu_min_count":"3","owner":"1"}
+    // this.newEvent = {"name":"Kanva Lake Camping","description":"Kanva Lake Camping provides a serene getaway surrounded by nature's beauty.","location":"Kanva Reservoir, Karnataka","location_url":"https://www.google.com/maps/place/Kanva+Reservoir","date":"2025-02-15","time":"00:00","startTime":"2025-02-15 00:00:00","organizerName":"Rishikanna","gender":"Any","age":"18+","image":"https://media1.thrillophilia.com/filestore/x5yu4hn3svla5ug4oh31uq4b2tqi_IMG_20201218_221443_733.jpg?w=auto&h=600","fee":"1349","bu_count":"10","bu_min_count":"3","owner":"1"}
     this.http.post(`${this.apiUrl}createEvent`, this.newEvent).subscribe(
       (response) => {
         console.log('Event saved successfully:', response);
