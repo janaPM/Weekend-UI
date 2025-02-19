@@ -19,7 +19,9 @@ export class ForYouComponent implements OnInit {
     name: '',
     description: '',
     location: '',
-    location_url:'',
+    location_url: '',
+    latitude:0,
+    longitude:0,
     date: '',
     time: '',
     startTime: '',
@@ -32,23 +34,6 @@ export class ForYouComponent implements OnInit {
     bu_min_count:'',
     owner: ''
   }; // Holds the new event data
-  forYouEvents: Array<{
-    name: string;
-    description: string;
-    location: string;
-    location_url: string;
-    date: string;
-    time: string;
-    startTime: string;
-    organizerName: string;
-    gender: string;
-    age: string;
-    image: string;
-    fee: string;
-    bu_count: string,
-    bu_min_count: string,
-    owner: string;
-  }> = [];
   bioItems = [
     {key: "bio", title: "Bio", icon: './../../assets/bio.png'},
   ];
@@ -378,7 +363,13 @@ saveEvent(): void {
   if (this.isEventValid()) {
     this.newEvent.owner = localStorage.getItem('My_ID') || ''; // Ensure it's a string
     this.newEvent.startTime = this.combineDateAndTime(); // Set the startTime
-    this.forYouEvents.push({ ...this.newEvent }); // Add to event list
+    try {
+      const coordinates = this.getCoordinatesFromLocationUrl(this.newEvent.location_url);
+      this.newEvent.latitude = coordinates.latitude;
+      this.newEvent.longitude = coordinates.longitude;
+    } catch (error) {
+      console.error(error);
+    }
     // this.newEvent = {"name":"Weekend Recruting","description":"No need of college degree","location":"Bangalure","date":"2025-01-20","time":"10:00","startTime":"2025-01-20T04:30:00.000Z","organizerName":"","gender":"Any","age":"18+","image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRucQIktdhubA67woLderNRVAR4lP1bC-BYBg&s","fee":"0","owner":"1"};
     // this.newEvent = {
     //   name: "Weekend Recruiting",
@@ -436,6 +427,8 @@ resetNewEvent(): void {
     description: '',
     location: '',
     location_url:'',
+    latitude: 0,
+    longitude: 0,
     date: '',
     time: '',
     startTime:'',
@@ -451,7 +444,8 @@ resetNewEvent(): void {
 }
 isEventValid(): boolean {
   return (
-    this.newEvent.name !== '' // &&
+    this.newEvent.name !== ''&& 
+    this.newEvent.location_url !== ''// &&
     // this.newEvent.description !== '' &&
     // this.newEvent.location !== ''&&
     // this.newEvent.date !== '' &&
@@ -460,5 +454,18 @@ isEventValid(): boolean {
     // this.newEvent.image !== '' &&
     // this.newEvent.fee !== ''
   );
+}
+getCoordinatesFromLocationUrl(locationUrl: string): { latitude: number; longitude: number } {
+  const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/; // Regex to match latitude and longitude
+  const match = locationUrl.match(regex);
+
+  if (match) {
+    return {
+      latitude: parseFloat(match[1]),  // Convert to float
+      longitude: parseFloat(match[2])   // Convert to float
+    };
+  } else {
+    throw new Error('Coordinates not found in the URL');
+  }
 }
 }

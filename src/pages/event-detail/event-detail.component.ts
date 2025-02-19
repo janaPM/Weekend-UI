@@ -184,7 +184,7 @@ export class EventDetailComponent implements OnInit {
     const eventId = this.route.snapshot.paramMap.get('id');
     console.log('Event-Id--->' + eventId);
     // this.http.get<any>(`${this.apiUrl}getAllEvents?id=${eventId}`).toPromise()
-    this.http.get<any>(`${this.apiUrl}getAllEvent?`).subscribe(
+    this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}`).subscribe(
       (data) => {
         this.event = data.find((e: any) => e.id === eventId);
         console.log('Event-Details--->' + JSON.stringify(this.event));

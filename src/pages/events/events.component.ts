@@ -150,7 +150,8 @@ export class EventsComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private router: Router) {}
   fetchEvents(): void {
     this.startAutoScroll();
-    this.http.get<any>(`${this.apiUrl}getAllEvent?`).subscribe({
+    const UserId = localStorage.getItem('My_ID') || '';
+    this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}`).subscribe({
       next: (data) => {
         this.events = data;
         this.filteredEvents = data; // Initialize filtered events
