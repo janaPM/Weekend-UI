@@ -11,6 +11,7 @@ import { combineLatest } from 'rxjs';
 import { CalendarComponent } from '../pages/calendar/calendar.component';
 import { LoginComponent } from '../pages/login/login.component';
 import { NewProfileInfoComponent } from '../pages/new-profile-info/new-profile-info.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -25,7 +26,8 @@ const routes: Routes = [
       { path: 'chat-conversation', component: ChatConversationComponent},
       { path: 'event-detail/:id', component: EventDetailComponent},
       { path: 'calendar', component: CalendarComponent},
-      { path: 'new', component: NewProfileInfoComponent}
+      { path: 'new', component: NewProfileInfoComponent},
+      { path: 'app-new-profile-info', component: NewProfileInfoComponent}
     ]
   }
 ];

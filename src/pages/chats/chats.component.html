@@ -7,11 +7,12 @@
   </header>
   <hr class="header-line" />
   <div class="chat-list">
-    <div *ngFor="let chat of chats" class="chat-item" (click)="navigateTo('chat-conversation')">
-      <img [src]="chat.avatar" alt="{{ chat.name }}" class="avatar" />
+    <div *ngFor="let chat of chatList" class="chat-item" (click)="navigateTo('chat-conversation', chat.event_id)">
+      <img [src]="chat.avatar" alt="{{ chat.event_name }}" class="avatar" />
       <div class="chat-details">
-        <h3 class="chat-name">{{ chat.name }}</h3>
-        <p class="chat-message">{{ chat.message }}</p>
+        <h3 class="chat-name">{{ chat.event_name }}</h3>
+        <p class="chat-message">{{ chat.last_message.message }}</p>
+        <span class="chat-time">{{ formatTime(chat.last_message.createdAt) }}</span> <!-- Added time display -->
       </div>
     </div>
   </div>

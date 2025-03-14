@@ -258,9 +258,7 @@ export class EventDetailComponent implements OnInit {
   
     // Send a POST request to your backend API to update the user's preference
     console.log('this.event: ' + JSON.stringify(requestBody));
-    this.http
-      .post('http://localhost:3000/requestToJoinEvent', requestBody)
-      .subscribe(
+    this.http.post(`${this.apiUrl}requestToJoinEvent`, requestBody).subscribe(
         (response) => {
           console.log('User acceptance updated successfully:', response);
           // Handle successful response, e.g., show a success message

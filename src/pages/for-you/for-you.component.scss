@@ -16,6 +16,7 @@ $weekend-gold-yellow: #ffd700;
   background-color: $background-color;
   font-family: 'Arial', sans-serif;
   border-radius: $border-radius;
+  min-height: 100vh;
   margin-bottom: 70px;
 }
 
@@ -793,4 +794,32 @@ $weekend-gold-yellow: #ffd700;
 
 .floating-button:focus {
   outline: none;
+}
+.no-events-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // height: 300px; /* Adjust height as needed */
+  width: 100%;
+  text-align: center;
+  .bold-message {
+    font-weight: bold;
+  }
+}
+.no-events-message {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.no-events-image {
+  max-width: 150px;
+  margin-bottom: 20px;
+}
+
+.no-events-message p {
+  margin: 5px 0;
+  color: #7f8c8d;
+  font-family: 'Your Sngular Font', sans-serif; /* Replace */
 }

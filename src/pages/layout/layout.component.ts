@@ -11,7 +11,8 @@ export class LayoutComponent {
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.isChatConversation = event.urlAfterRedirects === '/chat-conversation' || event.urlAfterRedirects.startsWith('/login') || event.urlAfterRedirects.startsWith('/new');
+        console.log("event.urlAfterRedirects"+event.urlAfterRedirects);
+        this.isChatConversation = event.urlAfterRedirects.startsWith('/chat-conversation') || event.urlAfterRedirects.startsWith('/login') || event.urlAfterRedirects.startsWith('/new');
         console.log("event.urlAfterRedirects == '/chat-conversation'"+event.urlAfterRedirects);
       }
     });

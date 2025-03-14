@@ -47,5 +47,6 @@ export const images = {
     calander:"../../assets/calendaricon.png",
     age:"../../assets/age.png",
     redirect:"../../assets/redirect.svg",
-    share:"../../assets/share.png"
+    share:"../../assets/share.png",
+    noEvents:"../../assets/No_events.png"
 }

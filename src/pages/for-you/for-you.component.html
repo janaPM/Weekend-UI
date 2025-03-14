@@ -21,86 +21,98 @@
   <!-- Events List -->
   <h3 *ngIf="showProfilesSection">Your Events</h3>
   <h3 *ngIf="!showProfilesSection">Events joined</h3>
-  <div *ngFor="let event of events">
-    <div class="event-card" (click)="goToEventDetail(event.id)">
-      <!-- Status Badge -->
-      <div *ngIf="event.accProfiles.length >= event.bu_count; else checkMin" class="status-badge closed">
-        <p>Tickets Filled</p>
-      </div>      
-      <ng-template #checkMin>
-        <div *ngIf="event.accProfiles.length >= event.bu_min_count" class="status-badge confirm">
-          <p>Confirmed</p>
-        </div>
-      </ng-template>
-      <div class="event-details">
-        <div class="event-datetime">
-          <h3>{{ event.name }}</h3>
-          <p>{{ formatDateTime(event.startTime).formattedDate }}</p>
-          <p>{{ formatDateTime(event.startTime).formattedTime }}</p>
-        </div>
-        <!-- Stack of accepted profile images -->
-        <!-- <div class="accepted-profiles">
-          <div class="profile-stack">
-            <img *ngFor="let profile of event.profiles" [src]="profile.image || images.profile1" alt="{{ profile.name }}" class="profile-image" />
+  <div *ngIf="events && events.length > 0; else noEvents">
+    <div *ngFor="let event of events">
+      <div class="event-card" (click)="goToEventDetail(event.id)">
+        <!-- Status Badge -->
+        <div *ngIf="event.accProfiles.length >= event.bu_count; else checkMin" class="status-badge closed">
+          <p>Tickets Filled</p>
+        </div>      
+        <ng-template #checkMin>
+          <div *ngIf="event.accProfiles.length >= event.bu_min_count" class="status-badge confirm">
+            <p>Confirmed</p>
           </div>
-        </div> -->
-        <div class="accepted-profiles">
-          <!-- <div class="profile-stack">
-            <ng-container *ngFor="let profile of event.profiles.slice(0,3); let i = index">
-              <img [src]="profile.image || images.profile1" [alt]="profile.name" class="profile-image" />
-            </ng-container>
-            <ng-container *ngIf="event.profiles.length > 3" class="profile-more">
-              +{{ event.profiles.length -3 }} </ng-container>
+        </ng-template>
+        <div class="event-details">
+          <div class="event-datetime">
+            <h3>{{ event.name }}</h3>
+            <p>{{ formatDateTime(event.startTime).formattedDate }}</p>
+            <p>{{ formatDateTime(event.startTime).formattedTime }}</p>
+          </div>
+          <!-- Stack of accepted profile images -->
+          <!-- <div class="accepted-profiles">
+            <div class="profile-stack">
+              <img *ngFor="let profile of event.profiles" [src]="profile.image || images.profile1" alt="{{ profile.name }}" class="profile-image" />
+            </div>
           </div> -->
-          <div class="profile-stack" (click)="toggleAcceptedProfiles(event); $event.stopPropagation()">
-            <ng-container *ngFor="let profile of (event.accProfiles); let i = index">
-            <ng-container *ngIf="i < 2">
-            <img
-                   [src]="profile.image || images.profile1"
-                   [alt]="profile.name || 'Profile Image'"
-                   class="profile-image"
-                 />
-            </ng-container>
-            </ng-container>
-            <div *ngIf="(event.accProfiles).length > 2" class="profile-more">
-               +{{ (event.accProfiles).length - 2 }}
-            </div>
-            </div>
-        </div>
-      </div>
-      <button *ngIf="showProfilesSection" (click)="toggleInterestedProfiles(event); $event.stopPropagation()" [disabled]="!event.profiles || event.profiles.length === 0">
-        {{ event.showProfiles ? 'Hide' : 'View' }} Interested Profiles
-      </button>
-      <!-- <button *ngIf="!showProfilesSection && event.showProfiles" (click)="toggleAcceptedProfiles(event)" [disabled]="!event.profiles || event.profiles.length === 0">
-        {{ event.showProfiles ? 'Hide' : 'View' }} Joined Profiles
-      </button> -->
-    </div>
-    <!-- Interested Profiles Section -->
-    <div *ngIf="event.showProfiles" class="interested-profiles">
-      <h4 *ngIf="event.profiles.length > 0">Profiles Interested</h4>
-      <div (click)="openProfileView(profile)" class="profile-card" *ngFor="let profile of event.profiles; let i = index"
-        [attr.data-id]="profile.id" [ngStyle]="{
-          transform: activeIndex === i ? 'translateX(' + currentTranslateX + 'px)' : 'translateX(0)',
-          transition: activeIndex === null ? 'transform 0.3s ease-out' : 'none',
-          background: activeIndex === i ? getCardBackground(currentTranslateX) : 'white'
-        }" (touchstart)="onTouchStart($event, i)" (touchmove)="onTouchMove($event)"
-        (touchend)="onTouchEnd(profile, event)">
-        <img [src]="profile.image" alt="{{ profile.name }}" />
-        <h3>{{ profile.name }}</h3>
-        <p>{{ profile.commonInterests }} Common Interests</p>
-        <button (click)="addFriend(profile)">Accept</button>
-      </div>
-    </div>
-        <!-- Interested Profiles Section -->
-        <div *ngIf="event.showAccProfiles" class="interested-profiles">
-          <h4 *ngIf="event.accProfiles.length > 0">Confirmed Profiles</h4>
-          <div (click)="openProfileView(profile)" class="profile-card" *ngFor="let profile of event.accProfiles;">
-            <img [src]="profile.image" alt="{{ profile.name }}" />
-            <h3>{{ profile.name }}</h3>
-            <p>{{ profile.commonInterests }} Common Interests</p>
+          <div class="accepted-profiles">
+            <!-- <div class="profile-stack">
+              <ng-container *ngFor="let profile of event.profiles.slice(0,3); let i = index">
+                <img [src]="profile.image || images.profile1" [alt]="profile.name" class="profile-image" />
+              </ng-container>
+              <ng-container *ngIf="event.profiles.length > 3" class="profile-more">
+                +{{ event.profiles.length -3 }} </ng-container>
+            </div> -->
+            <div class="profile-stack" (click)="toggleAcceptedProfiles(event); $event.stopPropagation()">
+              <ng-container *ngFor="let profile of (event.accProfiles); let i = index">
+              <ng-container *ngIf="i < 2">
+              <img
+                    [src]="profile.image || images.profile1"
+                    [alt]="profile.name || 'Profile Image'"
+                    class="profile-image"
+                  />
+              </ng-container>
+              </ng-container>
+              <div *ngIf="(event.accProfiles).length > 2" class="profile-more">
+                +{{ (event.accProfiles).length - 2 }}
+              </div>
+              </div>
           </div>
         </div>
+        <button *ngIf="showProfilesSection" (click)="toggleInterestedProfiles(event); $event.stopPropagation()" [disabled]="!event.profiles || event.profiles.length === 0">
+          {{ event.showProfiles ? 'Hide' : 'View' }} Interested Profiles
+        </button>
+        <!-- <button *ngIf="!showProfilesSection && event.showProfiles" (click)="toggleAcceptedProfiles(event)" [disabled]="!event.profiles || event.profiles.length === 0">
+          {{ event.showProfiles ? 'Hide' : 'View' }} Joined Profiles
+        </button> -->
+      </div>
+      <!-- Interested Profiles Section -->
+      <div *ngIf="event.showProfiles" class="interested-profiles">
+        <h4 *ngIf="event.profiles.length > 0">Profiles Interested</h4>
+        <div (click)="openProfileView(profile)" class="profile-card" *ngFor="let profile of event.profiles; let i = index"
+          [attr.data-id]="profile.id" [ngStyle]="{
+            transform: activeIndex === i ? 'translateX(' + currentTranslateX + 'px)' : 'translateX(0)',
+            transition: activeIndex === null ? 'transform 0.3s ease-out' : 'none',
+            background: activeIndex === i ? getCardBackground(currentTranslateX) : 'white'
+          }" (touchstart)="onTouchStart($event, i)" (touchmove)="onTouchMove($event)"
+          (touchend)="onTouchEnd(profile, event)">
+          <img [src]="profile.image" alt="{{ profile.name }}" />
+          <h3>{{ profile.name }}</h3>
+          <p>{{ profile.commonInterests }} Common Interests</p>
+          <button (click)="addFriend(profile)">Accept</button>
+        </div>
+      </div>
+          <!-- Interested Profiles Section -->
+          <div *ngIf="event.showAccProfiles" class="interested-profiles">
+            <h4 *ngIf="event.accProfiles.length > 0">Confirmed Profiles</h4>
+            <div (click)="openProfileView(profile)" class="profile-card" *ngFor="let profile of event.accProfiles;">
+              <img [src]="profile.image" alt="{{ profile.name }}" />
+              <h3>{{ profile.name }}</h3>
+              <p>{{ profile.commonInterests }} Common Interests</p>
+            </div>
+          </div>
+    </div>
+</div>
+
+<ng-template #noEvents>
+  <div class="no-events-container">
+    <div class="no-events-message">
+      <img [src]="images.noEvents" alt="No Events" class="no-events-image">
+      <p class="bold-message">No events to display.</p>
+      <p>Create or join events to enjoy your weekend</p>
+    </div>
   </div>
+</ng-template>
 
   <!-- Event Creation Form -->
 <div *ngIf="isCreatingEvent" class="create-event-form">

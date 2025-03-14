@@ -1,47 +1,12 @@
-<div class="edit-page">
-    <h1>{{ questions[currentQuestionIndex].title }}</h1>
-    <div class="input-container">
-      <!-- Work Title and Company -->
-      <ng-container *ngIf="questions[currentQuestionIndex].type === 'work'">
-        <input type="text" [(ngModel)]="currentTitle" placeholder="Enter your Title" (input)="onInput()"/>
-        <input type="text" [(ngModel)]="currentCompany" placeholder="Enter your Company" (input)="onInput()"/>
-      </ng-container>
+<div class="payment-container">
+  <h1>{{ title }}</h1>
   
-      <!-- Gender Selection -->
-      <ng-container *ngIf="questions[currentQuestionIndex].type === 'gender'">
-        <div class="gender-options">
-          <div *ngFor="let option of genderOptions" 
-               [class.selected]="currentGender === option.label"
-               (click)="selectGender(option)" 
-               class="dot-option">
-            {{ option.label }}
-          </div>
-        </div>
-      </ng-container>
-  
-      <!-- Text Input for Other Questions -->
-      <ng-container *ngIf="questions[currentQuestionIndex].type === 'text'">
-        <input type="text" [(ngModel)]="currentValue" (input)="onInput()"
-               [placeholder]="'Enter your ' + questions[currentQuestionIndex].key" />
-      </ng-container>
-  
-      <!-- Interests Selection -->
-      <ng-container *ngIf="questions[currentQuestionIndex].type === 'interests'">
-        <div class="interest-bubble" *ngFor="let option of interestOptions"
-             [class.selected]="selectedInterests.includes(option)" 
-             (click)="toggleInterest(option)">
-          {{ option }}
-        </div>
-      </ng-container>
-    </div>
-  
-    <div class="button-container">
-      <button class="update-button" (click)="saveAnswer()" [ngClass]="{ active: inputActive }" [disabled]="!inputActive"> 
-        Save
-      </button>
-      <button class="skip-button" (click)="skipQuestion()">
-        Skip
-      </button>
-    </div>
+  <div class="image-container">
+    <img [src]="images.home" alt="Home Image" class="home-image" />
   </div>
-  
+
+  <div class="payment-info">
+    <p>Make a payment to proceed with your order.</p>
+    <button (click)="payNow()" class="pay-button">Pay Now</button>
+  </div>
+</div>
