@@ -7,7 +7,7 @@ import { FooterComponent } from '../pages/footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { LayoutComponent } from '../pages/layout/layout.component';
 import { EventsComponent } from '../pages/events/events.component';
@@ -20,31 +20,23 @@ import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, WorkWe
 import { HammerGestureConfig } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewProfileInfoComponent } from '../pages/new-profile-info/new-profile-info.component';
-@NgModule({
-  declarations: [
-    AppComponent, LoginComponent, ProfileComponent, ForYouComponent, FooterComponent, LayoutComponent, EventsComponent, ChatsComponent, ChatConversationComponent, EventDetailComponent, CalendarComponent, NewProfileInfoComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    ScheduleModule,
-    RecurrenceEditorModule,
-    HammerModule,
-    BrowserAnimationsModule,
-  ],
-  providers: [DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService, DragAndDropService, ResizeService,
-    provideClientHydration(), provideHttpClient(withFetch()),
-    {
-      provide: HammerGestureConfig,
-      useFactory: () => {
-        return new HammerGestureConfig();
-      },
-    }
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent, LoginComponent, ProfileComponent, ForYouComponent, FooterComponent, LayoutComponent, EventsComponent, ChatsComponent, ChatConversationComponent, EventDetailComponent, CalendarComponent, NewProfileInfoComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        ScheduleModule,
+        RecurrenceEditorModule,
+        HammerModule,
+        BrowserAnimationsModule], providers: [DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService, DragAndDropService, ResizeService,
+        provideClientHydration(), provideHttpClient(withFetch()),
+        {
+            provide: HammerGestureConfig,
+            useFactory: () => {
+                return new HammerGestureConfig();
+            },
+        }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
