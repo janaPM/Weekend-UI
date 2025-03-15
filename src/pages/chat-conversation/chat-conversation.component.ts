@@ -22,9 +22,9 @@ export class ChatConversationComponent {
       avatar: 'https://via.placeholder.com/50x50?text=A'
     },
     messages: [
-      { text: "Hey there! How's your day going?", isSender: false, time: ''},
-      { text: "Hi Alex! It's going well, thanks for asking. How about yours?", isSender: true, time: '' },
-      { text: 'Pretty good! Just finished work and looking forward to relaxing.', isSender: false , time: ''}
+      { text: "Hey there! How's your day going?", isSender: false, time: '', profilepicture: "",name:""},
+      { text: "Hi Alex! It's going well, thanks for asking. How about yours?", isSender: true, time: '' , profilepicture: "",name:""},
+      { text: 'Pretty good! Just finished work and looking forward to relaxing.', isSender: false , time: '', profilepicture: "",name:""}
     ]
   };
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
@@ -49,7 +49,9 @@ export class ChatConversationComponent {
       this.chat.messages = this.messages.map(message => ({
         text: message.message,
         time: message.createdAt,
-        isSender: message.user_id === this.currentUserId // Compare user_id with currentUserId
+        isSender: message.user_id === this.currentUserId,
+        profilepicture: message.profilepicture,
+        name: message.name // Compare user_id with currentUserId
       }));
       console.log("this.chat.messages --"+JSON.stringify(this.chat.messages));
     },
@@ -79,7 +81,9 @@ export class ChatConversationComponent {
       this.chat.messages.push({
         text: this.newMessage,
         time: '',
-        isSender: true // Mark this message as sent by the current user
+        isSender: true, 
+        profilepicture: "",
+        name: ""// Mark this message as sent by the current user
       });
   
       // Clear the input field
