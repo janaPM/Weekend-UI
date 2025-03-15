@@ -7,9 +7,10 @@ import { RouterOutlet } from '@angular/router';
 declare var Razorpay: any;
 
 @Component({
-  selector: 'app-new-profile-info',
-  templateUrl: './new-profile-info.component.html',
-  styleUrl: './new-profile-info.component.scss'
+    selector: 'app-new-profile-info',
+    templateUrl: './new-profile-info.component.html',
+    styleUrl: './new-profile-info.component.scss',
+    standalone: false
 })
 export class NewProfileInfoComponent {
   title = 'razorpay';

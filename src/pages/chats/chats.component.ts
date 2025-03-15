@@ -11,9 +11,10 @@ interface Chat {
 }
 
 @Component({
-  selector: 'app-chats',
-  templateUrl: './chats.component.html',
-  styleUrl: './chats.component.scss'
+    selector: 'app-chats',
+    templateUrl: './chats.component.html',
+    styleUrl: './chats.component.scss',
+    standalone: false
 })
 export class ChatsComponent implements OnInit{
   public images = images;

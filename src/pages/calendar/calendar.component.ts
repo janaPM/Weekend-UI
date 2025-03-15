@@ -18,9 +18,10 @@ interface Event {
 }
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.scss'
+    selector: 'app-calendar',
+    templateUrl: './calendar.component.html',
+    styleUrl: './calendar.component.scss',
+    standalone: false
 })
 
 export class CalendarComponent implements OnInit {

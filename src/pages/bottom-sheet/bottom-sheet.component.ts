@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
-  selector: 'app-bottom-sheet',
-  templateUrl: './bottom-sheet.component.html',
-  styleUrl: './bottom-sheet.component.scss'
+    selector: 'app-bottom-sheet',
+    templateUrl: './bottom-sheet.component.html',
+    styleUrl: './bottom-sheet.component.scss',
+    standalone: false
 })
 export class BottomSheetComponent {
   newEvent = {
