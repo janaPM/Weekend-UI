@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrl: './layout.component.scss'
+    selector: 'app-layout',
+    templateUrl: './layout.component.html',
+    styleUrl: './layout.component.scss',
+    standalone: false
 })
 export class LayoutComponent {
   isChatConversation = false;

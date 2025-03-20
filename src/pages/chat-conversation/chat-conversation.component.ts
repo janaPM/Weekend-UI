@@ -4,9 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environment';
 @Component({
-  selector: 'app-chat-conversation',
-  templateUrl: './chat-conversation.component.html',
-  styleUrl: './chat-conversation.component.scss'
+    selector: 'app-chat-conversation',
+    templateUrl: './chat-conversation.component.html',
+    styleUrl: './chat-conversation.component.scss',
+    standalone: false
 })
 export class ChatConversationComponent {
   public images = images;

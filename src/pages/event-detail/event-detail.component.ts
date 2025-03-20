@@ -6,10 +6,11 @@ import { Console } from 'node:console';
 import { images } from '../../app/constants/image-constants';
 import { environment } from '../../../environment';
 @Component({
-  selector: 'app-event-detail',
-  templateUrl: './event-detail.component.html',
-  styleUrl: './event-detail.component.scss',
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-event-detail',
+    templateUrl: './event-detail.component.html',
+    styleUrl: './event-detail.component.scss',
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class EventDetailComponent implements OnInit {
   // public user = [

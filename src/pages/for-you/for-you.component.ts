@@ -5,9 +5,10 @@ import { environment } from '../../../environment';
 import { Router } from '@angular/router';
 // import * as Hammer from 'hammerjs';
 @Component({
-  selector: 'app-for-you',
-  templateUrl: './for-you.component.html',
-  styleUrl: './for-you.component.scss'
+    selector: 'app-for-you',
+    templateUrl: './for-you.component.html',
+    styleUrl: './for-you.component.scss',
+    standalone: false
 })
 export class ForYouComponent implements OnInit {
   @Input() showProfilesSection = true;

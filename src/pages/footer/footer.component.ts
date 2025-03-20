@@ -3,9 +3,10 @@ import { images } from '../../app/constants/image-constants';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+    selector: 'app-footer',
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss',
+    standalone: false
 })
 
 export class FooterComponent {

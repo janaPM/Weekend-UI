@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { images } from '../../app/constants/image-constants';
 import { environment } from '../../../environment';
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss'
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrl: './profile.component.scss',
+    standalone: false
 })
 export class ProfileComponent implements OnInit {
   private apiUrl = environment.URL;

@@ -5,9 +5,10 @@ import { NgModel } from '@angular/forms';
 import { images } from '../../app/constants/image-constants';
 import { environment } from '../../../environment';
 @Component({
- selector: 'app-events',
- templateUrl: './events.component.html',
- styleUrls: ['./events.component.scss']
+    selector: 'app-events',
+    templateUrl: './events.component.html',
+    styleUrls: ['./events.component.scss'],
+    standalone: false
 })
 export class EventsComponent implements OnInit, OnDestroy {
   userLocation: { latitude: number; longitude: number } | null = null;
