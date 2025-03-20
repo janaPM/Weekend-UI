@@ -22,7 +22,7 @@ export class ChatConversationComponent {
       avatar: 'https://via.placeholder.com/50x50?text=A'
     },
     messages: [
-      { text: "Hey there! How's your day going?", isSender: false, time: '', profilepicture: "",name:""},
+      { text: "Hey there! How's your day going?", isSender: false, time: '', profilepicture: "",name:"", user_id:""},
       { text: "Hi Alex! It's going well, thanks for asking. How about yours?", isSender: true, time: '' , profilepicture: "",name:""},
       { text: 'Pretty good! Just finished work and looking forward to relaxing.', isSender: false , time: '', profilepicture: "",name:""}
     ]
@@ -50,6 +50,7 @@ export class ChatConversationComponent {
         text: message.message,
         time: message.createdAt,
         isSender: message.user_id === this.currentUserId,
+        user_id: message.user_id,
         profilepicture: message.profilepicture,
         name: message.name // Compare user_id with currentUserId
       }));
