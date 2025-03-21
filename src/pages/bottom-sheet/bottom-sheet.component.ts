@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Component, Inject } from '@angular/core';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
     selector: 'app-bottom-sheet',
@@ -8,25 +8,19 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
     standalone: false
 })
 export class BottomSheetComponent {
-  newEvent = {
-    name: '',
-    location: '',
-    date: '',
-    time: '',
-    organizerName: '',
-    gender: 'Any',
-    age: '',
-    image: ''
-  };
-  constructor(private bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>) {}
+  constructor(
+    private bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { fee: number }
+  ) {}
 
-  saveEvent(): void {
-    // Implement your save logic here
-    console.log('Event saved:', this.newEvent);
-    this.bottomSheetRef.dismiss(); // Close the bottom sheet
+  payNow() {
+    // Logic for payment processing goes here
+    console.log('Payment initiated for fee:', this.data.fee);
+    this.bottomSheetRef.dismiss(); // Close the bottom sheet after payment
   }
 
-  cancelEvent(): void {
-    this.bottomSheetRef.dismiss(); // Close the bottom sheet
+  close() {
+    this.bottomSheetRef.dismiss();
   }
 }
+

@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Console } from 'node:console';
 import { images } from '../../app/constants/image-constants';
 import { environment } from '../../../environment';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 @Component({
     selector: 'app-event-detail',
     templateUrl: './event-detail.component.html',
@@ -175,7 +177,8 @@ export class EventDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private bottomSheet: MatBottomSheet
   ) {}
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -256,7 +259,9 @@ export class EventDetailComponent implements OnInit {
       profileId: UserId, // Use profileId instead of userId
       eventId: eventId // The ID of the event being accepted
     };
-  
+    this.bottomSheet.open(BottomSheetComponent, {
+      data: { fee: this.event.fee } // Pass the event fee to the bottom sheet
+    });
     // Send a POST request to your backend API to update the user's preference
     console.log('this.event: ' + JSON.stringify(requestBody));
     this.http.post(`${this.apiUrl}requestToJoinEvent`, requestBody).subscribe(

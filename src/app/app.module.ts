@@ -15,12 +15,14 @@ import { EventDetailComponent } from '../pages/event-detail/event-detail.compone
 import { ChatConversationComponent } from '../pages/chat-conversation/chat-conversation.component';
 import { CalendarComponent } from '../pages/calendar/calendar.component';
 import { ScheduleModule, RecurrenceEditorModule, DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService, DragAndDropService, ResizeService } from '@syncfusion/ej2-angular-schedule';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { BottomSheetComponent } from '../pages/bottom-sheet/bottom-sheet.component';
 // import * as Hammer from 'hammerjs';
 import { HammerGestureConfig } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewProfileInfoComponent } from '../pages/new-profile-info/new-profile-info.component';
 @NgModule({ declarations: [
-        AppComponent, LoginComponent, ProfileComponent, ForYouComponent, FooterComponent, LayoutComponent, EventsComponent, ChatsComponent, ChatConversationComponent, EventDetailComponent, CalendarComponent, NewProfileInfoComponent
+        AppComponent, LoginComponent, ProfileComponent, ForYouComponent, FooterComponent, LayoutComponent, EventsComponent, ChatsComponent, ChatConversationComponent, EventDetailComponent, CalendarComponent, NewProfileInfoComponent,BottomSheetComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
@@ -29,6 +31,7 @@ import { NewProfileInfoComponent } from '../pages/new-profile-info/new-profile-i
         ScheduleModule,
         RecurrenceEditorModule,
         HammerModule,
+        MatBottomSheetModule,
         BrowserAnimationsModule], providers: [DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService, DragAndDropService, ResizeService,
         provideClientHydration(), provideHttpClient(withFetch()),
         {
