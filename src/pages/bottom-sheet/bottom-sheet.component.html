@@ -1,4 +1,10 @@
-<h2>Event Fee</h2>
-<p>Amount: ₹{{ data.fee }}</p>
-<button mat-button (click)="payNow()">Pay Now</button>
-<button mat-button (click)="close()">Cancel</button>
+<div class="bottom-sheet-container">
+    <div class="info-icon-container">
+        <img [src]="images.i" alt="Info" class="info-image" />
+    </div>
+    <div class="offer-section">
+        <!-- <img [src]="images.bulb" alt="YES Bank Offer" class="offer-icon"> -->
+        <span>{{data.name}}</span>
+    </div>
+    <button mat-button class="pay-button" (click)="payNow()">Pay ₹{{data.fee}}</button>
+</div>
