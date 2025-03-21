@@ -1,45 +1,4 @@
-
-<div class="create-event-form">
-    <h3>Create New Event</h3>
-    <!-- <div>
-      <label>Event Name:</label>
-      <input [(ngModel)]="newEvent.name" placeholder="Event Name" />
-    </div> -->
-    <!-- <div>
-      <label>Location:</label>
-      <input [(ngModel)]="newEvent.location" placeholder="Event Location" />
-    </div>
-    <div>
-      <label>Date:</label>
-      <input [(ngModel)]="newEvent.date" type="date" />
-    </div>
-    <div>
-      <label>Time:</label>
-      <input [(ngModel)]="newEvent.time" type="time" />
-    </div>
-    <div>
-      <label>Organizer Name:</label>
-      <input [(ngModel)]="newEvent.organizerName" placeholder="Organizer Name" />
-    </div>
-    <div>
-      <label>Gender:</label>
-      <select [(ngModel)]="newEvent.gender">
-        <option value="Any">Any</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-      </select>
-    </div>
-    <div>
-      <label>Age:</label>
-      <input [(ngModel)]="newEvent.age" placeholder="Age Range (e.g., 18-30)" />
-    </div>
-    <div>
-      <label>Event Image URL:</label>
-      <input [(ngModel)]="newEvent.image" placeholder="Image URL" />
-    </div> -->
-    <!-- <div class="form-buttons">
-      <button (click)="saveEvent()">Save</button>
-      <button (click)="cancelEvent()">Cancel</button>
-    </div> -->
-  </div>
-  
+<h2>Event Fee</h2>
+<p>Amount: ₹{{ data.fee }}</p>
+<button mat-button (click)="payNow()">Pay Now</button>
+<button mat-button (click)="close()">Cancel</button>
