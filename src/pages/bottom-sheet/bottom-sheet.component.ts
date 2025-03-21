@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
-
+import { images } from '../../app/constants/image-constants';
 @Component({
     selector: 'app-bottom-sheet',
     templateUrl: './bottom-sheet.component.html',
@@ -8,9 +8,10 @@ import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bott
     standalone: false
 })
 export class BottomSheetComponent {
+  public images = images;
   constructor(
     private bottomSheetRef: MatBottomSheetRef<BottomSheetComponent>,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { fee: number }
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { fee: number, name: string }
   ) {}
 
   payNow() {

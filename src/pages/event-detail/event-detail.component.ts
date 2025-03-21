@@ -260,7 +260,7 @@ export class EventDetailComponent implements OnInit {
       eventId: eventId // The ID of the event being accepted
     };
     this.bottomSheet.open(BottomSheetComponent, {
-      data: { fee: this.event.fee } // Pass the event fee to the bottom sheet
+      data: { fee: this.event.fee , name: this.event.name} // Pass the event fee to the bottom sheet
     });
     // Send a POST request to your backend API to update the user's preference
     console.log('this.event: ' + JSON.stringify(requestBody));
