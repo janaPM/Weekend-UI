@@ -16,6 +16,7 @@ export class ForYouComponent implements OnInit {
   // profile view
   isCreatingEvent: boolean = false; // Track if creating an event
   public isOpen = false;
+  public formStep: number = 1;
   newEvent = {
     name: '',
     description: '',
@@ -455,5 +456,13 @@ getCoordinatesFromLocationUrl(locationUrl: string): { latitude: number; longitud
   } else {
     throw new Error('Coordinates not found in the URL');
   }
+}
+
+nextStep() {
+  if (this.formStep < 2) this.formStep++;
+}
+
+prevStep() {
+  if (this.formStep > 1) this.formStep--;
 }
 }
