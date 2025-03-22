@@ -115,69 +115,83 @@
 </ng-template>
 
   <!-- Event Creation Form -->
-<div *ngIf="isCreatingEvent" class="create-event-form">
-  <h3>Create New Event</h3>
-  <div>
-    <label>Event Name:</label>
-    <input [(ngModel)]="newEvent.name" placeholder="Event Name" />
+  <div *ngIf="isCreatingEvent" class="modal-overlay">
+    <div class="create-event-form">
+      <h3>Create New Event</h3>
+  
+      <!-- Step 1 -->
+      <div *ngIf="formStep === 1">
+        <div>
+          <label>Event Name:</label>
+          <input [(ngModel)]="newEvent.name" placeholder="Event Name" />
+        </div>
+        <div>
+          <label>Event Description:</label>
+          <input [(ngModel)]="newEvent.description" placeholder="Event Description" />
+        </div>
+        <div>
+          <label>Location:</label>
+          <input [(ngModel)]="newEvent.location" placeholder="Event Location" />
+        </div>
+        <div>
+          <label>Location Link:</label>
+          <input [(ngModel)]="newEvent.location_url" placeholder="Event Location URL" />
+        </div>
+        <div>
+          <label>Max Participants:</label>
+          <input [(ngModel)]="newEvent.bu_count" placeholder="Max participants" />
+        </div>
+        <div>
+          <label>Min Buddies:</label>
+          <input [(ngModel)]="newEvent.bu_min_count" placeholder="Min buddies" />
+        </div>
+        <div class="form-buttons">
+          <button (click)="cancelEvent()">Cancel</button>
+          <button (click)="nextStep()">Next</button>
+        </div>
+      </div>
+  
+      <!-- Step 2 -->
+      <div *ngIf="formStep === 2">
+        <div>
+          <label>Date:</label>
+          <input [(ngModel)]="newEvent.date" type="date" />
+        </div>
+        <div>
+          <label>Time:</label>
+          <input [(ngModel)]="newEvent.time" type="time" />
+        </div>
+        <div>
+          <label>Organizer Name:</label>
+          <input [(ngModel)]="newEvent.organizerName" placeholder="Organizer Name" />
+        </div>
+        <div>
+          <label>Gender:</label>
+          <select [(ngModel)]="newEvent.gender">
+            <option value="Any">Any</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div>
+          <label>Age Range:</label>
+          <input [(ngModel)]="newEvent.age" placeholder="Age Range (e.g., 18-30)" />
+        </div>
+        <div>
+          <label>Image URL:</label>
+          <input [(ngModel)]="newEvent.image" placeholder="Image URL" />
+        </div>
+        <div>
+          <label>Event Fee:</label>
+          <input [(ngModel)]="newEvent.fee" placeholder="Event Fee" />
+        </div>
+        <div class="form-buttons">
+          <button (click)="prevStep()">Back</button>
+          <button (click)="saveEvent()">Save</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div>
-    <label>Event Description:</label>
-    <input [(ngModel)]="newEvent.description" placeholder="Event Name" />
-  </div>
-  <div>
-    <label>Location:</label>
-    <input [(ngModel)]="newEvent.location" placeholder="Event Location" />
-  </div>
-  <div>
-    <label>location Link:</label>
-    <input [(ngModel)]="newEvent.location_url" placeholder="Event Location URL" />
-  </div>
-  <div>
-    <label>Enter max no of participants:</label>
-    <input [(ngModel)]="newEvent.bu_count" placeholder="Enter max no of participants" />
-  </div>
-  <div>
-    <label>Enter min count of buddies:</label>
-    <input [(ngModel)]="newEvent.bu_min_count" placeholder="Enter min count of buddies for confirmation" />
-  </div>
-  <div>
-    <label>Date:</label>
-    <input [(ngModel)]="newEvent.date" type="date" />
-  </div>
-  <div>
-    <label>Time:</label>
-    <input [(ngModel)]="newEvent.time" type="time" />
-  </div>
-  <div>
-    <label>Organizer Name:</label>
-    <input [(ngModel)]="newEvent.organizerName" placeholder="Organizer Name" />
-  </div>
-  <div>
-    <label>Gender:</label>
-    <select [(ngModel)]="newEvent.gender">
-      <option value="Any">Any</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-    </select>
-  </div>
-  <div>
-    <label>Age:</label>
-    <input [(ngModel)]="newEvent.age" placeholder="Age Range (e.g., 18-30)" />
-  </div>
-  <div>
-    <label>Event Image URL:</label>
-    <input [(ngModel)]="newEvent.image" placeholder="Image URL" />
-  </div>
-  <div>
-    <label>Event Fee:</label>
-    <input [(ngModel)]="newEvent.fee" placeholder="Organizer Name" />
-  </div>
-  <div class="form-buttons">
-    <button (click)="saveEvent()">Save</button>
-    <button (click)="cancelEvent()">Cancel</button>
-  </div>
-</div>
 
   <!-- Swipeable Profiles Section -->
   <div class="swipeable-profiles" *ngIf="showProfilesInterested">
