@@ -709,13 +709,18 @@ $weekend-gold-yellow: #ffd700;
 }
 
 .create-event-form {
+  position: fixed;                     // Make it float above everything
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);   // Center the box
+  z-index: 2000;
   border: 1px solid #ddd;
   padding: 15px;
-  // margin: 15px auto;
-  // margin-bottom: 50px;
-  // max-width: 400px;
   border-radius: 8px;
   background-color: #f9f9f9;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
 }
 
 .create-event-form h3 {
@@ -822,4 +827,17 @@ $weekend-gold-yellow: #ffd700;
   margin: 5px 0;
   color: #7f8c8d;
   font-family: 'Your Sngular Font', sans-serif; /* Replace */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
