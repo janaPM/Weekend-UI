@@ -33,16 +33,26 @@
           <p>{{ event.name }}</p>
         </div>
       </div>
-    </section> -->
+    </section> -->      
     <section class="event-list">
       <h3>Events near you</h3>
-      <div class="event-card" *ngFor="let event of events" class="event-card"
-        (click)="viewEvent(event.id)">
-        <img [src]="event.image" alt="{{ event.name }}" />
-        <h4>{{ event.name }}</h4>
-        <p>{{ event.description }}</p>
-        <p>{{ formatDateTime(event.startTime) }}</p>
-        <p>{{ event.fee == 0 || event.fee === null ? 'Free' : '₹' + event.fee }}, {{ event.age }}</p>
+      <div *ngIf="isLoading" class="loading-placeholder">
+        <div class="loading-card" *ngFor="let card of loadingCards">
+          <div class="loading-image"></div>
+          <div class="loading-text"></div>
+          <div class="loading-text short"></div>
+          <div class="loading-text short"></div>
+        </div>
+      </div>
+      <div  *ngIf="!isLoading">
+        <div class="event-card" *ngFor="let event of events" class="event-card"
+          (click)="viewEvent(event.id)">
+          <img [src]="event.image" alt="{{ event.name }}" />
+          <h4>{{ event.name }}</h4>
+          <p>{{ event.description }}</p>
+          <p>{{ formatDateTime(event.startTime) }}</p>
+          <p>{{ event.fee == 0 || event.fee === null ? 'Free' : '₹' + event.fee }}, {{ event.age }}</p>
+        </div>
       </div>
     </section>
   </div>
