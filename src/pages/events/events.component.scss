@@ -307,3 +307,78 @@
     margin-bottom: 0px;
   }
  }
+ .loading-placeholder {
+  display: grid; /* Use grid layout */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust the size as needed */
+  gap: 20px; /* Space between cards */
+  justify-items: center; /* Center items in the grid */
+  margin: 20px 0;
+  width: 100%; /* Ensure it takes full width */
+}
+
+.loading-card {
+  background: #f0f0f0; /* Base background color */
+  border-radius: 8px;
+  width: 100%; /* Set to 100% to fill the container */
+  max-width: 400px; /* Optional: Set a max width for better appearance */
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative; /* Position relative for the pseudo-element */
+  overflow: hidden; /* Hide overflow for the shimmer effect */
+}
+
+.loading-card::before {
+  content: '';
+  position: absolute;
+  top: -50%; /* Start off-screen at the top */
+  left: -50%; /* Start off-screen at the left */
+  width: 200%; /* Make it wider to cover the card */
+  height: 200%; /* Make it taller to cover the card */
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+  background-size: 200% 200%; /* Ensure the background is large enough for the animation */
+  animation: shimmer 1.5s infinite; /* Apply shimmer animation */
+  transform: rotate(30deg); /* Rotate to create a diagonal effect */
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% -200%; /* Start from the top left */
+  }
+  100% {
+    background-position: 200% 200%; /* Move to the bottom right */
+  }
+}
+
+/* Add different animation timings for different cards */
+.loading-card:nth-child(1)::before {
+  animation-duration: 3s;
+}
+
+.loading-card:nth-child(2)::before {
+  animation-duration: 3.5s;
+}
+
+.loading-card:nth-child(3)::before {
+  animation-duration: 4s;
+}
+
+/* Add more nth-child rules as needed for additional cards */
+
+
+.loading-image {
+  height: 150px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.loading-text {
+  height: 20px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  margin: 5px 0;
+}
+
+.loading-text.short {
+  width: 70%;
+}

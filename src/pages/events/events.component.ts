@@ -14,6 +14,8 @@ export class EventsComponent implements OnInit, OnDestroy {
   userLocation: { latitude: number; longitude: number } | null = null;
   private apiUrl = environment.URL;
   isDefaultView: boolean = true;
+  isLoading: boolean = true;
+  loadingCards: number[] = new Array(5); // Change 5 to however many loading cards you want
   isCreatingEvent: boolean = false; // Track if creating an event
   public images = images;
   public isOpen = false;
@@ -150,18 +152,23 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
   constructor(private http: HttpClient, private router: Router) {}
   fetchEvents(): void {
+    this.isLoading = true; 
     this.startAutoScroll();
     const UserId = localStorage.getItem('My_ID') || '';
-    this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}`).subscribe({
-      next: (data) => {
-        this.events = data;
-        this.filteredEvents = data; // Initialize filtered events
-        console.log(JSON.stringify(this.filteredEvents));
-      },
-      error: (error) => {
-        console.error('Error fetching events data:', error);
-      },
-    });
+    setTimeout(() => {
+      this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}`).subscribe({
+        next: (data) => {
+          this.events = data;
+          this.filteredEvents = data; // Initialize filtered events
+          console.log(JSON.stringify(this.filteredEvents));
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error fetching events data:', error);
+          this.isLoading = false;
+        },
+      });
+    }, 1000); // Delay of 1 second
     this.http.get<any>('/assets/forYouEvents.json').subscribe({
       next: (data) => {
         // this.forYouEvents = data || [];
