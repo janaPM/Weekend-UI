@@ -842,75 +842,72 @@ $weekend-gold-yellow: #ffd700;
   justify-content: center;
 }
 .loading-placeholder {
-  display: grid; /* Use grid layout */
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust the size as needed */
-  gap: 20px; /* Space between cards */
-  justify-items: center; /* Center items in the grid */
-  margin: 0px 0;
+  --webkit-scrollable : none; 
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Stack items vertically */
+  gap: 10px; /* Space between cards */
+  margin: 0; /* Remove margin */
   width: 100%; /* Ensure it takes full width */
+  // overflow-y: auto; /* Allow scrolling if content exceeds max height */
 }
-
 .loading-card {
-  background: #f0f0f0; /* Base background color */
-  border-radius: 0px;
-  width: 100%; /* Set to 100% to fill the container */
-  max-width: 400px; /* Optional: Set a max width for better appearance */
+  background: #d0d0d0; /* Darker base background color */
+  border-radius: 4px; /* Slightly rounded corners */
   padding: 15px;
   padding-top: 0px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  position: relative; /* Position relative for the pseudo-element */
-  overflow: hidden; /* Hide overflow for the shimmer effect */
-  display: flex; /* Use flexbox for layout */
-  flex-direction: column; /* Stack items vertically */
-  align-items: flex-start; /* Align items to the start (left) */
+  // box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Darker shadow for more depth */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Slightly darker shadow for more depth */
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .loading-card::before {
   content: '';
   position: absolute;
-  top: -50%; /* Start off-screen at the top */
-  left: -50%; /* Start off-screen at the left */
-  width: 250%; /* Make it wider to cover the card */
-  height: 250%; /* Make it taller to cover the card */
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
-  background-size: 200% 200%; /* Ensure the background is large enough for the animation */
-  animation: shimmer 1.5s infinite; /* Apply shimmer animation */
-  transform: rotate(30deg); /* Rotate to create a diagonal effect */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+  background-size: 200% 200%;
+  animation: shimmer 1.5s infinite;
 }
 
 @keyframes shimmer {
   0% {
-    background-position: -200% -200%; /* Start from the top left */
+      background-position: -100% 0%;
   }
   100% {
-    background-position: 200% 200%; /* Move to the bottom right */
+      background-position: 100% 0%;
   }
 }
 
 .loading-text {
   height: 20px;
-  background: #e0e0e0;
+  background: #746e6e; /* Darker loading text background */
   border-radius: 4px;
-  margin-top: 0px;
   margin: 5px 0;
 }
 
 .loading-text.short {
-  width: 70%; /* Shorter text block */
+  width: 60%; /* Shorter text block */
 }
 
 .loading-buttom {
   padding: 8px 12px;
-  border-radius: $border-radius;
-  height: 30px;
-  background: #e0e0e0; /* Background color for the button */
-  margin: 5px 0; /* Space above and below */
-  margin-left: auto; /* Push the button to the right */
-  margin-right: auto; /* Center the button */
+  border-radius: 4px;
+  height: 20px;
+  background: #746e6e; /* Darker button background */
+  margin: 5px 0;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .loading-buttom.short {
   width: -webkit-fill-available;
-  display: flex; /* Use flexbox for centering */
-  justify-content: center; /* Center the button content */
+  display: flex;
+  justify-content: center;
 }
