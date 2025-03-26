@@ -21,7 +21,15 @@
   <!-- Events List -->
   <h3 *ngIf="showProfilesSection">Your Events</h3>
   <h3 *ngIf="!showProfilesSection">Events joined</h3>
-  <div *ngIf="events && events.length > 0; else noEvents">
+  <div *ngIf="isLoading" class="loading-placeholder">
+    <div class="loading-card" *ngFor="let card of loadingCards">
+      <div class="loading-text"></div>
+      <div class="loading-text short"></div>
+      <div class="loading-text short"></div>
+      <div class="loading-buttom short"></div>
+    </div>
+  </div>
+  <div *ngIf="events && !isLoading && events.length > 0; else noEvents">
     <div *ngFor="let event of events">
       <div class="event-card" (click)="goToEventDetail(event.id)">
         <!-- Status Badge -->
@@ -105,7 +113,7 @@
 </div>
 
 <ng-template #noEvents>
-  <div class="no-events-container">
+  <div *ngIf="!isLoading" class="no-events-container">
     <div class="no-events-message">
       <img [src]="images.noEvents" alt="No Events" class="no-events-image">
       <p class="bold-message">No events to display.</p>
@@ -207,7 +215,7 @@
     </div>
   </div>
   <!-- Profiles Interested in Event -->
-  <div class="profiles-interested" *ngIf="profiles.length > 0">
+  <div class="profiles-interested" *ngIf="profiles.length > 0 && !isLoading">
     <h3>Profiles Interested</h3>
     <div class="profile-grid">
       <div *ngFor="let profile of profiles" class="profile-card">

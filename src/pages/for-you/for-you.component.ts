@@ -17,6 +17,9 @@ export class ForYouComponent implements OnInit {
   isCreatingEvent: boolean = false; // Track if creating an event
   public isOpen = false;
   public formStep: number = 1;
+  isLoading: boolean = true;
+  // isLoading: boolean = false;
+  loadingCards: number[] = new Array(5); // Change 5 to however many loading cards you want
   newEvent = {
     name: '',
     description: '',
@@ -69,8 +72,10 @@ export class ForYouComponent implements OnInit {
  showProfile=false;
  ngOnInit() {
    // Mock Events
+   this.isLoading = true; 
    const UserId = localStorage.getItem('My_ID'); 
    console.log('UserId:', UserId);
+   setTimeout(() => {
    const apiEndpoint = this.showProfilesSection ? 'getMyEvent' : 'getEventsByReqId';
    this.http.get<any>(`${this.apiUrl}${apiEndpoint}?ownerId=${UserId}`).subscribe((data) => {
     console.log('User details:', data);
@@ -102,10 +107,14 @@ export class ForYouComponent implements OnInit {
 
           // Add the new event to this.events
           this.events.push(event);
+          this.isLoading = false; 
           console.log("this.events"+JSON.stringify(this.events));
         });
       }
+      this.isLoading = false; 
     });
+  }, 1000); // Delay of 1 second
+
   
     this.profiles = [
       {
