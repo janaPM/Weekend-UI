@@ -71,48 +71,59 @@ export class ForYouComponent implements OnInit {
  showAccProfiles = false;
  showProfile=false;
  ngOnInit() {
-   // Mock Events
-   this.isLoading = true; 
-   const UserId = localStorage.getItem('My_ID'); 
-   console.log('UserId:', UserId);
-   setTimeout(() => {
-   const apiEndpoint = this.showProfilesSection ? 'getMyEvent' : 'getEventsByReqId';
-   this.http.get<any>(`${this.apiUrl}${apiEndpoint}?ownerId=${UserId}`).subscribe((data) => {
-    console.log('User details:', data);
+  // Mock Events
+  this.isLoading = true; 
+  const UserId = localStorage.getItem('My_ID'); 
+  console.log('UserId:', UserId);
+  setTimeout(() => {
+  const apiEndpoint = this.showProfilesSection ? 'getMyEvent' : 'getEventsByReqId';
+    try {
+      this.http.get<any>(`${this.apiUrl}${apiEndpoint}?ownerId=${UserId}`).subscribe({
+        next: (data) => {
+        console.log('User details:', data);
 
-    // Assuming data is an array of events, iterate and map it to this.events
-    if (Array.isArray(data)) {
-      data.forEach(eventData => {
-        // Create event object and map data
-        const event = {
-          id: eventData.id,
-          name: eventData.name,
-          // date: new Date(eventData.startTime).toLocaleDateString(),  // Convert date to a readable format
-          // time: new Date(eventData.startTime).toLocaleTimeString(), // Convert time to a readable format
-          startTime: eventData.startTime,
-          // location: eventData.location,
-          // description: eventData.description,
-          // gender: eventData.gender,
-          // age: eventData.age,
-          // image: eventData.image,
-          // fee: eventData.fee.toString(), // Ensure fee is a string
-          // owner: eventData.owner,
-          bu_min_count: eventData.bu_min_count,
-          bu_count: eventData.bu_count,
-          accProfiles: eventData.acc_users,
-          profiles: eventData.req_users,  // Assuming you have no profiles yet
-          showProfiles: false,
-          showAccProfiles: false
-        };
+            // Assuming data is an array of events, iterate and map it to this.events
+            if (Array.isArray(data)) {
+              data.forEach((eventData) => {
+                // Create event object and map data
+                const event = {
+                  id: eventData.id,
+                  name: eventData.name,
+                  // date: new Date(eventData.startTime).toLocaleDateString(),  // Convert date to a readable format
+                  // time: new Date(eventData.startTime).toLocaleTimeString(), // Convert time to a readable format
+                  startTime: eventData.startTime,
+                  // location: eventData.location,
+                  // description: eventData.description,
+                  // gender: eventData.gender,
+                  // age: eventData.age,
+                  // image: eventData.image,
+                  // fee: eventData.fee.toString(), // Ensure fee is a string
+                  // owner: eventData.owner,
+                  bu_min_count: eventData.bu_min_count,
+                  bu_count: eventData.bu_count,
+                  accProfiles: eventData.acc_users,
+                  profiles: eventData.req_users, // Assuming you have no profiles yet
+                  showProfiles: false,
+                  showAccProfiles: false,
+                };
 
-          // Add the new event to this.events
-          this.events.push(event);
-          this.isLoading = false; 
-          console.log("this.events"+JSON.stringify(this.events));
-        });
-      }
-      this.isLoading = false; 
-    });
+            // Add the new event to this.events
+            this.events.push(event);
+            this.isLoading = false; 
+            console.log("this.events"+JSON.stringify(this.events));
+          });
+        }
+        this.isLoading = false; 
+      },
+      error: (error) => {
+        console.error('Error fetching events data:', error);
+        this.isLoading = false;
+      },
+      });
+    } catch (error) {
+      console.error('Error in API call:', error);
+      this.isLoading = false; // Stop loading on error
+    }
   }, 1000); // Delay of 1 second
 
   
