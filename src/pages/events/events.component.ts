@@ -14,6 +14,10 @@ export class EventsComponent implements OnInit, OnDestroy {
   userLocation: { latitude: number; longitude: number } | null = null;
   private apiUrl = environment.URL;
   isDefaultView: boolean = true;
+  limit = 5;
+  offset = 0;
+  loading = false;
+  private hasMoreEvents: boolean = true;
   isLoading: boolean = true;
   loadingCards: number[] = new Array(5); // Change 5 to however many loading cards you want
   isCreatingEvent: boolean = false; // Track if creating an event
@@ -152,20 +156,39 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
   constructor(private http: HttpClient, private router: Router) {}
   fetchEvents(): void {
+    console.log('this.loading'+this.loading);
+    if (this.loading || !this.hasMoreEvents) {return;} // Prevent multiple calls
+    this.loading = true;
     this.isLoading = true; 
     this.startAutoScroll();
     const UserId = localStorage.getItem('My_ID') || '';
+    console.log("Limit:", this.limit, "Offset:", this.offset);
     setTimeout(() => {
-      this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}`).subscribe({
+      this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}&limit=${this.limit}&offset=${this.offset}`).subscribe({
         next: (data) => {
-          this.events = data;
-          this.filteredEvents = data; // Initialize filtered events
-          console.log(JSON.stringify(this.filteredEvents));
+          if (data && data.length > 0) {
+            this.events.push(...data);
+            // this.events = [...this.events, ...data]; // Append new events
+            console.log("length"+this.events.length);
+            console.log(JSON.stringify(this.events));
+            this.filteredEvents = this.events; // Initialize filtered events
+            this.offset += 5; // Update offset for next call
+            this.limit += 5;
+            console.log("New Offset:", this.offset); // Log the new offset
+            this.loading = false;
+          } else {
+              console.log('No more events to load.'); // Log if no more events
+              this.loading = false;
+              this.isLoading = false;
+              this.hasMoreEvents = false; // Set flag to false when no more events
+              return;
+          }
           this.isLoading = false;
         },
         error: (error) => {
           console.error('Error fetching events data:', error);
           this.isLoading = false;
+          this.loading = false; // Reset loading state
         },
       });
     }, 1000); // Delay of 1 second
@@ -178,6 +201,24 @@ export class EventsComponent implements OnInit, OnDestroy {
       },
     });
   }
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+      // console.log('Scroll event triggered'); // Debugging line
+      const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+      const body = document.body;
+      const html = document.documentElement;
+
+      const documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+      const windowBottom = windowHeight + window.scrollY;
+
+      // Check if the user has scrolled to the bottom of the page
+      if (windowBottom >= documentHeight - 50 && !this.loading) { // 50px from the bottom
+        console.log('Loading more events'); // Debugging line
+        this.fetchEvents(); // Load more events
+          console.log('Loading more event done'); // Debugging line
+      }
+  }
+
   getUserLocation() {
     const UserId = localStorage.getItem('My_ID'); 
     if (navigator.geolocation) {
