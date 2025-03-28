@@ -167,13 +167,17 @@ export class EventsComponent implements OnInit, OnDestroy {
     const UserId = localStorage.getItem('My_ID') || '';
     console.log("Offset:", this.offset);
     // Fetch events with pagination
+
     this.delay = this.offset === 0 ? 1000 : 0;
+
     setTimeout(() => {
       this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}&limit=${this.limit}&offset=${this.offset}`).subscribe({
         next: (data) => {
           if (data && data.length > 0) {
             this.events.push(...data);
+
             // this.events = [...this.events, ...data];
+
             this.offset += this.limit; // Update offset for next call
             this.hasMoreEvents = data.length === this.limit; // Check if there are more events to load
           } else {
@@ -189,6 +193,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           this.loading = false; // Reset loading state
         },
       });
+
     }, this.delay); // Delay of 1 second
 }
   @HostListener('window:scroll', [])
