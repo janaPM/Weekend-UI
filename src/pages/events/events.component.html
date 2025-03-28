@@ -36,7 +36,7 @@
     </section> -->      
     <section class="event-list">
       <h3>Events near you</h3>
-      <div *ngIf="isLoading" class="loading-placeholder">
+      <div *ngIf="isLoading && this.offset==0" class="loading-placeholder">
         <div class="loading-card" *ngFor="let card of loadingCards">
           <div class="loading-image"></div>
           <div class="loading-text"></div>
@@ -45,7 +45,7 @@
         </div>
       </div>
       <div  *ngIf="!isLoading">
-        <div class="event-card" *ngFor="let event of events" class="event-card"
+        <div class="event-card" *ngFor="let event of events; trackBy: trackByEventId" class="event-card"
           (click)="viewEvent(event.id)">
           <img [src]="event.image" alt="{{ event.name }}" />
           <h4>{{ event.name }}</h4>

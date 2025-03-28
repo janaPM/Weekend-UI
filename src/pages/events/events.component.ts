@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgModel } from '@angular/forms';
 import { images } from '../../app/constants/image-constants';
 import { environment } from '../../../environment';
+import { delay } from 'rxjs';
 @Component({
     selector: 'app-events',
     templateUrl: './events.component.html',
@@ -14,6 +15,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   userLocation: { latitude: number; longitude: number } | null = null;
   private apiUrl = environment.URL;
   isDefaultView: boolean = true;
+  public delay: number = 0; 
   sortedEvents: any[] = []; // Store sorted events
   limit = 5;
   offset = 0;
@@ -165,11 +167,13 @@ export class EventsComponent implements OnInit, OnDestroy {
     const UserId = localStorage.getItem('My_ID') || '';
     console.log("Offset:", this.offset);
     // Fetch events with pagination
+    this.delay = this.offset === 0 ? 1000 : 0;
     setTimeout(() => {
       this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}&limit=${this.limit}&offset=${this.offset}`).subscribe({
         next: (data) => {
           if (data && data.length > 0) {
             this.events.push(...data);
+            // this.events = [...this.events, ...data];
             this.offset += this.limit; // Update offset for next call
             this.hasMoreEvents = data.length === this.limit; // Check if there are more events to load
           } else {
@@ -185,7 +189,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           this.loading = false; // Reset loading state
         },
       });
-    }, 1000); // Delay of 1 second
+    }, this.delay); // Delay of 1 second
 }
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
@@ -336,5 +340,8 @@ export class EventsComponent implements OnInit, OnDestroy {
       this.newEvent.organizerName !== '' &&
       this.newEvent.image !== ''
     );
+  }
+  trackByEventId(index: number, event: { id: string }): string {
+    return event.id; // Return the unique identifier (id)
   }
  }
