@@ -911,3 +911,22 @@ $weekend-gold-yellow: #ffd700;
   display: flex;
   justify-content: center;
 }
+.interest-bubble {
+  background-color: #eee;
+  padding: 8px 16px;
+  margin: 3px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block; /* Change to inline-block */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.interest-bubble.selected {
+  background-color: #ffd700;
+  color: #000;
+  font-weight: bold;
+}

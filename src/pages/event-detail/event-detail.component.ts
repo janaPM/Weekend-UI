@@ -268,12 +268,12 @@ export class EventDetailComponent implements OnInit {
         (response) => {
           console.log('User acceptance updated successfully:', response);
           // Handle successful response, e.g., show a success message
-          this.router.navigate(['/events']);
+          // this.router.navigate(['/events']);
         },
         (error) => {
           console.error('Error updating user acceptance:', error);
           // Handle errors, e.g., show an error message to the user
-          this.router.navigate(['/events']);
+         // this.router.navigate(['/events']);
         }
       );
   }
