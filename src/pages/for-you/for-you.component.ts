@@ -4,6 +4,26 @@ import { images } from '../../app/constants/image-constants';
 import { environment } from '../../../environment';
 import { Router } from '@angular/router';
 // import * as Hammer from 'hammerjs';
+interface NewEvent {
+  name: string;
+  description: string;
+  location: string;
+  location_url: string;
+  latitude: number;
+  longitude: number;
+  date: string;
+  time: string;
+  startTime: string;
+  organizerName: string;
+  gender: string;
+  age: string;
+  image: string;
+  fee: string;
+  bu_count: string;
+  bu_min_count: string;
+  owner: string;
+  interests: string[]; // Add this line to define interests as an array of strings
+}
 @Component({
     selector: 'app-for-you',
     templateUrl: './for-you.component.html',
@@ -20,7 +40,7 @@ export class ForYouComponent implements OnInit {
   isLoading: boolean = true;
   // isLoading: boolean = false;
   loadingCards: number[] = new Array(5); // Change 5 to however many loading cards you want
-  newEvent = {
+  newEvent: NewEvent = {
     name: '',
     description: '',
     location: '',
@@ -35,10 +55,24 @@ export class ForYouComponent implements OnInit {
     age: '',
     image: '',
     fee: '',
+    interests: [], // Add this line to hold selected interests
     bu_count:'',
     bu_min_count:'',
     owner: ''
   }; // Holds the new event data
+  selectedInterests: string[] = []; // Array to hold selected interests
+  interestOptions: string[] = [
+    'Music',
+    'Traveling',
+    'Cooking',
+    'Sports',
+    'Photography',
+    'Gaming',
+    'Reading',
+    'Fitness',
+    'Movies',
+    'Art',
+  ];
   bioItems = [
     {key: "bio", title: "Bio", icon: './../../assets/bio.png'},
   ];
@@ -186,6 +220,15 @@ export class ForYouComponent implements OnInit {
   }
   event.showAccProfiles = false;
   event.showProfiles = !event.showProfiles;
+}
+toggleInterest(option: string) {
+  const index = this.selectedInterests.indexOf(option);
+  console.log('option'+option);
+  if (index === -1) {
+    this.selectedInterests.push(option); // Add interest if not already selected
+  } else {
+    this.selectedInterests.splice(index, 1); // Remove interest if already selected
+  }
 }
 toggleAcceptedProfiles(event: any){
     // Check if any other event already has profiles visible
@@ -385,6 +428,8 @@ saveEvent(): void {
   if (this.isEventValid()) {
     this.newEvent.owner = localStorage.getItem('My_ID') || ''; // Ensure it's a string
     this.newEvent.startTime = this.combineDateAndTime(); // Set the startTime
+    this.newEvent.interests = this.selectedInterests; // Set selected interests
+
     try {
       const coordinates = this.getCoordinatesFromLocationUrl(this.newEvent.location_url);
       this.newEvent.latitude = coordinates.latitude;
@@ -448,7 +493,8 @@ resetNewEvent(): void {
     fee:'',
     bu_count:'',
     bu_min_count:'',
-    owner:''
+    owner:'',
+    interests:[]
   };
 }
 isEventValid(): boolean {
