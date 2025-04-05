@@ -5,6 +5,8 @@
   height: 100%;
   padding: 10px;
   font-family: Arial, sans-serif;
+  height: 100vh;
+  padding-bottom: 70px;
 }
 
 .chat-header {
@@ -31,6 +33,7 @@
   flex-grow: 1;
   overflow-y: auto;
   margin-bottom: 10px;
+  height: calc(100vh - 150px);
 }
 
 .chat-message {

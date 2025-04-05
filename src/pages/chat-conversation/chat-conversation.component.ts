@@ -16,7 +16,10 @@ export class ChatConversationComponent {
   private apiUrl = environment.URL;
   public messages: any[] = []; // Initialize as an empty array
   private currentUserId: string | null = localStorage.getItem('My_ID'); // Get the current user ID
-
+  limit = 30;  // Number of messages to load per request
+  offset = 0;  // Used for pagination
+  isLoading = false;
+  allMessagesLoaded = false;
   chat = {
     user: {
       name: 'Alex',
@@ -40,10 +43,21 @@ export class ChatConversationComponent {
     });
   }
 
-  fetchMessages() {
-    this.http.get<any>(`${this.apiUrl}getMessages?event_id=${this.eventId}`).subscribe((data) => {
+  fetchMessages(loadMore: boolean = false) {
+    if (this.isLoading || this.allMessagesLoaded) return;
+
+    this.isLoading = true;
+
+    this.http.get<any>(`${this.apiUrl}getMessages?event_id=${this.eventId}&limit=${this.limit}&offset=${this.offset}`).subscribe((data) => {
       console.log(JSON.stringify(data));
-      this.messages = data; 
+            
+      if (data.length === 0) {
+        this.allMessagesLoaded = true; // No more messages
+    } else {
+        this.offset += this.limit; // Update offset for next batch
+        this.messages = loadMore ? [...data, ...this.messages] : data;
+    }
+
       console.log("chatList->" + JSON.stringify(this.messages));
 
       // Process messages to determine if the current user is the sender
@@ -56,6 +70,7 @@ export class ChatConversationComponent {
         name: message.name // Compare user_id with currentUserId
       }));
       console.log("this.chat.messages --"+JSON.stringify(this.chat.messages));
+      this.isLoading = false;
     },
     (error) => {
       console.error('Error fetching requested user data:', error);
@@ -95,4 +110,11 @@ export class ChatConversationComponent {
       alert('Failed to send message. Please try again.');
     });
   }
+
+  onScroll(event: any) {
+    const element = event.target; 
+    if (element.scrollTop === 0 && !this.isLoading) {
+        this.fetchMessages(true);  // Fetch older messages
+    }
+}
 }
