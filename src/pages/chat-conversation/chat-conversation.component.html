@@ -4,6 +4,7 @@
     <h2 class="chat-name">{{ chat.user.name }}</h2>
   </header>
   <div class="chat-messages" #chatContainer (scroll)="onScroll($event)">
+
     <div *ngFor="let message of chat.messages; let i = index">
       
       <!-- Show message sender name only if the previous message was from a different sender -->

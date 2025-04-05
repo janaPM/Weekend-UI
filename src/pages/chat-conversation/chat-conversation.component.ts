@@ -127,4 +127,5 @@ scrollToBottom(): void {
     container.scrollTop = container.scrollHeight;
   }
 }
+
 }
