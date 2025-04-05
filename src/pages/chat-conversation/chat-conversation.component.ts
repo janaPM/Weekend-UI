@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { images } from '../../app/constants/image-constants';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -31,6 +31,8 @@ export class ChatConversationComponent {
       { text: 'Pretty good! Just finished work and looking forward to relaxing.', isSender: false , time: '', profilepicture: "",name:""}
     ]
   };
+
+  @ViewChild('chatContainer') chatContainer!: ElementRef;
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
   ngOnInit() {
     // Retrieve the event_id from the route parameters
@@ -102,7 +104,9 @@ export class ChatConversationComponent {
         profilepicture: "",
         name: ""// Mark this message as sent by the current user
       });
-  
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 0);
       // Clear the input field
       this.newMessage = '';
     }, error => {
@@ -117,4 +121,11 @@ export class ChatConversationComponent {
         this.fetchMessages(true);  // Fetch older messages
     }
 }
+scrollToBottom(): void {
+  if (this.chatContainer && this.chatContainer.nativeElement) {
+    const container = this.chatContainer.nativeElement;
+    container.scrollTop = container.scrollHeight;
+  }
+}
+
 }
