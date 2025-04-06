@@ -3,16 +3,22 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 10px;
+  // padding: 10px;
   font-family: Arial, sans-serif;
   height: 100vh;
-  padding-bottom: 70px;
+  // padding-bottom: 70px;
 }
 
 .chat-header {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 10px; /* Add padding for better spacing */
+  background-color: white; /* Optional: Set background color */
+  position: fixed; /* Fix the header at the top */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  right: 0; /* Align to the right */
+  z-index: 10; /* Ensure it stays above other elements */
 }
 
 .avatar {
@@ -32,7 +38,9 @@
   flex-direction: column;
   flex-grow: 1;
   overflow-y: auto;
-  margin-bottom: 10px;
+  margin: 1vw;
+  margin-top: 75.69px; /* Adjust margin to account for header height */
+  margin-bottom: 72px;
   height: calc(100vh - 150px);
 }
 
@@ -100,6 +108,7 @@
   border-top: 1px solid #ddd;
   padding: 10px;
   width: 98vw;
+  // height: 60px;
   background-color: white;
   position: fixed;
   bottom: 0;
