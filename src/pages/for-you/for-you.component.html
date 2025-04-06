@@ -194,7 +194,7 @@
           <input [(ngModel)]="newEvent.fee" placeholder="Event Fee" />
         </div>
         <div>
-          <h3>Select Interests</h3>
+          <h3>Select Hashtags</h3>
           <div class="input-container">
             <div class="interest-bubble" *ngFor="let option of interestOptions"
               [class.selected]="selectedInterests.includes(option)" (click)="toggleInterest(option)">
