@@ -3,6 +3,7 @@ import { images } from '../../app/constants/image-constants';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environment';
+import { io, Socket } from 'socket.io-client'; // Import Socket.IO client
 @Component({
     selector: 'app-chat-conversation',
     templateUrl: './chat-conversation.component.html',
@@ -16,6 +17,7 @@ export class ChatConversationComponent {
   private apiUrl = environment.URL;
   public messages: any[] = []; // Initialize as an empty array
   private currentUserId: string | null = localStorage.getItem('My_ID'); // Get the current user ID
+  private socket!: Socket; // Declare a Socket.IO instance
   limit = 18;  // Number of messages to load per request
   offset = 0;  // Used for pagination
   isLoading = false;
@@ -36,6 +38,24 @@ export class ChatConversationComponent {
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
   ngOnInit() {
     // Retrieve the event_id from the route parameters
+    // Initialize Socket.IO connection
+    this.socket = io(this.apiUrl, {
+      transports: ['websocket'], // Force WebSocket transport
+  });
+    // Debug connection
+    this.socket.on('connect', () => {
+      console.log('Connected to Socket.IO server');
+  });
+
+  this.socket.on('connect_error', (error: any) => {
+      console.error('Socket.IO connection error:', error);
+  });
+    // Listen for new messages
+    this.socket.on('newMessage', (message: any) => {
+        console.log('New message received:', message);
+        this.messages.push(message); // Add the new message to the chat
+        this.scrollToBottom();
+    });
     this.route.paramMap.subscribe(params => {
       this.eventId = params.get('eventId'); // Get the event_id
       console.log(`Received eventId: ${this.eventId}`);
