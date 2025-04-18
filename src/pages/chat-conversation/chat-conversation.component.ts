@@ -3,6 +3,8 @@ import { images } from '../../app/constants/image-constants';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environment';
+import { SocketService } from '../../app/services/socket.service';
+
 @Component({
     selector: 'app-chat-conversation',
     templateUrl: './chat-conversation.component.html',
@@ -33,7 +35,7 @@ export class ChatConversationComponent {
   };
 
   @ViewChild('chatContainer') chatContainer!: ElementRef;
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private socketService: SocketService) {}
   ngOnInit() {
     // Retrieve the event_id from the route parameters
     this.route.paramMap.subscribe(params => {
@@ -42,6 +44,21 @@ export class ChatConversationComponent {
 
       // Fetch messages after getting the eventId
       this.fetchMessages();
+
+      this.socketService.onMessage().subscribe((incoming: any) => {
+        if (incoming.event_id === this.eventId) { // 🔥 only push if it matches current chat
+          const newMsg = {
+            text: incoming.text,
+            time: incoming.createdAt || '',
+            isSender: incoming.user_id === this.currentUserId,
+            profilepicture: incoming.profilepicture || '',
+            name: incoming.name || '',
+            user_id: incoming.user_id
+          };
+          this.chat.messages.push(newMsg);
+          setTimeout(() => this.scrollToBottom(), 0); // 🔥 auto-scroll
+        }
+      });
     });
   }
 
@@ -115,17 +132,9 @@ export class ChatConversationComponent {
     this.http.post<any>(`${this.apiUrl}sendMessage`, messageToSend).subscribe(response => {
       console.log('Message sent successfully:', response);
 
+       this.socketService.sendMessage({ ...messageToSend, createdAt: new Date() });
+
       // Optionally, you can add the message to the local chat messages for immediate display
-      this.chat.messages.push({
-        text: this.newMessage,
-        time: '',
-        isSender: true, 
-        profilepicture: "",
-        name: ""// Mark this message as sent by the current user
-      });
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 0);
       // Clear the input field
       this.newMessage = '';
     }, error => {

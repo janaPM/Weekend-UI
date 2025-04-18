@@ -11,6 +11,7 @@ import { ChatConversationComponent } from './chat-conversation/chat-conversation
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { NewProfileInfoComponent } from './new-profile-info/new-profile-info.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -18,7 +19,8 @@ import { NewProfileInfoComponent } from './new-profile-info/new-profile-info.com
   declarations: [
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
   ]
 })
 export class PagesModule { }
