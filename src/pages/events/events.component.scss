@@ -13,15 +13,17 @@
   display: colum;
   // margin-bottom: 60px;
   padding-bottom: 60px;
+
   .search-section {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 2rem;
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: #f4f4f4;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    //width: 300px; // Set a fixed width for the search component
     input, button {
       padding: 0.75rem;
       border: 1px solid #ddd;
@@ -29,13 +31,272 @@
       font-size: 1rem;
     }
     button {
-      background-color: #ffd700;;
+      background-color: #ffd700;
+      width: auto;
       color: #000;
       font-weight: bold;
       border-radius: 25px;
       cursor: pointer;
     }
   }
+  
+  .search-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-input-button {
+    padding: 0.5rem 2rem; // Add padding for the icon
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%; // Full width
+  }
+  
+  .filter-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex; // Use flexbox to center the image
+    align-items: center; // Vertically center the image
+    justify-content: center; // Horizontally center the image
+    margin-left: 0.5rem; // Space between input and icon
+    padding: 0; // Remove padding for a compact look
+  }
+  
+  .filter-image {
+    width: 20px; // Set width for the filter icon
+    height: 20px; // Set height for the filter icon
+  }
+  
+  button {
+    background-color: #ffd700;
+    color: #000;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 0.5rem 1rem; // Adjust padding for a compact look
+    border: none; // Remove border
+  }
+  
+  .bottom-sheet {
+    position: fixed;
+    bottom: 0; /* Start off-screen */
+    left: 0;
+    right: 0;
+    max-height: 490px;
+    height: 390px;
+    background-color: #fff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    z-index: 1000; // Ensure it appears above other elements
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Add transition for smooth effect */
+    opacity: 0; /* Start with opacity 0 */
+    transform: translateY(100%); /* Start off-screen */
+    &.show {
+    transform: translateY(0%); /* Move it into view */
+    opacity: 1; /* Fade in */
+  }
+  }
+  
+  .bottom-sheet-button {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between buttons */
+    margin-top: 1rem; /* Add some margin if needed */
+  
+    button {
+      flex: 1; /* Make buttons take equal width */
+      margin: 0 0.5rem; /* Add some margin between buttons */
+      padding: 0.5rem; /* Add padding for better appearance */
+      border-radius: 4px; /* Optional: Add border radius for rounded corners */
+      cursor: pointer; /* Change cursor to pointer on hover */
+      border-radius: 25px;
+    }
+  
+    .clear-button {
+      background-color: transparent; /* Transparent background */
+      border: 2px solid #ffc400; /* Yellow border */
+      color: #ffc400; /* Yellow text */
+    }
+  
+    .apply-button {
+      background-color: #ffc400; /* Filled with yellow */
+      color: white; /* White text */
+      border: none; /* No border */
+    }
+  
+    .close-button {
+      background-color: #ffc400; /* Filled with yellow */
+      color: white; /* White text */
+      border: none; /* No border */
+    }
+  }
+  .close-icon {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    cursor: pointer; /* Change cursor to pointer for better UX */
+    width: 13px; /* Adjust size as needed */
+    height: 13px; /* Adjust size as needed */
+  }
+  h4{
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+  }
+  
+  .filter-container {
+    display: flex;
+    min-height: 214px;
+    gap: 1rem; // Space between left and right sections
+  }
+  
+  .filter-selection {
+    flex: 1; // Take up equal space
+    max-width: 25vw;
+    border-right: 1px solid #ddd; // Add a right border for separation
+    h5 {
+      margin-bottom: 0.5rem;
+    }
+    label {
+      display: block;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      &:hover {
+        background-color: #f0f0f0; // Highlight on hover
+      }
+    }
+  }
+  input{
+    padding: 0.5rem 2rem; // Add padding for the icon
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    // width: 100%; // Full width
+}
+  
+  .filter-options {
+    flex: 2; // Take up more space
+    h5 {
+      margin-bottom: 0.5rem;
+    }
+    // border-top: 1px solid #ddd; // Add a top border to separate from the filter selection
+    // padding-top: 1rem; // Add some padding to the top
+  }
+  
+
+  
+  .date-picker h5 {
+    margin-bottom: 0.5rem; /* Space below the heading */
+  }
+  
+  .date-options {
+    display: flex;
+    flex-direction: column; /* Stack radio buttons vertically */
+    gap: 0.5rem; /* Space between radio buttons */
+  }
+  
+  .date-options label {
+    cursor: pointer; /* Change cursor to pointer for better UX */
+    padding: 0.5rem; /* Add padding for better click area */
+    border-radius: 4px; /* Add border radius for hover effect */
+    transition: background-color 0.3s; /* Smooth background transition */
+  }
+  
+  .date-options label:hover {
+    background-color: #f0f0f0; /* Highlight on hover */
+  }
+  
+  .date-scroll {
+    display: flex;
+    overflow-x: auto; // Allow horizontal scrolling
+    padding: 0.5rem 0;
+    .day {
+      min-width: 40px; // Set a minimum width for each day
+      text-align: center;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      &:hover {
+        background-color: #e0e0e0; // Highlight on hover
+      }
+    }
+  }
+  
+  .month-year {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    .month, .year {
+      min-width: 40px; // Set a minimum width for each month/year
+      text-align: center;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      &:hover {
+        background-color: #e0e0e0; // Highlight on hover
+      }
+    }
+  }
+  
+  .hashtag-selection {
+    display: flex;
+    flex-direction: column;
+    .hashtag-bubbles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem; // Space between hashtags
+      span {
+        background-color: #f0f0f0;
+        border-radius: 20px;
+        padding: 0.5rem 1rem;
+        font-size: small;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        &.selected {
+          background-color: #ffc400; // Highlight selected hashtags
+          color: #000; // Change text color for selected
+        }
+      }
+    }
+  }
+  
+  .price-selection, .rating-selection {
+    display: flex;
+    flex-direction: column;
+    label {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      &:hover {
+        background-color: #f0f0f0; // Highlight on hover
+      }
+    }
+  }
+  
+  button {
+    background-color: #ffd700; // Default color
+    color: #000;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: medium;
+    padding: 0.75rem 1rem;
+    border: none; // Remove border
+    margin-top: auto; // Push the button to the bottom
+    width: 100%; // Make the button full width
+  }
+  
   .event-section {
     margin-bottom: 2rem;
     // h3 {
@@ -92,6 +353,13 @@
       background-color: #ebebeb;
       margin-bottom: 1rem;
       border-radius: 4px;
+      .event-name,
+        .event-description {
+          overflow: hidden;          /* Hide overflow text */
+          white-space: nowrap;      /* Prevent text from wrapping to the next line */
+          text-overflow: ellipsis;  /* Add ellipsis (...) for overflow text */
+          max-width: 100%;          /* Ensure it doesn't exceed the card width */
+        }
     }
     img {
       width: -webkit-fill-available;

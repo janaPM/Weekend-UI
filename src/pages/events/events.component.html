@@ -9,12 +9,113 @@
     </button>
   </div>
   <div *ngIf="isDefaultView" class="events-container">
-    <div class="search-section">
+    <!-- <div class="search-section">
       <input [(ngModel)]="searchQuery" placeholder="What's the event name?" />
       <input placeholder="Date and time" />
-      <!-- <input placeholder="Gender and age range" /> -->
+      <button (click)="filterEvents()">Search</button>
+    </div> -->
+    <div class="search-section">
+      <div class="search-input">
+        <input class="search-input-button" [(ngModel)]="searchQuery" placeholder="🔍 What's the event name?" />
+        <button class="filter-icon" (click)="openFilterOptions()">
+          <img class = "filter-image" [src]="images.filter" width = 20px; height = 20px;>
+        </button>
+      </div>
       <button (click)="filterEvents()">Search</button>
     </div>
+
+<!-- Bottom Sheet for Filters -->
+<div class="bottom-sheet" [ngClass]="{'show': showBottomSheet}" *ngIf="showBottomSheet">
+  <div class="bottom-sheet-content">
+    <img src="{{ images.cross }}" alt="Close" class="close-icon" (click)="closeFilterOptions()" />
+    <h4>Filter Options</h4>
+    <div class="filter-container">
+      <!-- <div class="filter-selection">
+        <h5>Select Filters</h5>
+        <label (click)="selectFilter('date')">Date</label>
+        <label (click)="selectFilter('hashtags')">Hashtags</label>
+        <label (click)="selectFilter('price')">Price</label>
+        <label (click)="selectFilter('ratings')">Ratings</label>
+      </div> -->
+      <div class="filter-selection">
+        <h5>Select Filters</h5>
+        <label *ngFor="let filter of ['date', 'hashtags', 'price', 'ratings']" (click)="selectFilter(filter)">
+          {{ filter | titlecase }}
+        </label>
+      </div>
+      <div class="filter-options">
+        <ng-container *ngIf="selectedFilter === 'date'">
+          <h5>Choose Date</h5>
+          <div class="date-options">
+            <label *ngFor="let range of ['thisWeek', 'thisMonth', 'thisQuarter', 'thisYear']">
+              <input type="radio" name="date" [(ngModel)]="selectedDateRange" [value]="range" /> {{ range | titlecase }}
+            </label>
+          </div>
+        </ng-container>
+
+        <div *ngIf="selectedFilter === 'hashtags'" class="hashtag-selection">
+          <h5>Choose Hashtags</h5>
+          <div class="hashtag-bubbles">
+            <span *ngFor="let hashtag of hashtags" 
+                  [ngClass]="{'selected': selectedHashtags.includes(hashtag)}" 
+                  (click)="toggleHashtag(hashtag)">
+              {{ hashtag }}
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="selectedFilter === 'price'" class="price-selection">
+          <h5>Choose Price Range</h5>
+          <label *ngFor="let price of priceRanges">
+            <input type="checkbox" 
+                   [checked]="selectedPrice.includes(price)" 
+                   (change)="togglePrice(price)" /> {{ price }}
+          </label>
+        </div>
+
+        <div *ngIf="selectedFilter === 'ratings'" class="rating-selection">
+          <h5>Choose Ratings</h5>
+          <label *ngFor="let rating of ratingRanges">
+            <input type="checkbox" 
+                   [checked]="selectedRating.includes(rating)" 
+                   (change)="toggleRating(rating)" /> {{ rating }}
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- <button 
+      (click)="closeFilterOptions()" 
+      [disabled]="!isFilterSelected()" 
+      [ngStyle]="{'background-color': isFilterSelected() ? '#ffd700' : '#ccc'}">
+      Close
+    </button> -->
+    <div class="bottom-sheet-button">
+      <button 
+        class="clear-button" 
+        (click)="resetSelections()">
+        Clear
+      </button>
+      <button 
+        class="apply-button" 
+        (click)="filterEvents()" 
+        [disabled]="!isFilterSelected()" 
+        [ngStyle]="{'background-color': isFilterSelected() ? '#ffc400' : '#ffc400',
+        'color': isFilterSelected() ? 'black' : 'white'}">
+        Apply
+      </button>
+    </div>
+    <!-- <button 
+      class="close-button" 
+      (click)="closeFilterOptions()" 
+      [disabled]="!isFilterSelected()" 
+      [ngStyle]="{'background-color': isFilterSelected() ? '#ffd700' : '#ccc'}">
+      Close
+    </button> -->
+  </div>
+</div>
+
+
+
     <!-- <section class="event-section">
       <h3>Upcoming events</h3>
       <div class="event-grid">
@@ -48,8 +149,8 @@
         <div class="event-card" *ngFor="let event of events; trackBy: trackByEventId" class="event-card"
           (click)="viewEvent(event.id)">
           <img [src]="event.image" alt="{{ event.name }}" />
-          <h4>{{ event.name }}</h4>
-          <p>{{ event.description }}</p>
+          <h4 class="event-name">{{ event.name }}</h4>
+          <p class="event-description">{{ event.description }}</p>
           <p>{{ formatDateTime(event.startTime) }}</p>
           <p>{{ event.fee == 0 || event.fee === null ? 'Free' : '₹' + event.fee }}, {{ event.age }}</p>
         </div>

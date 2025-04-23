@@ -12,6 +12,18 @@ import { delay } from 'rxjs';
     standalone: false
 })
 export class EventsComponent implements OnInit, OnDestroy {
+  // searchQuery: string = '';
+  showBottomSheet: boolean = false;
+  filterByHashtags: boolean = false;
+  filterByPrice: boolean = false;
+  filterByRatings: boolean = false;
+  selectedFilter: string | null = null; // To track the currently selected filter
+  selectedHashtags: string[] = []; // To store selected hashtags
+  selectedPrice: string[] = []; // Change to an array for multiple selections
+  selectedRating: string[] = []; // Change to an array for multiple selections
+  selectedDateRange: string | null = null;
+  priceRanges: string[] = ['0-200', '200-500', '500-2000', '>2000'];
+  ratingRanges: string[] = ['4.5>', '4-4.5', '3.5-4', '<3.5'];
   userLocation: { latitude: number; longitude: number } | null = null;
   private apiUrl = environment.URL;
   isDefaultView: boolean = true;
@@ -108,6 +120,100 @@ export class EventsComponent implements OnInit, OnDestroy {
         this.moveToNext();
       }
     }, 3000); // Scroll every 3 seconds
+  }
+  isFilterSelected(): boolean {
+    return (
+      (this.selectedPrice.length > 0) || // Check if any prices are selected
+      (this.selectedDateRange !== null && this.selectedDateRange !== '') || // Check if a date range is selected
+      (this.selectedRating.length > 0) || // Check if any ratings are selected
+      (this.selectedHashtags.length > 0) // Check if any hashtags are selected
+    );
+  }
+  hashtags: string[] = [
+    'Music',
+    'Traveling',
+    'Cooking',
+    'Sports',
+    'Gaming',
+    'Reading',
+    'Fitness',
+    'Movies',
+    'Art',
+    'Photography',
+  ];
+
+  // Method to open the bottom sheet
+  openFilterOptions() {
+    this.showBottomSheet = true;
+    setTimeout(() => {
+      this.showBottomSheet = true; // Ensure the class is applied after the transition
+    }, 50000);
+  }
+
+  // Method to close the bottom sheet
+  closeFilterOptions() {
+    this.showBottomSheet = false;
+    // Reset selections if needed
+    this.resetSelections();
+  }
+  isBottomSheetVisible() {
+    return this.showBottomSheet;
+  }
+  // Method to select a filter
+  async selectFilter(filter: string) {
+    this.selectedFilter = filter;
+    console.log('selectedFilter'+this.selectedFilter);
+  }
+  // Method to toggle hashtag selection
+  toggleHashtag(hashtag: string) {
+    const index = this.selectedHashtags.indexOf(hashtag);
+    if (index === -1) {
+      this.selectedHashtags.push(hashtag); // Add hashtag if not selected
+    } else {
+      this.selectedHashtags.splice(index, 1); // Remove hashtag if already selected
+    }
+  }
+
+  // Method to filter events based on selected options
+  filterEvents() {
+    console.log('Search Query:', this.searchQuery);
+    console.log('Selected Hashtags:', this.selectedHashtags);
+    console.log('Selected Price Range:', this.selectedPrice);
+    console.log('selectedDateRange:', this.selectedDateRange);
+    console.log('Selected Rating Range:', this.selectedRating);
+    this.closeFilterOptions(); // Close the filter options after searching
+  }
+
+  // Method to reset selections
+  resetSelections() {
+    console.log('selectedHashtags: '+this.selectedHashtags+' selectedPrice: '+this.selectedPrice+' selectedDateRange:'+this.selectedDateRange+' selectedRating: '+this.selectedRating);
+    this.selectedFilter = null;
+    this.selectedHashtags = [];
+    this.selectedPrice = [];
+    this.selectedDateRange = null;
+    this.selectedRating = [];
+  }
+  togglePrice(price: string): void {
+    console.log("Added togglePrice");
+    const index = this.selectedPrice.indexOf(price);
+    if (index === -1) {
+      this.selectedPrice.push(price);
+      console.log(`Added price: ${price}`, this.selectedPrice);
+    } else {
+      this.selectedPrice.splice(index, 1);
+      console.log(`Removed price: ${price}`, this.selectedPrice);
+    }
+  }
+  
+  toggleRating(rating: string): void {
+    const index = this.selectedRating.indexOf(rating);
+    if (index === -1) {
+      this.selectedRating.push(rating);
+      console.log(`Added rating: ${rating}`, this.selectedRating);
+    } else {
+      this.selectedRating.splice(index, 1);
+      console.log(`Removed rating: ${rating}`, this.selectedRating);
+    }
   }
   stopAutoScroll(): void {
     clearInterval(this.autoScrollInterval);
@@ -285,18 +391,18 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.searchQuery = eventName.toLowerCase();
     this.filterEvents();
   }
-  filterEvents(): void {
-    const query = this.searchQuery.toLowerCase();
-    console.error('query:', query);
-    this.filteredEvents = this.events.filter(
-      (event) =>
-        event.name.toLowerCase().includes(query) || // Match name
-        event.description.toLowerCase().includes(query) ||// Optional: Match hashtags/description
-        event.hashtag?.some((tag) => tag.toLowerCase().includes(query))
-    );
-    console.error('filteredNearbyEvents:', this.filteredEvents);
-    this.isHovering = false;
-  }
+  // filterEvents(): void {
+  //   const query = this.searchQuery.toLowerCase();
+  //   console.error('query:', query);
+  //   this.filteredEvents = this.events.filter(
+  //     (event) =>
+  //       event.name.toLowerCase().includes(query) || // Match name
+  //       event.description.toLowerCase().includes(query) ||// Optional: Match hashtags/description
+  //       event.hashtag?.some((tag) => tag.toLowerCase().includes(query))
+  //   );
+  //   console.error('filteredNearbyEvents:', this.filteredEvents);
+  //   this.isHovering = false;
+  // }
   toggleCreateEvent(): void {
     this.isCreatingEvent = !this.isCreatingEvent;
     this.isOpen = !this.isOpen;

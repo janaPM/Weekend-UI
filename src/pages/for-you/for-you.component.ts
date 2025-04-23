@@ -22,7 +22,7 @@ interface NewEvent {
   bu_count: string;
   bu_min_count: string;
   owner: string;
-  interests: string[]; // Add this line to define interests as an array of strings
+  hashtag: string[]; // Add this line to define interests as an array of strings
 }
 @Component({
     selector: 'app-for-you',
@@ -55,7 +55,7 @@ export class ForYouComponent implements OnInit {
     age: '',
     image: '',
     fee: '',
-    interests: [], // Add this line to hold selected interests
+    hashtag: [], // Add this line to hold selected interests
     bu_count:'',
     bu_min_count:'',
     owner: ''
@@ -428,7 +428,7 @@ saveEvent(): void {
   if (this.isEventValid()) {
     this.newEvent.owner = localStorage.getItem('My_ID') || ''; // Ensure it's a string
     this.newEvent.startTime = this.combineDateAndTime(); // Set the startTime
-    this.newEvent.interests = this.selectedInterests; // Set selected interests
+    this.newEvent.hashtag = this.selectedInterests; // Set selected interests
 
     try {
       const coordinates = this.getCoordinatesFromLocationUrl(this.newEvent.location_url);
@@ -494,7 +494,7 @@ resetNewEvent(): void {
     bu_count:'',
     bu_min_count:'',
     owner:'',
-    interests:[]
+    hashtag:[]
   };
 }
 isEventValid(): boolean {
