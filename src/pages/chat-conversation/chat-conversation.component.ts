@@ -28,9 +28,8 @@ export class ChatConversationComponent {
       avatar: 'https://via.placeholder.com/50x50?text=A'
     },
     messages: [
-      { text: "Hey there! How's your day going?", isSender: false, time: '', profilepicture: "",name:"", user_id:""},
-      { text: "Hi Alex! It's going well, thanks for asking. How about yours?", isSender: true, time: '' , profilepicture: "",name:""}
-      // { text: 'Pretty good! Just finished work and looking forward to relaxing.', isSender: false , time: '', profilepicture: "",name:""}
+      { text: "", isSender: false, time: '', profilepicture: "",name:"", user_id:""},
+      { text: "", isSender: true, time: '' , profilepicture: "",name:""}
     ]
   };
 
@@ -112,7 +111,7 @@ export class ChatConversationComponent {
     },
     (error) => {
       console.error('Error fetching requested user data:', error);
-      alert('Failed to get requested user data. Please try again.');
+      // alert('Failed to get requested user data. Please try again.');
     });
   }
   sendMessage() {
