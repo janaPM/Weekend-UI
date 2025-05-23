@@ -1,10 +1,10 @@
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
-host: 'localhost',
-user: 'root', // Replace with your username
-password: '12345678', // Replace with your password
-database: 'chessy_database'
+host: 'weekend.ct0u60y6o314.ap-south-1.rds.amazonaws.com',
+user: 'Weekend', // Replace with your username
+password: 'Jana123Ajan123', // Replace with your password
+database: 'Weekend'
 });
 
 connection.connect((err) => {

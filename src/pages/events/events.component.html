@@ -9,11 +9,6 @@
     </button>
   </div>
   <div *ngIf="isDefaultView" class="events-container">
-    <!-- <div class="search-section">
-      <input [(ngModel)]="searchQuery" placeholder="What's the event name?" />
-      <input placeholder="Date and time" />
-      <button (click)="filterEvents()">Search</button>
-    </div> -->
     <div class="search-section">
       <div class="search-input">
         <input class="search-input-button" [(ngModel)]="searchQuery" placeholder="🔍 What's the event name?" />
@@ -30,13 +25,6 @@
     <img src="{{ images.cross }}" alt="Close" class="close-icon" (click)="closeFilterOptions()" />
     <h4>Filter Options</h4>
     <div class="filter-container">
-      <!-- <div class="filter-selection">
-        <h5>Select Filters</h5>
-        <label (click)="selectFilter('date')">Date</label>
-        <label (click)="selectFilter('hashtags')">Hashtags</label>
-        <label (click)="selectFilter('price')">Price</label>
-        <label (click)="selectFilter('ratings')">Ratings</label>
-      </div> -->
       <div class="filter-selection">
         <h5>Select Filters</h5>
         <label *ngFor="let filter of ['date', 'hashtags', 'price', 'ratings']" (click)="selectFilter(filter)">
@@ -78,17 +66,11 @@
           <label *ngFor="let rating of ratingRanges">
             <input type="checkbox" 
                    [checked]="selectedRating.includes(rating)" 
-                   (change)="toggleRating(rating)" /> {{ rating }}
+                   (change)="toggleRating(rating)" disabled/> {{ rating }}
           </label>
         </div>
       </div>
     </div>
-    <!-- <button 
-      (click)="closeFilterOptions()" 
-      [disabled]="!isFilterSelected()" 
-      [ngStyle]="{'background-color': isFilterSelected() ? '#ffd700' : '#ccc'}">
-      Close
-    </button> -->
     <div class="bottom-sheet-button">
       <button 
         class="clear-button" 
@@ -104,17 +86,8 @@
         Apply
       </button>
     </div>
-    <!-- <button 
-      class="close-button" 
-      (click)="closeFilterOptions()" 
-      [disabled]="!isFilterSelected()" 
-      [ngStyle]="{'background-color': isFilterSelected() ? '#ffd700' : '#ccc'}">
-      Close
-    </button> -->
   </div>
 </div>
-
-
 
     <!-- <section class="event-section">
       <h3>Upcoming events</h3>
@@ -134,7 +107,12 @@
           <p>{{ event.name }}</p>
         </div>
       </div>
-    </section> -->      
+    </section> --> 
+    <div class="event-detail-container">
+      <!-- Loader -->
+      <div *ngIf="isLoading" class="loader-container">
+        <div class="loader"></div>
+      </div>     
     <section class="event-list">
       <h3>Events near you</h3>
       <div *ngIf="isLoading && this.offset==0" class="loading-placeholder">
@@ -156,71 +134,9 @@
         </div>
       </div>
     </section>
+    </div>
   </div>
   <div *ngIf="!isDefaultView" class="for-you-container">
-    <!-- Event Creation Form -->
-    <div *ngIf="isCreatingEvent" class="create-event-form">
-      <h3>Create New Event</h3>
-      <div>
-        <label>Event Name:</label>
-        <input [(ngModel)]="newEvent.name" placeholder="Event Name" />
-      </div>
-      <div>
-        <label>Location:</label>
-        <input [(ngModel)]="newEvent.location" placeholder="Event Location" />
-      </div>
-      <div>
-        <label>Date:</label>
-        <input [(ngModel)]="newEvent.date" type="date" />
-      </div>
-      <div>
-        <label>Time:</label>
-        <input [(ngModel)]="newEvent.time" type="time" />
-      </div>
-      <div>
-        <label>Organizer Name:</label>
-        <input [(ngModel)]="newEvent.organizerName" placeholder="Organizer Name" />
-      </div>
-      <div>
-        <label>Gender:</label>
-        <select [(ngModel)]="newEvent.gender">
-          <option value="Any">Any</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-      </div>
-      <div>
-        <label>Age:</label>
-        <input [(ngModel)]="newEvent.age" placeholder="Age Range (e.g., 18-30)" />
-      </div>
-      <div>
-        <label>Event Image URL:</label>
-        <input [(ngModel)]="newEvent.image" placeholder="Image URL" />
-      </div>
-      <div class="form-buttons">
-        <button (click)="saveEvent()">Save</button>
-        <button (click)="cancelEvent()">Cancel</button>
-      </div>
-    </div>
-    <!-- <div *ngFor="let event of forYouEvents" class="for-you-card">
-      <img [src]="event.image" alt="{{ event.name }}" class="event-image" />
-      <div class="event-details">
-        <h4>{{ event.name }}</h4>
-        <p>{{ event.location }}</p>
-        <p>{{ event.date }} | {{ event.time }}</p>
-        <p>
-          Organizer: {{ event.organizerName }}, {{ event.gender }},
-          {{ event.age }}
-        </p>
-      </div>
-    </div> -->
     <app-for-you [showProfilesSection]="false"></app-for-you>
-    <!-- Create Event Button -->
-    <button class="floating-button" (click)="toggleCreateEvent()">
-      <span [ngClass]="{ 'rotate': isCreatingEvent }">
-        <ng-container *ngIf="!isCreatingEvent">+</ng-container>
-        <ng-container *ngIf="isCreatingEvent">+</ng-container>
-      </span>
-    </button>
   </div>
 </div>

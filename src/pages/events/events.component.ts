@@ -22,7 +22,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   selectedPrice: string[] = []; // Change to an array for multiple selections
   selectedRating: string[] = []; // Change to an array for multiple selections
   selectedDateRange: string | null = null;
-  priceRanges: string[] = ['0-200', '200-500', '500-2000', '>2000'];
+  priceRanges: string[] = ['<200', '200-500', '500-2000', '>2000'];
   ratingRanges: string[] = ['4.5>', '4-4.5', '3.5-4', '<3.5'];
   userLocation: { latitude: number; longitude: number } | null = null;
   private apiUrl = environment.URL;
@@ -31,11 +31,11 @@ export class EventsComponent implements OnInit, OnDestroy {
   sortedEvents: any[] = []; // Store sorted events
   limit = 5;
   offset = 0;
+  filters: any;
   loading = false;
   private hasMoreEvents: boolean = true;
   isLoading: boolean = true;
   loadingCards: number[] = new Array(5); // Change 5 to however many loading cards you want
-  isCreatingEvent: boolean = false; // Track if creating an event
   public images = images;
   public isOpen = false;
   searchQuery: string = ''; // To bind the search input
@@ -66,22 +66,6 @@ export class EventsComponent implements OnInit, OnDestroy {
     hashtag?: string[];
   }> = [];
   
-  newEvent = {
-    id: '',
-    name: '',
-    description: '',
-    location: '',
-    date: '',
-    time: '',
-    startTime: '',
-    organizerName: '',
-    gender: 'Any',
-    age: '',
-    fee: '',
-    location_url: '',
-    image: '',
-    hashtag: [] // Change this to an array of strings
-  };
   userData = {
     id: '' as any, // Replace with the actual user ID
     // name: '',
@@ -145,16 +129,16 @@ export class EventsComponent implements OnInit, OnDestroy {
   // Method to open the bottom sheet
   openFilterOptions() {
     this.showBottomSheet = true;
-    setTimeout(() => {
-      this.showBottomSheet = true; // Ensure the class is applied after the transition
-    }, 50000);
+    // setTimeout(() => {
+    //   this.showBottomSheet = true; // Ensure the class is applied after the transition
+    // }, 5000);
   }
 
   // Method to close the bottom sheet
   closeFilterOptions() {
     this.showBottomSheet = false;
     // Reset selections if needed
-    this.resetSelections();
+    // this.resetSelections();
   }
   isBottomSheetVisible() {
     return this.showBottomSheet;
@@ -176,11 +160,18 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   // Method to filter events based on selected options
   filterEvents() {
-    console.log('Search Query:', this.searchQuery);
+    this.events = [];
+    this.hasMoreEvents = true;
+    // this.loading = false;
+    // console.log('Search Query:', this.searchQuery);
     console.log('Selected Hashtags:', this.selectedHashtags);
     console.log('Selected Price Range:', this.selectedPrice);
     console.log('selectedDateRange:', this.selectedDateRange);
     console.log('Selected Rating Range:', this.selectedRating);
+    // Prepare filter parameters
+    this.limit = 5;
+    this.offset = 0;
+    this.fetchEvents();
     this.closeFilterOptions(); // Close the filter options after searching
   }
 
@@ -192,6 +183,12 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.selectedPrice = [];
     this.selectedDateRange = null;
     this.selectedRating = [];
+    this.events = [];
+    this.hasMoreEvents = true;
+    this.limit = 5;
+    this.offset = 0;
+    this.fetchEvents();
+    this.closeFilterOptions(); // Close the filter options after searching
   }
   togglePrice(price: string): void {
     console.log("Added togglePrice");
@@ -273,11 +270,22 @@ export class EventsComponent implements OnInit, OnDestroy {
     const UserId = localStorage.getItem('My_ID') || '';
     console.log("Offset:", this.offset);
     // Fetch events with pagination
-
+    
     this.delay = this.offset === 0 ? 1000 : 0;
-
+    
+    this.filters = {
+      hashtags: this.selectedHashtags,
+      priceRange: this.selectedPrice,
+      dateRange: this.selectedDateRange,
+      ratingRange: this.selectedRating,
+    };
+    // Stringify filters for GET request
+    const filtersString = encodeURIComponent(JSON.stringify(this.filters));
+    console.log('filtersString:', filtersString);
+    // const filtersString = '%7B%22hashtags%22%3A%5B%5D%2C%22priceRange%22%3A%5B%22%3C200%22%5D%2C%22dateRange%22%3Anull%2C%22ratingRange%22%3A%5B%5D%7D';
     setTimeout(() => {
-      this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}&limit=${this.limit}&offset=${this.offset}`).subscribe({
+      console.log('Fetching events with filters:', this.filters);
+      this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}&limit=${this.limit}&offset=${this.offset}&filters=${filtersString}`).subscribe({
         next: (data) => {
           if (data && data.length > 0) {
             this.events.push(...data);
@@ -390,67 +398,6 @@ export class EventsComponent implements OnInit, OnDestroy {
     console.log('Clicked event name:', eventName);
     this.searchQuery = eventName.toLowerCase();
     this.filterEvents();
-  }
-  // filterEvents(): void {
-  //   const query = this.searchQuery.toLowerCase();
-  //   console.error('query:', query);
-  //   this.filteredEvents = this.events.filter(
-  //     (event) =>
-  //       event.name.toLowerCase().includes(query) || // Match name
-  //       event.description.toLowerCase().includes(query) ||// Optional: Match hashtags/description
-  //       event.hashtag?.some((tag) => tag.toLowerCase().includes(query))
-  //   );
-  //   console.error('filteredNearbyEvents:', this.filteredEvents);
-  //   this.isHovering = false;
-  // }
-  toggleCreateEvent(): void {
-    this.isCreatingEvent = !this.isCreatingEvent;
-    this.isOpen = !this.isOpen;
-    if (!this.isCreatingEvent) {
-      this.resetNewEvent();
-    }
-  }
-  saveEvent(): void {
-    if (this.isEventValid()) {
-    this.events.push({ ...this.newEvent }); // Add to events list
-    this.filteredEvents = [...this.events]; // Update filtered list
-    this.isCreatingEvent = false;
-    this.resetNewEvent();
-    } else {
-    alert('Please fill out all required fields!');
-    }
-    }
-  cancelEvent(): void {
-    this.isCreatingEvent = false;
-    this.resetNewEvent();
-  }
-  resetNewEvent(): void {
-    this.newEvent = {
-      id:'',
-      name: '',
-      description:'',
-      location: '',
-      date: '',
-      time: '',
-      startTime:'',
-      organizerName: '',
-      gender: 'Any',
-      age: '',
-      fee: '',
-      location_url:'',
-      image: '',
-      hashtag:[]
-    };
-  }
-  isEventValid(): boolean {
-    return (
-      this.newEvent.name !== '' &&
-      this.newEvent.location !== ''&&
-      this.newEvent.date !== '' &&
-      this.newEvent.time !== '' &&
-      this.newEvent.organizerName !== '' &&
-      this.newEvent.image !== ''
-    );
   }
   trackByEventId(index: number, event: { id: string }): string {
     return event.id; // Return the unique identifier (id)
