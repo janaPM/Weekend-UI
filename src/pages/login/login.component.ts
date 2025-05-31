@@ -47,7 +47,7 @@ export class LoginComponent {
 
   this.phoneNumber = '+91' + this.rawPhone;
 
-  this.http.post<SendOtpResponse>(`${this.apiUrl}api/auth/send-otp`, {
+  this.http.post<SendOtpResponse>(`${this.apiUrl}/auth/send-otp`, {
     phone: this.phoneNumber
   }).subscribe({
     next: (res) => {
@@ -69,7 +69,7 @@ export class LoginComponent {
       return;
     }
 
-    this.http.post<VerifyOtpResponse>(`${this.apiUrl}api/auth/verify-otp`, {
+    this.http.post<VerifyOtpResponse>(`${this.apiUrl}/auth/verify-otp`, {
       phone: this.phoneNumber,
       otp: this.otp,
       session: this.challengeSession
