@@ -1,73 +1,42 @@
 <div class="login-container">
   <div class="login-card">
-    <div class="logo">
-      <img [src]="images.weekend" alt="Weekend Logo"/>
+    <h3>Login with Phone Number</h3>
+
+    <!-- Step 1: Phone Number -->
+    <div *ngIf="step === 1" class="form-group">
+      <label for="phone">Phone Number</label>
+      <div class="phone-input-wrapper">
+        <span class="prefix">+91</span>
+        <input
+          type="text"
+          id="phone"
+          [(ngModel)]="rawPhone"
+          placeholder="Enter 10-digit number"
+          maxlength="10"
+          pattern="[0-9]{10}"
+          required
+        />
+      </div>
+      <button class="login-button" (click)="sendOTP()">Send OTP</button>
     </div>
-    <h3>{{ isLogin ? 'Welcome back!' : 'Create your account' }}</h3>
-    <form >
 
-      <!-- Email or Username input -->
-      <div class="form-group">
-        <label for="email">{{ isLogin ? 'Login' : 'Email' }}</label>
-        <input *ngIf="isLogin" type="text" id="username" [(ngModel)]="signinObj.email" name="username" placeholder="Username" required />
-        <input *ngIf="!isLogin" type="email" id="email" [(ngModel)]="signupObj.email" name="email" placeholder="Email" required />
-        <div *ngIf="invalidEmail || emailExists || userNotExists || userExists" class="error-message">
-          <span *ngIf="invalidEmail">Invalid email format.</span>
-          <span *ngIf="emailExists">Email already exists.</span>
-          <span *ngIf="userNotExists">User not found.</span>
-          <span *ngIf="userExists">User already exists.</span>
-        </div>
-      </div>
-
-      <!-- Password input -->
-      <div class="form-group">
-        <label for="password">{{ isLogin ? 'Password' : 'Create a password' }}</label>
-        <div class="password-container">
-          <input *ngIf="isLogin" type="password" id="password" [(ngModel)]="signinObj.password" name="password" placeholder="Enter password" required />
-          <input *ngIf="!isLogin" type="password" id="create-password" [(ngModel)]="signupObj.password" name="createPassword" placeholder="Create password" required />
-          <span class="password-toggle" (click)="togglePassword()">
-            <i class="fas" [ngClass]="{'fa-eye': !isPasswordVisible, 'fa-eye-slash': isPasswordVisible}"></i>
-          </span>
-        </div>
-        <div *ngIf="easyPassword || passwordInvalid" class="error-message">
-          <span *ngIf="easyPassword">Password is too weak.</span>
-          <ul *ngIf="easyPassword" class="password-requirements">
-            <li>A minimum of 1 lower case letter [a-z]</li>
-            <li>A minimum of 1 upper case letter [A-Z]</li>
-            <li>A minimum of 1 numeric character [0-9]</li>
-            <li>A minimum of 1 special character</li>
-            <li>A minimum of 9 characters</li>
-          </ul>
-          <span *ngIf="passwordInvalid">Password is not correct.</span>
-        </div>
-      </div>
-
-      <!-- Additional Options for Login -->
-      <div *ngIf="isLogin" class="form-options">
-        <div class="toggle-remember-me">
-          <label class="switch">
-            <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe">
-            <span class="slider round"></span>
-          </label>
-          <span>Remember me</span>
-        </div>
-        <a href="#" class="forgot-password">Forgot password?</a>
-      </div>
-      
-      <!-- Submit Button -->
-      <button type="submit" class="login-button" (click)="onSubmit()">{{ isLogin ? 'Sign in' : 'Sign up' }}</button>
-    </form>
-
-    <div class="divider">
-      <span class="divider-text">or</span>
+    <!-- Step 2: OTP -->
+    <div *ngIf="step === 2" class="form-group">
+      <label for="otp">Enter OTP</label>
+      <input
+        type="text"
+        id="otp"
+        [(ngModel)]="otp"
+        placeholder="6-digit OTP"
+        maxlength="6"
+        pattern="[0-9]{6}"
+        required
+      />
+      <button class="login-button" (click)="verifyOTP()">Verify</button>
     </div>
-    <button class="google-button">
-      <img [src]="images.g" class="google-logo"> {{ isLogin ? 'Sign in with Google' : 'Sign up with Google' }}
-    </button>
-    <div class="signup-option">
-      <span>{{ isLogin ? "Don't have an account?" : "Already have an account?" }} 
-        <a (click)="toggleForm()">{{ isLogin ? 'Sign up now' : 'Sign in' }}</a>
-      </span>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
     </div>
   </div>
 </div>
