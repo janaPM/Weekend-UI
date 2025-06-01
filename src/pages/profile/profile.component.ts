@@ -70,7 +70,7 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
     const UserId = localStorage.getItem('My_ID'); 
     // const UserId = '1';
     console.log("UserId--->"+UserId);
-    this.http.get<any>(`${this.apiUrl}userDetail?userId=${UserId}`).subscribe((data) => {
+    this.http.get<any>(`${this.apiUrl}/userDetail?userId=${UserId}`).subscribe((data) => {
       this.user.id = UserId;
       this.user = { ...data };
       if (Array.isArray(this.user.profilePicture)) {
@@ -245,10 +245,10 @@ years: string[] = Array.from({ length: 51 }, (_, i) => `${1970 + i}`);
     this.calculateProgress();
     alert('Profile saved successfully!');
     console.log(JSON.stringify(this.user));
-    console.log(JSON.stringify(this.http.post(`${this.apiUrl}updateUser`, this.user)));
+    console.log(JSON.stringify(this.http.post(`${this.apiUrl}/updateUser`, this.user)));
     // this.http.put('http://your-backend-api/update-user', this.user)
     // this.http.post('http://localhost:3000/api/updateUser', this.user)
-    this.http.post(`${this.apiUrl}updateUser`, this.user)
+    this.http.post(`${this.apiUrl}/updateUser`, this.user)
       .subscribe(
         (response) => {
           console.log('User data saved successfully:', response);

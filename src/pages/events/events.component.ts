@@ -285,7 +285,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     // const filtersString = '%7B%22hashtags%22%3A%5B%5D%2C%22priceRange%22%3A%5B%22%3C200%22%5D%2C%22dateRange%22%3Anull%2C%22ratingRange%22%3A%5B%5D%7D';
     setTimeout(() => {
       console.log('Fetching events with filters:', this.filters);
-      this.http.get<any>(`${this.apiUrl}getAllEvent?ownerId=${UserId}&limit=${this.limit}&offset=${this.offset}&filters=${filtersString}`).subscribe({
+      this.http.get<any>(`${this.apiUrl}/getAllEvent?ownerId=${UserId}&limit=${this.limit}&offset=${this.offset}&filters=${filtersString}`).subscribe({
         next: (data) => {
           if (data && data.length > 0) {
             this.events.push(...data);
@@ -359,7 +359,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   sendUserLocation() {
     if (this.userLocation) {
       console.log("this.userData++"+JSON.stringify(this.userData));
-      this.http.post(`${this.apiUrl}updateUser`, this.userData)
+      this.http.post(`${this.apiUrl}/updateUser`, this.userData)
         .subscribe(
           response => {
             console.log('Location sent successfully:', response);

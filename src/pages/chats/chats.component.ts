@@ -23,7 +23,7 @@ export class ChatsComponent implements OnInit{
   constructor(private router: Router, private http: HttpClient) {}
   ngOnInit() {
     const UserId = localStorage.getItem('My_ID'); 
-    this.http.get<any>(`${this.apiUrl}getMyChatList?id=${UserId}`).subscribe((data) => {
+    this.http.get<any>(`${this.apiUrl}/getMyChatList?id=${UserId}`).subscribe((data) => {
       console.log(JSON.stringify(data));
       this.chatList = data; 
       console.log("chatList->"+JSON.stringify(this.chatList));

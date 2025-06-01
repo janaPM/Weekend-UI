@@ -70,7 +70,7 @@ export class ChatConversationComponent {
     var firstLoading = this.offset === 0;
     this.isLoading = true;
 
-    this.http.get<any>(`${this.apiUrl}getMessages?event_id=${this.eventId}&limit=${this.limit}&offset=${this.offset}`).subscribe((data) => {
+    this.http.get<any>(`${this.apiUrl}/getMessages?event_id=${this.eventId}&limit=${this.limit}&offset=${this.offset}`).subscribe((data) => {
       console.log(JSON.stringify(data));
             
       if (data.length === 0) {
@@ -128,7 +128,7 @@ export class ChatConversationComponent {
     };
     console.log("messageToSend-->"+JSON.stringify(messageToSend));
     // Send the message to the server (assuming you have an endpoint for this)
-    this.http.post<any>(`${this.apiUrl}sendMessage`, messageToSend).subscribe(response => {
+    this.http.post<any>(`${this.apiUrl}/sendMessage`, messageToSend).subscribe(response => {
       console.log('Message sent successfully:', response);
 
        this.socketService.sendMessage({ ...messageToSend, createdAt: new Date() });

@@ -112,7 +112,7 @@ export class ForYouComponent implements OnInit {
   setTimeout(() => {
   const apiEndpoint = this.showProfilesSection ? 'getMyEvent' : 'getEventsByReqId';
     try {
-      this.http.get<any>(`${this.apiUrl}${apiEndpoint}?ownerId=${UserId}`).subscribe({
+      this.http.get<any>(`${this.apiUrl}/${apiEndpoint}?ownerId=${UserId}`).subscribe({
         next: (data) => {
         console.log('User details:', data);
 
@@ -336,7 +336,7 @@ acceptProfile(profile: any, event: any) {
     profileId: profile,
     eventId: event
   };
-  this.http.post(`${this.apiUrl}acceptProfileForMyEvent`, payload).subscribe(
+  this.http.post(`${this.apiUrl}/acceptProfileForMyEvent`, payload).subscribe(
     (response) => {
       console.log('Profile accepted successfully:', response);
       this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
