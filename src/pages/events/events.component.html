@@ -124,7 +124,7 @@
         </div>
       </div>
       <div  *ngIf="!isLoading">
-        <div class="event-card" *ngFor="let event of events; trackBy: trackByEventId" class="event-card"
+        <div class="event-card" *ngFor="let event of events; trackBy: trackByEventId"
           (click)="viewEvent(event.id)">
           <img [src]="event.image" alt="{{ event.name }}" />
           <h4 class="event-name">{{ event.name }}</h4>
