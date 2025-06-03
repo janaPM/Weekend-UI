@@ -1,42 +1,83 @@
-<div class="login-container">
-  <div class="login-card">
-    <h3>Login with Phone Number</h3>
-
-    <!-- Step 1: Phone Number -->
-    <div *ngIf="step === 1" class="form-group">
-      <label for="phone">Phone Number</label>
-      <div class="phone-input-wrapper">
-        <span class="prefix">+91</span>
+<div class="auth-container">
+  <div class="auth-header">
+    <!-- <span class="auth-title">Weekend</span>
+    <img [src]="images.next" class="auth-bell" alt="Bell" />
+    <img [src]="images.next" class="auth-account" alt="Account" /> -->
+  </div>
+  <div class="auth-error-message" [class.visible]="!!errorMessage">
+  {{ errorMessage }}
+</div>
+  <div class="auth-card">
+    <!-- <img [src]="images.heart" class="auth-heart" alt="Heart" /> -->
+    <h2 class="auth-welcome">Sign in to Weekend</h2>
+    <p class="auth-subtitle">
+      Meet people, book events &amp; find your vibe!
+    </p>
+    <form *ngIf="!showOtpInput" (ngSubmit)="getOtp()" #authForm="ngForm">
+      <label for="mobile" class="auth-label">Mobile Number</label>
+      <div class="auth-input-group">
+        <span class="auth-country-code">+91</span>
         <input
-          type="text"
-          id="phone"
-          [(ngModel)]="rawPhone"
-          placeholder="Enter 10-digit number"
-          maxlength="10"
-          pattern="[0-9]{10}"
+          id="mobile"
+          name="mobile"
+          type="tel"
+          class="auth-input"
+          placeholder="Enter mobile number"
           required
+          maxlength="10"
+          minlength="10"
+          pattern="[0-9]*"
+          inputmode="numeric"
+          [(ngModel)]="mobile"
+          (keypress)="onlyNumberKey($event)"
+          #mobileInput="ngModel"
         />
       </div>
-      <button class="login-button" (click)="sendOTP()">Send OTP</button>
-    </div>
+      <div class="auth-error">
+        <span *ngIf="!isValidIndianMobile(mobile)">Enter a valid Indian mobile number.</span>
+      </div>
+      <button type="submit" class="auth-btn" [disabled]="!authForm.form.valid || !isValidIndianMobile(mobile)">
+        Send OTP
+      </button>
+    </form>
 
-    <!-- Step 2: OTP -->
-    <div *ngIf="step === 2" class="form-group">
-      <label for="otp">Enter OTP</label>
-      <input
-        type="text"
-        id="otp"
-        [(ngModel)]="otp"
-        placeholder="6-digit OTP"
-        maxlength="6"
-        pattern="[0-9]{6}"
-        required
-      />
-      <button class="login-button" (click)="verifyOTP()">Verify</button>
+    <!-- OTP Input Form -->
+  <form *ngIf="showOtpInput" (ngSubmit)="verifyOtp()" #otpForm="ngForm">
+    <label for="otp" class="auth-label">Enter OTP</label>
+    <div class="auth-input-group otp-group">
+      <ng-otp-input
+        [config]="otpInputConfig"
+        (onInputChange)="onOtpChange($event)">
+      </ng-otp-input>
     </div>
+    <div class="auth-error">
+      <span *ngIf="otp && otp.length !== 6">OTP must be 6 digits.</span>
+    </div>
+    <button type="submit" class="auth-btn" [disabled]="!otp || otp.length !== 6">
+      Verify OTP
+    </button>
+    <div class="auth-otp-options">
+      <a href="#" (click)="changeNumber(); $event.preventDefault();">Change Number</a>
+      <span class="divider-dot">•</span>
+      <a href="#" (click)="getOtp(); $event.preventDefault();">Didn't get a code?</a>
+    </div>
+  </form>
+    <div class="auth-divider">
+      <span>or sign in with</span>
+    </div>
+    <div class="auth-social">
+      <button class="auth-social-btn"><img [src]="images.g" alt="Google" /></button>
+    </div>
+  </div>
 
-    <div *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </div>
+  <div class="auth-footer">
+    <p>
+      By continuing, you agree to our
+      <a href="#" class="auth-link">Terms</a> &amp;
+      <a href="#" class="auth-link">Privacy Policy</a>.
+    </p>
+    <p class="auth-copyright">
+      © 2024 Weekend App
+    </p>
   </div>
 </div>

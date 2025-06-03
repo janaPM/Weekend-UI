@@ -12,15 +12,28 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { NewProfileInfoComponent } from './new-profile-info/new-profile-info.component';
 import { FormsModule } from '@angular/forms';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 
 
 @NgModule({
   declarations: [
+    LoginComponent,
+    ProfileComponent,
+    FooterComponent,
+    ForYouComponent,
+    LayoutComponent,
+    EventsComponent,
+    ChatsComponent,
+    ChatConversationComponent,
+    EventDetailComponent,
+    CalendarComponent,
+    NewProfileInfoComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    NgOtpInputModule,
   ]
 })
 export class PagesModule { }

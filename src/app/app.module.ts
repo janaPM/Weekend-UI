@@ -21,10 +21,12 @@ import { BottomSheetComponent } from '../pages/bottom-sheet/bottom-sheet.compone
 import { HammerGestureConfig } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewProfileInfoComponent } from '../pages/new-profile-info/new-profile-info.component';
+import { NgOtpInputModule } from 'ng-otp-input';
+
 @NgModule({ declarations: [
-        AppComponent, LoginComponent, ProfileComponent, ForYouComponent, FooterComponent, LayoutComponent, EventsComponent, ChatsComponent, ChatConversationComponent, EventDetailComponent, CalendarComponent, NewProfileInfoComponent,BottomSheetComponent
+        AppComponent, LoginComponent, ProfileComponent, ForYouComponent, FooterComponent, LayoutComponent, EventsComponent, ChatsComponent, ChatConversationComponent, EventDetailComponent, CalendarComponent,BottomSheetComponent, NewProfileInfoComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent], imports: [BrowserModule, NgOtpInputModule,
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,

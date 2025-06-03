@@ -13,7 +13,7 @@ export class LayoutComponent {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         console.log("event.urlAfterRedirects"+event.urlAfterRedirects);
-        this.isChatConversation = event.urlAfterRedirects.startsWith('/chat-conversation') || event.urlAfterRedirects.startsWith('/login') || event.urlAfterRedirects.startsWith('/new');
+        this.isChatConversation = event.urlAfterRedirects.startsWith('/chat-conversation') || event.urlAfterRedirects.startsWith('/login') || event.urlAfterRedirects.startsWith('/new') || event.urlAfterRedirects.startsWith('/app-new-profile-info');
         console.log("event.urlAfterRedirects == '/chat-conversation'"+event.urlAfterRedirects);
       }
     });

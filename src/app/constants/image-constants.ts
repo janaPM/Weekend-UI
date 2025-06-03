@@ -21,7 +21,7 @@ export const images = {
     // profile_icon:"../../../assets/profile-icon.png",
     profile_icon:"../../../assets/Account.svg",
     for_you:"../../../assets/myEventsIcon.svg",
-    calendar:"../../../assets/calendar_.png",
+    calendar:"../../../assets/calendar.svg",
     chat:"../../../assets/chatIcon.svg",
     // events:"../../../assets/event.png",
     events:"../../../assets/homeIcon.svg",
