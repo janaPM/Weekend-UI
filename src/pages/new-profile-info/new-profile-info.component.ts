@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { images } from '../../app/constants/image-constants';
 import { Router } from '@angular/router';
+import { environment } from '../../../environment';
 @Component({
   selector: 'app-new-profile-info',
   templateUrl: './new-profile-info.component.html',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class NewProfileInfoComponent implements OnInit {
   public images = images;
+  private apiUrl = environment.URL;
   inputActive: boolean = false;
   questions: any[] = [
     { key: 'name', title: 'What is your name?', type: 'text' },
@@ -58,7 +60,7 @@ export class NewProfileInfoComponent implements OnInit {
     // Initialize user object
     this.user = {};
   }
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
   nextQuestion(): void {
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
@@ -67,6 +69,16 @@ export class NewProfileInfoComponent implements OnInit {
       alert('All questions answered!');
       console.log(this.user); // Log the collected user data
       this.router.navigate(['/profile']);
+      this.user.id = localStorage.getItem('My_ID');
+      this.http.post(`${this.apiUrl}/updateUser`, this.user)
+      .subscribe(
+        (response) => {
+          console.log('User data saved successfully:', response);
+        },
+        (error) => {
+          console.error('Error saving user data:', error);
+        }
+      );
       console.log('saved-->'+JSON.stringify(this.user));
     }
   }
