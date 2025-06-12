@@ -18,6 +18,7 @@ interface VerifyOtpResponse {
     id: string;
     phone: string;
   };
+  newUser: boolean;
 }
 
 @Component({
@@ -111,8 +112,12 @@ export class LoginComponent {
         const userId = res.user?.id;
         localStorage.setItem('My_ID', userId);
         console.log('✅ OTP verified:', userId);
-        this.router.navigate(['/new']);
-      },
+         if (res.newUser) {
+      this.router.navigate(['/new']);
+    } else {
+      this.router.navigate(['/events']);
+    }
+  },
       error: (err) => {
         console.error('❌ OTP verification failed:', err);
         this.showError(err.error?.message || 'OTP verification failed.');
