@@ -39,7 +39,10 @@
       <button class="update-button" (click)="saveAnswer()" [ngClass]="{ active: inputActive }" [disabled]="!inputActive"> 
         Save
       </button>
-      <button class="skip-button" (click)="skipQuestion()">
+      <button 
+        class="skip-button" 
+        *ngIf="!['name', 'gender', 'location', 'interests'].includes(questions[currentQuestionIndex].key)"
+        (click)="skipQuestion()">
         Skip
       </button>
     </div>

@@ -131,4 +131,9 @@ export class LoginComponent {
     return /^[6-9]\d{9}$/.test(mobile);
   }
 
+  atGoogleSignIn() {
+    console.log('Google Sign In clicked');
+    this.showError('Google Sign In is not implemented yet, please use Mobile login.');
+  }
+
 }
