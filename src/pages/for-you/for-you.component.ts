@@ -352,7 +352,7 @@ rejectProfile(profile: any,event: any) {
     profileId: profile,
     eventId: event
   };
-  this.http.post(`${this.apiUrl}rejectProfileForMyEvent`, payload).subscribe(
+  this.http.post(`${this.apiUrl}/rejectProfileForMyEvent`, payload).subscribe(
     (response) => {
       console.log('Profile rejected successfully:', response);
       this.swipeableProfiles = this.swipeableProfiles.filter((p) => p.id !== profile.id);
@@ -377,7 +377,7 @@ removeProfile(profile: any) {
   this.showProfile = true;
   console.log("UserId-http"+this.UserIds);
   // this.UserIds ='1';
-  this.http.get<any>(`${this.apiUrl}userDetail?userId=${this.UserIds}`).subscribe((data) => {
+  this.http.get<any>(`${this.apiUrl}/userDetail?userId=${this.UserIds}`).subscribe((data) => {
     this.user = { ...data }; }
   ,(error) => {
     console.error('Error fetching requested user data:', error);
